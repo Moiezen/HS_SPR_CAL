@@ -2,6 +2,8 @@
 Hearthstone Spectral Pillager Rogue Calculator
 炉石鬼灵贼计算器 施工中
 
+</br>
+
 当前考虑范围：
 
 对手空场（**待定**，影响背刺是否具有合理目标）且无干扰因素（**待定**，但短期内不可能考虑干扰因素），己方可能已控制若干随从，己方可能已打出若干卡牌（已经进行了一些过牌）
@@ -26,7 +28,7 @@ Hearthstone Spectral Pillager Rogue Calculator
 
 手牌数量上限固定为10，随从数量上限固定为7，剩余费用上限固定为10
 
-
+</br>
 
 因为种种原因，考虑用C++实现
 
@@ -46,13 +48,13 @@ Hearthstone Spectral Pillager Rogue Calculator
 
 一系列操作用opes=list<ope>表示
   
-
+</br>
 
 应有基础函数：trans(state,ope)->(state,dmg)，**待定**：因为dmg具有可加性，可以设计为被各项操作分离（参考马尔可夫决策过程中，因为收益具有可加性，而被各次决策分离）
 
 可以写出Brute Force：maxdmg(state):=max(ope of allope(state))(trans.dmg+maxdmg(trans.state)),where trans=trans(state,ope)
 
-
+</br>
 
 First step:
   
