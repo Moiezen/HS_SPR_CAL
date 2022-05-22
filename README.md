@@ -74,6 +74,22 @@ Hearthstone Spectral Pillager Rogue Calculator
 
 </br>
 
+**2022/5/22会议纪要**
+
+暗歌再次强调：考虑超凡
+
+奶青 复盘为主，实战演算为辅
+
+凌果冰 背刺如要凑连击，几乎只有起手困难
+
+背刺如要腾格子，几乎只需要给老千和腾武
+
+桉 如有需要，背刺总能腾出格子
+
+开始收集鬼灵题目图片
+
+</br>
+
 First step:
   
 完成Brute Force代码
