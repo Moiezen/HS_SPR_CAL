@@ -70,10 +70,10 @@ scm k2s(kpm a){
 		}
 	}
 }
-//µĞ·½Ó¢ĞÛ-¿ÉÒÔÊÇ¹íÁé·ËÔôµÄÄ¿±ê
-//µĞ·½Ëæ´Ó-¿ÉÒÔÊÇ±³´ÌµÄÄ¿±ê
-//¿ÕÄ¿±ê
-//ÒÔÉÏĞéÄ¿±ê¾ù¹éÈëËæ´ÓÃûÒÔ¼ò»¯²Ù×÷Ä¿±ê
+//æ•Œæ–¹è‹±é›„-å¯ä»¥æ˜¯é¬¼çµåŒªè´¼çš„ç›®æ ‡
+//æ•Œæ–¹éšä»-å¯ä»¥æ˜¯èƒŒåˆºçš„ç›®æ ‡
+//ç©ºç›®æ ‡
+//ä»¥ä¸Šè™šç›®æ ‡å‡å½’å…¥éšä»åä»¥ç®€åŒ–æ“ä½œç›®æ ‡
 int bcost(scm a){
 	switch(a){
 		case msyzl:{
@@ -129,31 +129,56 @@ minion minioncons(scm a){
 	minion b;
 	b.name=a;
 	return b;
-} 
-//ÒÑ¼ÙÉè ±³´ÌÖ»ÓÃÓÚÈ¥³ıÀÏÇ§ºÍÌÚÎä ¶ø¹íÁé·ËÔô×ÜÄÜÈ¥³ı
+}
+//å·²å‡è®¾ èƒŒåˆºåªç”¨äºå»é™¤è€åƒå’Œè…¾æ­¦ è€Œé¬¼çµåŒªè´¼æ€»èƒ½å»é™¤
 struct aura{
 	int asjdf;
 	int ahrlq;
 	int ady1;
 	int ady2;
 };
+aura auracons(int a,int b,int c,int d){
+	aura e;
+	e.asjdf=a;
+	e.ahrlq=b;
+	e.ady1=c;
+	e.ady2=d;
+	return e;
+}
+aura emptyau=auracons(0,0,0,0);
 struct state{
 	vector<card> hands;
-	vector<minion> minions;
+	vector<minion> fields;
 	aura auras;
 	int mana;
 	int num;
-}emptyst;
+};
+state emptystcons(){
+	state a;
+	a.hands.clear();
+	a.fields.clear();
+	a.auras=emptyau;
+	a.mana=0;
+	a.num=0;
+	return a;
+}
+state emptyst=emptystcons();
 struct ope{
 	int cost;
 	kpm name;
 	scm target;
 };
-//ÓÉÓÚËæ´ÓÔİÊ±²»Çø·ÖÑªÁ¿£¬²Ù×÷Ä¿±ê½öĞèÒªËæ´ÓÃû£¬ÇÒÒÑ¿ÉÒÔ°üÀ¨µĞ·½Ó¢ĞÛ
+//ç”±äºéšä»æš‚æ—¶ä¸åŒºåˆ†è¡€é‡ï¼Œæ“ä½œç›®æ ‡ä»…éœ€è¦éšä»åï¼Œä¸”å·²å¯ä»¥åŒ…æ‹¬æ•Œæ–¹è‹±é›„ï¼Œæ•Œæ–¹éšä»ï¼Œç©ºç›®æ ‡ 
+ope opecons(int a,kpm b,scm c){
+	ope d;
+	d.cost=a;
+	d.name=b;
+	d.target=c;
+	return d;
+}
 struct opes{
 	vector<ope> opes;
 };
-
 bool rmv1(vector<minion>&a,scm b){
 	vector<minion>::iterator i=a.begin();
 	while(i!=a.end()){
@@ -188,8 +213,8 @@ const int dy1lim=2;
 const int dy2lim=2;
 
 int twice(state st){
-	vector<minion>::iterator i=st.minions.begin();
-	while(i!=st.minions.end()){
+	vector<minion>::iterator i=st.fields.begin();
+	while(i!=st.fields.end()){
 		if((*i).name==msyzl){
 			return 2;
 		}
@@ -199,11 +224,13 @@ int twice(state st){
 }
 
 pair<state,int> trans(state st,ope op){
+	int dmg=0;
+	bool flag=true;
 	switch(op.name){
 		case ayb:{
-			bool flag=rmv1(st.minions,op.target);
-			if(!flag) return badpair;
 			flag=rmv2(st.hands,op.name,op.cost);
+			if(!flag) return badpair;
+			flag=rmv1(st.fields,op.target);
 			if(!flag) return badpair;
 			st.mana-=max(op.cost-st.auras.asjdf*2-st.auras.ady1*3,0);
 			if(st.mana<0) return badpair;
@@ -220,7 +247,7 @@ pair<state,int> trans(state st,ope op){
 			break;
 		}
 		case jb:{
-			bool flag=rmv2(st.hands,op.name,op.cost)&&(op.target==nul);
+			flag=rmv2(st.hands,op.name,op.cost)&&(op.target==nul);
 			if(!flag) return badpair;
 			st.mana-=max(op.cost-st.auras.asjdf*2-st.auras.ady1*3,0);
 			if(st.mana<0) return badpair;
@@ -233,7 +260,7 @@ pair<state,int> trans(state st,ope op){
 			break;
 		}
 		case sjdf:{
-			bool flag=rmv2(st.hands,op.name,op.cost)&&(op.target==nul);
+			flag=rmv2(st.hands,op.name,op.cost)&&(op.target==nul);
 			if(!flag) return badpair;
 			st.mana-=max(op.cost-st.auras.asjdf*2-st.auras.ady1*3,0);
 			if(st.mana<0) return badpair;
@@ -245,13 +272,13 @@ pair<state,int> trans(state st,ope op){
 			break;
 		}
 		case hjys:{
-			bool flag=rmv2(st.hands,op.name,op.cost)&&(op.target==nul);
+			flag=rmv2(st.hands,op.name,op.cost)&&(op.target==nul);
 			if(!flag) return badpair;
 			st.mana-=max(op.cost-st.auras.asjdf*2-st.auras.ady1*3,0);
 			if(st.mana<0) return badpair;
 			
-			vector<minion>::iterator i=st.minions.begin();
-			while(i!=st.minions.end()){
+			vector<minion>::iterator i=st.fields.begin();
+			while(i!=st.fields.end()){
 				if(st.hands.size()>=hlim) break; 
 				st.hands.push_back(cardcons(s2k((*i).name),1));
 				i++;
@@ -263,10 +290,10 @@ pair<state,int> trans(state st,ope op){
 			break;
 		}
 		case syzl:{
-			bool flag=rmv2(st.hands,op.name,op.cost)&&(op.target==nul);
+			flag=rmv2(st.hands,op.name,op.cost)&&(op.target==nul);
 			if(!flag) return badpair;
-			if(st.minions.size()>=mlim) flag=false;
-			else st.minions.push_back(minioncons(k2s(op.name)));
+			if(st.fields.size()>=mlim) flag=false;
+			else st.fields.push_back(minioncons(k2s(op.name)));
 			if(!flag) return badpair;
 			st.mana-=max(op.cost-st.auras.ady1*3,0);
 			if(st.mana<0) return badpair;
@@ -277,49 +304,109 @@ pair<state,int> trans(state st,ope op){
 			break;
 		}
 		case hrlq:{
-			int tw=twice(st);
-			bool flag=rmv2(st.hands,op.name,op.cost)&&(op.target==nul);
+			int twi=twice(st);
+			flag=rmv2(st.hands,op.name,op.cost)&&(op.target==nul);
 			if(!flag) return badpair;
-			if(st.minions.size()>=mlim) flag=false;
-			else st.minions.push_back(minioncons(k2s(op.name)));
+			if(st.fields.size()>=mlim) flag=false;
+			else st.fields.push_back(minioncons(k2s(op.name)));
 			if(!flag) return badpair;
 			st.mana-=max(op.cost-st.auras.ady1*3,0);
 			if(st.mana<0) return badpair;
 			
-			st.auras.ahrlq=min(st.auras.ahrlq+tw,hrlqlim);
+			st.auras.ahrlq=min(st.auras.ahrlq+twi,hrlqlim);
 			st.auras.ady1=st.auras.ady2;
 			st.auras.ady2=0;
 			st.num++;
 			break;
 		}
 		case dy:{
-			bool flag=rmv2(st.hands,op.name,op.cost)&&(op.target==nul);
+			int twi=twice(st);
+			flag=rmv2(st.hands,op.name,op.cost)&&(op.target==nul);
 			if(!flag) return badpair;
-			if(st.minions.size()>=mlim) flag=false;
-			else st.minions.push_back(minioncons(k2s(op.name)));
+			if(st.fields.size()>=mlim) flag=false;
+			else st.fields.push_back(minioncons(k2s(op.name)));
 			if(!flag) return badpair;
 			st.mana-=max(op.cost-st.auras.ahrlq*2-st.auras.ady1*3,0);
 			if(st.mana<0) return badpair;
 			
 			st.auras.ahrlq=0;
-			st.auras.ady1=min(st.auras.ady2+tw,dy1lim);
-			st.auras.ady2=tw;
+			if(st.num){
+				st.auras.ady1=min(st.auras.ady2+twi,dy1lim);
+				st.auras.ady2=twi;
+			}
+			else{
+				st.auras.ady1=st.auras.ady2;
+				st.auras.ady2=0;
+			}
 			st.num++;
 			break;
 		}
 		case tw:{
+			flag=rmv2(st.hands,op.name,op.cost);
+			if(!flag) return badpair;
+			if(st.fields.size()>=mlim) flag=false;
+			else st.fields.push_back(minioncons(k2s(op.name)));
+			if(!flag) return badpair;
+			bool flag=rmv1(st.fields,op.target);
+			if(!flag) return badpair;
+			st.mana-=max(op.cost-st.auras.ady1*3,0);
+			if(st.mana<0) return badpair;
 			
+			st.hands.push_back(cardcons(s2k(op.target),1));
+			st.auras.ady1=st.auras.ady2;
+			st.auras.ady2=0;
+			st.num++;
+			break;
 		}
 		case glfz:{
+			int twi=twice(st);
+			flag=rmv2(st.hands,op.name,op.cost);
+			if(!flag) return badpair;
+			if(st.fields.size()>=mlim) flag=false;
+			else st.fields.push_back(minioncons(k2s(op.name)));
+			if(!flag) return badpair;
+			if(op.target==dfyx){
+				dmg=st.num*twi;
+			}
+			else{
+				//åº”ç”¨æ€»èƒ½å»é™¤çš„å‡å®š 
+				bool flag=rmv1(st.fields,op.target);
+				if(!flag) return badpair;
+			}
+			st.mana-=max(op.cost-st.auras.ahrlq*2-st.auras.ady1*3,0);
+			if(st.mana<0) return badpair;
 			
+			st.auras.ahrlq=0;
+			st.auras.ady1=st.auras.ady2;
+			st.auras.ady2=0;
+			st.num++;
 			break;
 		}
 		case ljsc:{
+			//å‡è®¾ä¸ºæ— è¯æ¡éšä»ï¼Œä¸é€‚ç”¨äºå‰å°”å°¼æ–¯ 
+			bool flag=rmv2(st.hands,op.name,op.cost)&&(op.target==nul);
+			if(!flag) return badpair;
+			if(st.fields.size()>=mlim) flag=false;
+			else st.fields.push_back(minioncons(k2s(op.name)));
+			if(!flag) return badpair;
+			st.mana-=max(op.cost-st.auras.ady1*3,0);
+			if(st.mana<0) return badpair;
 			
+			st.auras.ady1=st.auras.ady2;
+			st.auras.ady2=0;
+			st.num++;
 			break;
 		}
 		case ljfs:{
+			bool flag=rmv2(st.hands,op.name,op.cost)&&(op.target==nul);
+			if(!flag) return badpair;
+			st.mana-=max(op.cost-st.auras.asjdf*2-st.auras.ady1*3,0);
+			if(st.mana<0) return badpair;
 			
+			st.auras.asjdf=0;
+			st.auras.ady1=st.auras.ady2;
+			st.auras.ady2=0;
+			st.num++;
 			break;
 		}
 		case lj:{
@@ -327,8 +414,171 @@ pair<state,int> trans(state st,ope op){
 			break;
 		}
 	}
+	return make_pair(st,dmg);
 }
 
+int maxdmg(state st){
+	int res=0;
+	vector<card>::iterator i=st.hands.begin();
+	while(i!=st.hands.end()){
+		pair<state,int> pa; 
+		vector<minion>::iterator j=st.fields.begin();
+		while(j!=st.fields.end()){
+			pa=trans(st,opecons((*i).cost,(*i).name,(*j).name));
+			res=max(res,pa.second+maxdmg(pa.first));
+			j++;
+		}
+		pa=trans(st,opecons((*i).cost,(*i).name,dfyx));
+		res=max(res,pa.second+maxdmg(pa.first));
+		pa=trans(st,opecons((*i).cost,(*i).name,dfsc));//è¿˜æ²¡åŠ èƒŒåˆºï¼Œæš‚æ—¶æ²¡ç”¨ 
+		res=max(res,pa.second+maxdmg(pa.first));
+		pa=trans(st,opecons((*i).cost,(*i).name,nul));
+		res=max(res,pa.second+maxdmg(pa.first));
+		
+		i++;
+	}
+	return res;
+}
+state sample1cons(){
+	state st;
+	st.hands.clear();
+	st.hands.push_back(cardcons(syzl,4));
+	st.hands.push_back(cardcons(hrlq,2));
+	st.hands.push_back(cardcons(dy,4));
+	st.hands.push_back(cardcons(glfz,6));
+	st.hands.push_back(cardcons(glfz,6));
+	st.fields.clear();
+	st.auras=emptyau;
+	st.mana=6;
+	st.num=0;
+	return st;
+}
+state sample1=sample1cons();
+state sample2cons(){
+	state st;
+	st.hands.clear();
+	st.hands.push_back(cardcons(jb,0));
+	st.hands.push_back(cardcons(syzl,4));
+	st.hands.push_back(cardcons(tw,2));
+	st.hands.push_back(cardcons(dy,4));
+	st.hands.push_back(cardcons(glfz,6));
+	st.hands.push_back(cardcons(glfz,6));
+	st.fields.clear();
+	st.auras=emptyau;
+	st.mana=5;
+	st.num=0;
+	return st;
+}
+state sample2=sample2cons();
+state sample3cons(){
+	state st;
+	st.hands.clear();
+	st.hands.push_back(cardcons(ayb,0));
+	st.hands.push_back(cardcons(hrlq,2));
+	st.hands.push_back(cardcons(syzl,4));
+	st.hands.push_back(cardcons(tw,2));
+	st.hands.push_back(cardcons(dy,4));
+	st.hands.push_back(cardcons(glfz,6));
+	st.hands.push_back(cardcons(glfz,6));
+	st.fields.clear();
+	st.auras=emptyau;
+	st.mana=4;
+	st.num=0;
+	return st;
+}
+state sample3=sample3cons();
+state sample4cons(){
+	state st;
+	st.hands.clear();
+	st.hands.push_back(cardcons(jb,0));
+	st.hands.push_back(cardcons(ayb,0));
+	st.hands.push_back(cardcons(hrlq,2));
+	st.hands.push_back(cardcons(syzl,4));
+	st.hands.push_back(cardcons(tw,2));
+	st.hands.push_back(cardcons(dy,4));
+	st.hands.push_back(cardcons(glfz,6));
+	st.fields.clear();
+	st.auras=emptyau;
+	st.mana=5;
+	st.num=0;
+	return st;
+}
+state sample4=sample4cons();
+state sample5cons(){
+	state st;
+	st.hands.clear();
+	st.hands.push_back(cardcons(sjdf,0));
+	st.hands.push_back(cardcons(hjys,4));
+	st.hands.push_back(cardcons(syzl,4));
+	st.hands.push_back(cardcons(dy,4));
+	st.hands.push_back(cardcons(glfz,6));
+	st.hands.push_back(cardcons(glfz,6));
+	st.fields.clear();
+	st.auras=emptyau;
+	st.mana=6;
+	st.num=0;
+	return st;
+}
+state sample5=sample5cons();
+state sample6cons(){
+	state st;
+	st.hands.clear();
+	st.hands.push_back(cardcons(jb,0));
+	st.hands.push_back(cardcons(jb,0));
+	st.hands.push_back(cardcons(ayb,0));
+	st.hands.push_back(cardcons(hrlq,2));
+	st.hands.push_back(cardcons(syzl,4));
+	st.hands.push_back(cardcons(dy,4));
+	st.hands.push_back(cardcons(glfz,6));
+	st.fields.clear();
+	st.auras=emptyau;
+	st.mana=6;
+	st.num=2;
+	return st;
+}
+state sample6=sample6cons();
+state sample7cons(){
+	state st;
+	st.hands.clear();
+	st.hands.push_back(cardcons(jb,0));
+	st.hands.push_back(cardcons(sjdf,0));
+	st.hands.push_back(cardcons(hjys,4));
+	st.hands.push_back(cardcons(dy,4));
+	st.hands.push_back(cardcons(tw,2));
+	st.hands.push_back(cardcons(glfz,6));
+	st.hands.push_back(cardcons(glfz,6));
+	st.fields.clear();
+	st.auras=emptyau;
+	st.mana=10;
+	st.num=0;
+	return st;
+}
+state sample7=sample7cons();
+state sample8cons(){
+	state st;
+	st.hands.clear();
+	st.hands.push_back(cardcons(jb,0));
+	st.hands.push_back(cardcons(jb,0));
+	st.hands.push_back(cardcons(sjdf,0));
+	st.hands.push_back(cardcons(hjys,4));
+	st.hands.push_back(cardcons(dy,4));
+	st.hands.push_back(cardcons(tw,2));
+	st.hands.push_back(cardcons(glfz,6));
+	st.hands.push_back(cardcons(glfz,6));
+	st.fields.clear();
+	st.auras=emptyau;
+	st.mana=10;
+	st.num=0;
+	return st;
+}
+state sample8=sample8cons();
 int main(){
-	
+	printf("%d\n",maxdmg(sample1));
+	printf("%d\n",maxdmg(sample2));
+	printf("%d\n",maxdmg(sample3));
+	printf("%d\n",maxdmg(sample4));
+	printf("%d\n",maxdmg(sample5));
+	printf("%d\n",maxdmg(sample6));
+	printf("%d\n",maxdmg(sample7));
+	printf("%d\n",maxdmg(sample8));
 }
