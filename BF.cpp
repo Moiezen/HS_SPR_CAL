@@ -206,6 +206,7 @@ pair<state,int> badpair=make_pair(emptyst,-999999);
 
 const int hlim=10;
 const int mlim=7;
+const int manalim=10;
 
 const int sjdflim=1;
 const int hrlqlim=3;
@@ -223,7 +224,11 @@ int twice(state st){
 	return 1;
 }
 
+int tc=0;
+
 pair<state,int> trans(state st,ope op){
+	tc++;
+	
 	int dmg=0;
 	bool flag=true;
 	switch(op.name){
@@ -252,7 +257,7 @@ pair<state,int> trans(state st,ope op){
 			st.mana-=max(op.cost-st.auras.asjdf*2-st.auras.ady1*3,0);
 			if(st.mana<0) return badpair;
 			
-			st.mana++;
+			st.mana=min(st.mana+1,manalim);
 			st.auras.asjdf=0;
 			st.auras.ady1=st.auras.ady2;
 			st.auras.ady2=0;
@@ -426,14 +431,18 @@ int maxdmg(state st){
 		while(j!=st.fields.end()){
 			pa=trans(st,opecons((*i).cost,(*i).name,(*j).name));
 			res=max(res,pa.second+maxdmg(pa.first));
+			if(pa.second<0) tc--;
 			j++;
 		}
 		pa=trans(st,opecons((*i).cost,(*i).name,dfyx));
 		res=max(res,pa.second+maxdmg(pa.first));
-		pa=trans(st,opecons((*i).cost,(*i).name,dfsc));//还没加背刺，暂时没用 
-		res=max(res,pa.second+maxdmg(pa.first));
+		if(pa.second<0) tc--;
+		//pa=trans(st,opecons((*i).cost,(*i).name,dfsc));
+		//还没加背刺，此略 
+		//res=max(res,pa.second+maxdmg(pa.first));
 		pa=trans(st,opecons((*i).cost,(*i).name,nul));
 		res=max(res,pa.second+maxdmg(pa.first));
+		if(pa.second<0) tc--;
 		
 		i++;
 	}
@@ -572,8 +581,62 @@ state sample8cons(){
 	return st;
 }
 state sample8=sample8cons();
+state sample9cons(){
+	state st;
+	st.hands.clear();
+	st.hands.push_back(cardcons(jb,0));
+	st.hands.push_back(cardcons(sjdf,0));
+	st.hands.push_back(cardcons(hjys,4));
+	st.hands.push_back(cardcons(syzl,4));
+	st.hands.push_back(cardcons(hrlq,2));
+	st.hands.push_back(cardcons(dy,4));
+	st.hands.push_back(cardcons(tw,2));
+	st.hands.push_back(cardcons(glfz,6));
+	st.hands.push_back(cardcons(glfz,6));
+	st.hands.push_back(cardcons(ljsc,4));
+	st.fields.clear();
+	st.auras=emptyau;
+	st.mana=7;
+	st.num=0;
+	return st;
+}
+state sample9=sample9cons();
+state sample10cons(){
+	state st;
+	st.hands.clear();
+	st.hands.push_back(cardcons(jb,0));
+	st.hands.push_back(cardcons(jb,0));
+	st.hands.push_back(cardcons(ayb,0));
+	st.hands.push_back(cardcons(syzl,4));
+	st.hands.push_back(cardcons(hrlq,2));
+	st.hands.push_back(cardcons(tw,2));
+	st.hands.push_back(cardcons(glfz,6));
+	st.fields.clear();
+	st.auras=emptyau;
+	st.mana=7;
+	st.num=0;
+	return st;
+}
+state sample10=sample10cons();
+state sample11cons(){
+	state st;
+	st.hands.clear();
+	st.hands.push_back(cardcons(ayb,0));
+	st.hands.push_back(cardcons(ayb,0));
+	st.hands.push_back(cardcons(hjys,4));
+	st.hands.push_back(cardcons(syzl,4));
+	st.hands.push_back(cardcons(hrlq,2));
+	st.hands.push_back(cardcons(dy,4));
+	st.hands.push_back(cardcons(glfz,6));
+	st.fields.clear();
+	st.auras=emptyau;
+	st.mana=6;
+	st.num=0;
+	return st;
+}
+state sample11=sample11cons();
 int main(){
-	printf("%d\n",maxdmg(sample1));
+	/*printf("%d\n",maxdmg(sample1));
 	printf("%d\n",maxdmg(sample2));
 	printf("%d\n",maxdmg(sample3));
 	printf("%d\n",maxdmg(sample4));
@@ -581,4 +644,8 @@ int main(){
 	printf("%d\n",maxdmg(sample6));
 	printf("%d\n",maxdmg(sample7));
 	printf("%d\n",maxdmg(sample8));
+	printf("%d\n",maxdmg(sample9));
+	printf("%d\n",maxdmg(sample10));*/
+	
+	printf("%d\n",maxdmg(sample11));
 }
