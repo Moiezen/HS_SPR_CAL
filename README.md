@@ -88,6 +88,8 @@ Hearthstone Spectral Pillager Rogue Calculator
 
 开始收集鬼灵题目图片
 
+提及补丁优先级
+
 </br>
 
 First step:
