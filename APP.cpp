@@ -10,35 +10,35 @@ enum scm{
 string s2str(scm a){
 	switch(a){
 		case msyzl:{
-			return "ÓãÁé";
+			return "é±¼çµ";
 			break;
 		}
 		case mhrlq:{
-			return "ÀÏÇ§";
+			return "è€åƒ";
 			break;
 		}
 		case mdy:{
-			return "µ¶ÓÍ";
+			return "åˆ€æ²¹";
 			break;
 		}
 		case mtw:{
-			return "ÌÚÎä";
+			return "è…¾æ­¦";
 			break;
 		}
 		case mglfz:{
-			return "¹íÁé";
+			return "é¬¼çµ";
 			break;
 		}
 		case mljsc:{
-			return "À¬»ø";
+			return "åƒåœ¾";
 			break;
 		}
 		case dfyx:{
-			return "¶ÔÃæÁ³";
+			return "å¯¹é¢è„¸";
 			break;
 		}
 		case dfsc:{
-			return "¶ÔÃæ¹Ö";
+			return "å¯¹é¢æ€ª";
 			break;
 		}
 		case nul:{
@@ -54,55 +54,55 @@ string s2str(scm a){
 string k2str(kpm a){
 	switch(a){
 		case syzl:{
-			return "ÓãÁé";
+			return "é±¼çµ";
 			break;
 		}
 		case hrlq:{
-			return "ÀÏÇ§";
+			return "è€åƒ";
 			break;
 		}
 		case dy:{
-			return "µ¶ÓÍ";
+			return "åˆ€æ²¹";
 			break;
 		}
 		case tw:{
-			return "ÌÚÎä";
+			return "è…¾æ­¦";
 			break;
 		}
 		case glfz:{
-			return "¹íÁé";
+			return "é¬¼çµ";
 			break;
 		}
 		case ljsc:{
-			return "À¬»øËæ´Ó"; 
+			return "åƒåœ¾éšä»"; 
 			break;
 		}
 		case ayb:{
-			return "°µÓ°²½";
+			return "æš—å½±æ­¥";
 			break;
 		}
 		case bc:{
-			return "±³´Ì";
+			return "èƒŒåˆº";
 			break;
 		}
 		case jb:{
-			return "±Ò";
+			return "å¸";
 			break;
 		}
 		case sjdf:{
-			return "ËÅ»ú´ı·¢"; 
+			return "ä¼ºæœºå¾…å‘"; 
 			break;
 		}
 		case hjys:{
-			return "»Ã¾õÒ©Ë®";
+			return "å¹»è§‰è¯æ°´";
 			break;
 		}
 		case ljfs:{
-			return "À¬»ø·¨Êõ"; 
+			return "åƒåœ¾æ³•æœ¯"; 
 			break;
 		}
 		case lj:{
-			return "À¬»ø";
+			return "åƒåœ¾";
 			break;
 		}
 		default:{
@@ -175,10 +175,10 @@ scm k2s(kpm a){
 		}
 	}
 }
-//µĞ·½Ó¢ĞÛ-¿ÉÒÔÊÇ¹íÁé·ËÔôµÄÄ¿±ê
-//µĞ·½Ëæ´Ó-¿ÉÒÔÊÇ±³´ÌµÄÄ¿±ê
-//¿ÕÄ¿±ê
-//ÒÔÉÏĞéÄ¿±ê¾ù¹éÈëËæ´ÓÃûÒÔ¼ò»¯²Ù×÷Ä¿±ê
+//æ•Œæ–¹è‹±é›„-å¯ä»¥æ˜¯é¬¼çµåŒªè´¼çš„ç›®æ ‡
+//æ•Œæ–¹éšä»-å¯ä»¥æ˜¯èƒŒåˆºçš„ç›®æ ‡
+//ç©ºç›®æ ‡
+//ä»¥ä¸Šè™šç›®æ ‡å‡å½’å…¥éšä»åä»¥ç®€åŒ–æ“ä½œç›®æ ‡
 int bcost(scm a){
 	switch(a){
 		case msyzl:{
@@ -235,7 +235,7 @@ minion minioncons(scm a){
 	b.name=a;
 	return b;
 }
-//ÒÑ¼ÙÉè ±³´ÌÖ»ÓÃÓÚÈ¥³ıÀÏÇ§ºÍÌÚÎä ¶ø¹íÁé·ËÔô×ÜÄÜÈ¥³ı
+//å·²å‡è®¾ èƒŒåˆºåªç”¨äºå»é™¤è€åƒå’Œè…¾æ­¦ è€Œé¬¼çµåŒªè´¼æ€»èƒ½å»é™¤
 struct aura{
 	int asjdf;
 	int ahrlq;
@@ -273,7 +273,7 @@ struct ope{
 	kpm name;
 	scm target;
 };
-//ÓÉÓÚËæ´ÓÔİÊ±²»Çø·ÖÑªÁ¿£¬²Ù×÷Ä¿±ê½öĞèÒªËæ´ÓÃû£¬ÇÒÒÑ¿ÉÒÔ°üÀ¨µĞ·½Ó¢ĞÛ£¬µĞ·½Ëæ´Ó£¬¿ÕÄ¿±ê 
+//ç”±äºéšä»æš‚æ—¶ä¸åŒºåˆ†è¡€é‡ï¼Œæ“ä½œç›®æ ‡ä»…éœ€è¦éšä»åï¼Œä¸”å·²å¯ä»¥åŒ…æ‹¬æ•Œæ–¹è‹±é›„ï¼Œæ•Œæ–¹éšä»ï¼Œç©ºç›®æ ‡ 
 ope opecons(int a,kpm b,scm c){
 	ope d;
 	d.cost=a;
@@ -359,7 +359,26 @@ pair<state,int> trans(state st,ope op){
 			break;
 		}
 		case bc:{
+			//æš‚æ—¶æœªè€ƒè™‘åŒºåˆ†èƒŒåˆºæ•Œæ–¹éšä»å’ŒèƒŒåˆºè¡€é‡>2çš„å‹æ–¹éšä»ï¼Œç»Ÿä¸€è®°ä½œnullï¼Œä¸”è®¤ä¸ºæ€»èƒ½è¿™ä¹ˆåš 
+			//ç”¨ä½œå»é™¤æ—¶ï¼Œä»…è€ƒè™‘å»é™¤ç‹äººè€åƒå’Œèµ¤çƒŸè…¾æ­¦ 
+			flag=rmv2(st.hands,op.name,op.cost);
+			if(!flag) return badpair;
+			if(op.target==nul){
+				
+			}
+			else{
+				flag=(op.target==mhrlq)||(op.target==mtw);
+				if(!flag) return badpair;
+				flag=rmv1(st.fields,op.target);
+				if(!flag) return badpair;
+			} 
+			st.mana-=max(op.cost-st.auras.asjdf*2-st.auras.ady1*3,0);
+			if(st.mana<0) return badpair;
 			
+			st.auras.asjdf=0;
+			st.auras.ady1=st.auras.ady2;
+			st.auras.ady2=0;
+			st.num++;
 			break;
 		}
 		case jb:{
@@ -485,7 +504,7 @@ pair<state,int> trans(state st,ope op){
 				dmg=st.num*twi;
 			}
 			else{
-				//Ó¦ÓÃ×ÜÄÜÈ¥³ıµÄ¼Ù¶¨ 
+				//åº”ç”¨æ€»èƒ½å»é™¤çš„å‡å®š 
 				bool flag=rmv1(st.fields,op.target);
 				if(!flag) return badpair;
 			}
@@ -499,7 +518,7 @@ pair<state,int> trans(state st,ope op){
 			break;
 		}
 		case ljsc:{
-			//¼ÙÉèÎªÎŞ´ÊÌõËæ´Ó£¬²»ÊÊÓÃÓÚ¼ª¶ûÄáË¹ 
+			//å‡è®¾ä¸ºæ— è¯æ¡éšä»ï¼Œä¸é€‚ç”¨äºå‰å°”å°¼æ–¯ 
 			bool flag=rmv2(st.hands,op.name,op.cost)&&(op.target==nul);
 			if(!flag) return badpair;
 			if(st.fields.size()>=mlim) flag=false;
@@ -555,20 +574,20 @@ void output(opes o,int d){
 	}
 	s=s+to_string(d);
 	s=s+"\n";
-	MessageBox(NULL,s.c_str(),"°µ¸èÊÇÖí",MB_OK);
+	MessageBox(NULL,s.c_str(),"æš—æ­Œæ˜¯çŒª",MB_OK);
 }
 void outputfail(){
-	string s="Ò¯²»»á";
-	MessageBox(NULL,s.c_str(),"°µ¸èÊÇÖí",MB_OK);
+	string s="çˆ·ä¸ä¼š";
+	MessageBox(NULL,s.c_str(),"æš—æ­Œæ˜¯çŒª",MB_OK);
 }
 
 struct syn{
 	pair<state,int> pa;
-	//µ±Ç°×´Ì¬ÓëÀÛ¼ÆÉËº¦ 
+	//å½“å‰çŠ¶æ€ä¸ç´¯è®¡ä¼¤å®³ 
 	double pri;
-	//ÓÅÏÈ¼¶ 
+	//ä¼˜å…ˆçº§ 
 	opes os;
-	//²Ù×÷ĞòÁĞ 
+	//æ“ä½œåºåˆ— 
 };
 syn syncons(pair<state,int> a,double b,opes c){
 	syn d;
@@ -581,11 +600,14 @@ bool operator<(syn a,syn b){
 	return a.pri<b.pri;
 }
 
-int tlim=30;
+int tlim=15;
 
 priority_queue<syn> Q;
 
 void solve(state st,int eh=46){
+	opes curos=emptyos;
+	int curdmg=0;
+	
 	int tbegin=time(0);
 	
 	while(!Q.empty()) Q.pop();
@@ -596,12 +618,16 @@ void solve(state st,int eh=46){
 			output(q.os,q.pa.second);
 			return;
 		}
+		if(q.pa.second>=curdmg){
+			curos=q.os;
+			curdmg=q.pa.second;
+		}
 		
 		vector<card> C=q.pa.first.hands;
 		vector<minion> T=q.pa.first.fields;
 		T.push_back(minioncons(dfyx));
 		//T.push_back(minioncons(dfsc));
-		//»¹Ã»¼Ó±³´Ì£¬´ËÂÔ 
+		//ä»¥ä¸Šæè¿‡ä¸åŒºåˆ†èƒŒåˆºæ•Œæ–¹éšä»å’ŒèƒŒåˆºè¡€é‡>2çš„å‹æ–¹éšä»ï¼Œæ­¤ç•¥ 
 		T.push_back(minioncons(nul));
 		
 		vector<card>::iterator i=C.begin();
@@ -617,17 +643,16 @@ void solve(state st,int eh=46){
 			i++;
 		}
 	}
-	outputfail();
+	output(curos,curdmg);
 }
 state sample1cons(){
 	state st;
 	st.hands.clear();
-	st.hands.push_back(cardcons(ayb,0));
-	st.hands.push_back(cardcons(ayb,0));
-	st.hands.push_back(cardcons(hjys,4));
-	st.hands.push_back(cardcons(syzl,4));
-	st.hands.push_back(cardcons(hrlq,2));
+	st.hands.push_back(cardcons(bc,0));
 	st.hands.push_back(cardcons(dy,4));
+	st.hands.push_back(cardcons(tw,2));
+	st.hands.push_back(cardcons(syzl,4));
+	st.hands.push_back(cardcons(glfz,6));
 	st.hands.push_back(cardcons(glfz,6));
 	st.fields.clear();
 	st.auras=emptyau;
