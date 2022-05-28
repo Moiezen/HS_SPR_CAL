@@ -482,17 +482,17 @@ pair<state,int> trans(state st,ope op){
 			if(st.fields.size()>=mlim) flag=false;
 			else st.fields.push_back(minioncons(k2s(op.name)));
 			if(!flag) return badpair;
-			if(op.target==nul&&st.fields.size()==0){
+			if(op.target==nul&&st.fields.size()<=1){
 				//¿Õ³¡£¬ÌÚÎä¿É¿Õ½» 
 			}
 			else{
-				bool flag=rmv1(st.fields,op.target);
+				flag=rmv1(st.fields,op.target);
 				if(!flag) return badpair;
 			}
 			st.mana-=max(op.cost-st.auras.ady1*3,0);
 			if(st.mana<0) return badpair;
 			
-			st.hands.push_back(cardcons(s2k(op.target),1));
+			if(op.target!=nul) st.hands.push_back(cardcons(s2k(op.target),1));
 			st.auras.ady1=st.auras.ady2;
 			st.auras.ady2=0;
 			st.num++;
@@ -653,18 +653,11 @@ void solve(state st,int eh=999999){
 state sample1cons(){
 	state st;
 	st.hands.clear();
-	st.hands.push_back(cardcons(jb,0));
-	st.hands.push_back(cardcons(jb,0));
-	st.hands.push_back(cardcons(jb,0));
-	st.hands.push_back(cardcons(ayb,0));
-	st.hands.push_back(cardcons(dy,4));
-	st.hands.push_back(cardcons(syzl,4));
+	st.hands.push_back(cardcons(tw,2));
 	st.hands.push_back(cardcons(glfz,6));
-	st.hands.push_back(cardcons(hjys,4));
 	st.fields.clear();
 	st.auras=emptyau;
-	//st.auras.ahrlq=2;
-	st.mana=5;
+	st.mana=8;
 	st.num=0;
 	return st;
 }
@@ -672,5 +665,5 @@ state sample1=sample1cons();
 int main(){
 	srand(time(0));
 	
-	solve(sample1,54);
+	solve(sample1);
 }

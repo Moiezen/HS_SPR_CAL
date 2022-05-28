@@ -337,6 +337,8 @@ int twice(state st){
 
 int tc=0;
 
+int openmode=1;
+
 pair<state,int> trans(state st,ope op){
 	tc++;
 	
@@ -359,12 +361,25 @@ pair<state,int> trans(state st,ope op){
 			break;
 		}
 		case bc:{
-			//暂时未考虑区分背刺敌方随从和背刺血量>2的友方随从，统一记作null，且认为总能这么做 
-			//用作去除时，仅考虑去除狐人老千和赤烟腾武 
+			//用作连击时，目标统一记作null，不区分敌方随从和血量>2的友方随从
+			//根据模式检定，openmode=1时认为总有敌方随从可以选择，直接通过
+			//openmode=0时认为没有敌方随从可以选择，仅考虑选择鲨鱼之灵，刀油和鬼灵匪贼，并认为它们总可以选择且总不会去除 
+			//用作去除时，仅考虑选择狐人老千和赤烟腾武 
 			flag=rmv2(st.hands,op.name,op.cost);
 			if(!flag) return badpair;
 			if(op.target==nul){
-				
+				if(openmode==0){
+					flag=false;
+					vector<minion>::iterator i=st.fields.begin();
+					while(i!=st.fields.end()){
+						if((*i).name==msyzl||(*i).name==mdy||(*i).name==mglfz){
+							flag=true;
+							break;
+						}
+						i++;
+					}
+					if(!flag) return badpair;
+				}
 			}
 			else{
 				flag=(op.target==mhrlq)||(op.target==mtw);
@@ -481,18 +496,17 @@ pair<state,int> trans(state st,ope op){
 			if(!flag) return badpair;
 			if(st.fields.size()>=mlim) flag=false;
 			else st.fields.push_back(minioncons(k2s(op.name)));
-			if(op.target==nul&&st.fields.size()==0){
+			if(op.target==nul&&st.fields.size()<=1){
 				//空场，腾武可空交 
 			}
 			else{
-				bool flag=rmv1(st.fields,op.target);
+				flag=rmv1(st.fields,op.target);
 				if(!flag) return badpair;
 			}
-			if(!flag) return badpair;
 			st.mana-=max(op.cost-st.auras.ady1*3,0);
 			if(st.mana<0) return badpair;
 			
-			st.hands.push_back(cardcons(s2k(op.target),1));
+			if(op.target!=nul) st.hands.push_back(cardcons(s2k(op.target),1));
 			st.auras.ady1=st.auras.ady2;
 			st.auras.ady2=0;
 			st.num++;
@@ -784,10 +798,13 @@ namespace autor{
 			s3=id2cost[s1];
 			if(s3=="") s3="0";
 			s4=id2zone[s1];
-			if(s4=="HAND"){
-				cout<<s2<<" "<<s3<<endl;
+			if(s4=="HAND"||s4=="DECK"){
+				//偶尔手牌会保持显示zone=DECK 
+				//cout<<s2<<" "<<s3<<" "<<s4<<endl;
 				autost.hands.push_back(cardcons(cid2kpm(s2),atoi(s3.c_str())));
 			}
+			id2zone[s1]="";
+			//防止可交易被统计两次 
 			i++;
 		}
 		

@@ -371,17 +371,17 @@ pair<state,int> trans(state st,ope op){
 			if(st.fields.size()>=mlim) flag=false;
 			else st.fields.push_back(minioncons(k2s(op.name)));
 			if(!flag) return badpair;
-			if(op.target==nul&&st.fields.size()==0){
+			if(op.target==nul&&st.fields.size()<=1){
 				//空场，腾武可空交 
 			}
 			else{
-				bool flag=rmv1(st.fields,op.target);
+				flag=rmv1(st.fields,op.target);
 				if(!flag) return badpair;
 			}
 			st.mana-=max(op.cost-st.auras.ady1*3,0);
 			if(st.mana<0) return badpair;
 			
-			st.hands.push_back(cardcons(s2k(op.target),1));
+			if(op.target!=nul) st.hands.push_back(cardcons(s2k(op.target),1));
 			st.auras.ady1=st.auras.ady2;
 			st.auras.ady2=0;
 			st.num++;
@@ -739,6 +739,9 @@ state sampleCcons(){
 	return st;
 }
 state sampleC=sampleCcons();
+
+//D 场上已有鬼的一例 无鱼胜有鱼 
+
 state sampleEcons(){
 	state st;
 	st.hands.clear();
@@ -754,12 +757,27 @@ state sampleEcons(){
 	st.hands.push_back(cardcons(jb,1));
 	st.fields.clear();
 	st.auras=emptyau;
-	//st.auras.ahrlq=2;
 	st.mana=2;
 	st.num=0;
 	return st;
 }
 state sampleE=sampleEcons();
+state sampleFcons(){
+	state st;
+	st.hands.clear();
+	st.hands.push_back(cardcons(ayb,0));
+	st.hands.push_back(cardcons(ayb,0));
+	st.hands.push_back(cardcons(tw,1));
+	st.hands.push_back(cardcons(dy,1));
+	st.hands.push_back(cardcons(glfz,6));
+	st.hands.push_back(cardcons(hjys,4));
+	st.fields.clear();
+	st.auras=emptyau;
+	st.mana=5;
+	st.num=0;
+	return st;
+}
+state sampleF=sampleFcons();
 
 int main(){
 	/*printf("%d\n",maxdmg(sample1));
@@ -774,5 +792,5 @@ int main(){
 	printf("%d\n",maxdmg(sample10));
 	printf("%d\n",maxdmg(sample11));
 	printf("%d\n",maxdmg(sample12));*/
-	printf("%d\n",maxdmg(sampleE));
+	printf("%d\n",maxdmg(sampleF));
 }
