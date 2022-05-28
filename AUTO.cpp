@@ -668,6 +668,7 @@ namespace autor{
 	map<string,string> id2cid;
 	map<string,string> id2cost;
 	map<string,string> id2zone;
+	map<string,string> id2err;
 	
 	void getafter(string s,string a,string&t){
 		//cout<<a<<endl;
@@ -722,17 +723,25 @@ namespace autor{
 	vector<string> hand;
 	state autost=emptyst;
 	void autore(){
+		//更新结构： 
+		//id->cid,cost,zone
+		//resource(mana)
+		//op->id,err
+		//此处为简便，直接令op.id->err 
+		
 		freopen("D:\\Hearthstone\\Logs\\power.log","r",stdin);
 		//freopen("power.out","w",stdout);
 		
 		id2cid.clear();
 		id2cost.clear();
 		id2zone.clear();
+		id2err.clear();
 		hand.clear();
 		
 		string s,s0;
 		string s1,s2,s3,s4;
 		string s5,resources;
+		string s6;
 		
 		int cnt=0;
 		
@@ -741,6 +750,7 @@ namespace autor{
 				id2cid.clear();
 				id2cost.clear();
 				id2zone.clear();
+				id2err.clear(); 
 				hand.clear();
 			}
 			
@@ -785,9 +795,12 @@ namespace autor{
 			
 			if(s.find("Options() - id=")!=-1) hand.clear();
 			if(s.find("Options()")!=-1&&s.find("option")!=-1){
-				s1=s2=s3=s4="";
+				s1=s6="";
 				getid(s,s1);
-				hand.push_back(s1);
+				getafter(s,"error=",s6);
+				if(s1!="") hand.push_back(s1);
+				if(s1!=""&&s6!="") id2err[s1]=s6;
+				//此处有可能存在error=项但项为空，不必区分 
 			}
 		}
 		
@@ -800,11 +813,18 @@ namespace autor{
 			s4=id2zone[s1];
 			if(s4=="HAND"||s4=="DECK"){
 				//偶尔手牌会保持显示zone=DECK 
+				//虽然很奇怪但能work 
 				//cout<<s2<<" "<<s3<<" "<<s4<<endl;
 				autost.hands.push_back(cardcons(cid2kpm(s2),atoi(s3.c_str())));
 			}
+			s6=id2err[s1];
+			if(cid2kpm(s2)==bc&&s6!=""){
+				openmode=0;
+				//模式检定，将无法直接通过bc->nul 
+			}
+			
 			id2zone[s1]="";
-			//防止可交易被统计两次 
+			//防止（可交易牌）被统计两次 
 			i++;
 		}
 		
