@@ -678,8 +678,15 @@ kpm str2k(string s){
 	if(s=="lj") return lj;
 	return lj;
 }
+int _eh=999999; 
 state sampleread(){
+	cout<<"输入y代表你已经阅读过https://github.com/Moiezen/HS_SPR_CAL上的说明，并且该.exe是直接从此处获取的"<<endl;
+	string Y;
+	cin>>Y;
+	if(Y!="y") exit(0);
+	
 	//简单的从标准输入读入
+	cin>>_eh;
 	state st;
 	st.hands.clear();
 	int n,a;
@@ -711,5 +718,5 @@ state sample1=sampleread();
 int main(){
 	srand(time(0));
 	
-	solve(sample1);
+	solve(sample1,_eh);
 }
