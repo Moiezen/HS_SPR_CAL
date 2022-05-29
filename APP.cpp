@@ -661,7 +661,53 @@ state sample1cons(){
 	st.num=0;
 	return st;
 }
-state sample1=sample1cons();
+//state sample1=sample1cons();
+kpm str2k(string s){
+	if(s=="ayb") return ayb;
+	if(s=="bc") return bc;
+	if(s=="jb") return jb;
+	if(s=="sjdf") return sjdf;
+	if(s=="hjys") return hjys;
+	if(s=="syzl") return syzl;
+	if(s=="hrlq") return hrlq;
+	if(s=="dy") return dy;
+	if(s=="tw") return tw;
+	if(s=="glfz") return glfz;
+	if(s=="ljfs") return ljfs;
+	if(s=="ljsc") return ljsc;
+	if(s=="lj") return lj;
+	return lj;
+}
+state sampleread(){
+	//简单的从标准输入读入
+	state st;
+	st.hands.clear();
+	int n,a;
+	string s;
+	cin>>n;
+	while(n--){
+		cin>>s>>a;
+		st.hands.push_back(cardcons(str2k(s),a));
+	}
+	cin>>n;
+	st.fields.clear();
+	while(n--){
+		cin>>s;
+		st.fields.push_back(minioncons(k2s(str2k(s))));
+		//懒得写str2s了 
+	}
+	st.auras=emptyau;
+	cin>>st.auras.asjdf;
+	cin>>st.auras.ahrlq;
+	cin>>st.auras.ady1;
+	cin>>st.auras.ady2;
+	st.mana=0;
+	cin>>st.mana;
+	st.num=0;
+	cin>>st.num;
+	return st;
+}
+state sample1=sampleread();
 int main(){
 	srand(time(0));
 	
