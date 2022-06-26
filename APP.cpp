@@ -601,64 +601,75 @@ syn syncons(pair<state,int> a,double b,opes c){
 	d.os=c;
 	return d;
 }
-bool operator<(syn a,syn b){
-	return a.pri<b.pri;
+
+int tlim,tbegin;
+
+int eh,done,curdmg;
+opes curos;
+
+void solve_(syn q){
+	if(q.pa.second>=eh){
+		output(q.os,q.pa.second);
+		done=1;
+		return;
+	}
+	if(time(0)>tbegin+tlim){
+		done=1;
+		return;
+	}
+	if(q.pa.second>=curdmg){
+		curos=q.os;
+		curdmg=q.pa.second;
+	}
+	vector<card> C=q.pa.first.hands;
+	vector<minion> T=q.pa.first.fields;
+	T.push_back(minioncons(dfyx));
+	//T.push_back(minioncons(dfsc));
+	//以上提过不区分背刺敌方随从和背刺血量>2的友方随从，此略 
+	T.push_back(minioncons(nul));
+	
+	vector<card>::iterator i=C.begin();
+	while(i!=C.end()){
+		vector<minion>::iterator j=T.begin();
+		while(j!=T.end()){
+			ope o=opecons((*i).cost,(*i).name,(*j).name);
+			pair<state,int> p=trans(q.pa.first,o);
+			opes os=q.os;os.opes.push_back(o);
+			solve_(syncons(make_pair(p.first,q.pa.second+p.second),q.pri-1.0,os));
+			if(done==1) return;
+			j++;
+		}
+		i++;
+	}
 }
 
-int tlim=999999;
-
-priority_queue<syn> Q;
-
-void solve(state st,int eh=999999){
-	opes curos=emptyos;
-	int curdmg=0;
+void solve(state st,int _eh=999999,int _tlim=999999){
+	eh=_eh;
+	done=curdmg=0;
+	curos=emptyos;
 	
-	int tbegin=time(0);
+	tlim=_tlim;
+	tbegin=time(0);
 	
-	while(!Q.empty()) Q.pop();
-	Q.push(syncons(make_pair(st,0),0,emptyos));
-	while(time(0)<=tbegin+tlim&&!Q.empty()){
-		syn q=Q.top();Q.pop();
-		if(q.pa.second>=eh){
-			output(q.os,q.pa.second);
-			return;
-		}
-		if(q.pa.second>=curdmg){
-			curos=q.os;
-			curdmg=q.pa.second;
-		}
-		
-		vector<card> C=q.pa.first.hands;
-		vector<minion> T=q.pa.first.fields;
-		T.push_back(minioncons(dfyx));
-		//T.push_back(minioncons(dfsc));
-		//以上提过不区分背刺敌方随从和背刺血量>2的友方随从，此略 
-		T.push_back(minioncons(nul));
-		
-		vector<card>::iterator i=C.begin();
-		while(i!=C.end()){
-			vector<minion>::iterator j=T.begin();
-			while(j!=T.end()){
-				ope o=opecons((*i).cost,(*i).name,(*j).name);
-				pair<state,int> p=trans(q.pa.first,o);
-				opes os=q.os;os.opes.push_back(o);
-				Q.push(syncons(make_pair(p.first,q.pa.second+p.second),q.pri-1.0,os));
-				j++;
-			}
-			i++;
-		}
-	}
+	solve_(syncons(make_pair(st,0),0,emptyos));
+	
 	output(curos,curdmg);
 }
 state sample1cons(){
 	state st;
 	st.hands.clear();
+	st.hands.push_back(cardcons(jb,0));
+	st.hands.push_back(cardcons(sjdf,0));
+	st.hands.push_back(cardcons(hjys,4));
+	st.hands.push_back(cardcons(dy,4));
 	st.hands.push_back(cardcons(tw,2));
+	st.hands.push_back(cardcons(glfz,6));
 	st.hands.push_back(cardcons(glfz,6));
 	st.fields.clear();
 	st.auras=emptyau;
-	st.mana=8;
+	st.mana=10;
 	st.num=0;
+	return st;
 	return st;
 }
 //state sample1=sample1cons();
@@ -678,7 +689,8 @@ kpm str2k(string s){
 	if(s=="lj") return lj;
 	return lj;
 }
-int _eh=999999; 
+int __eh=999999;
+int __tlim=999999;
 state sampleread(){
 	cout<<"输入y代表你已经阅读过https://github.com/Moiezen/HS_SPR_CAL上的说明，并且该.exe是直接从此处获取的"<<endl;
 	string Y;
@@ -686,7 +698,7 @@ state sampleread(){
 	if(Y!="y") exit(0);
 	
 	//简单的从标准输入读入
-	cin>>_eh;
+	cin>>__eh;
 	state st;
 	st.hands.clear();
 	int n,a;
@@ -718,5 +730,5 @@ state sample1=sampleread();
 int main(){
 	srand(time(0));
 	
-	solve(sample1,_eh);
+	solve(sample1,__eh,__tlim);
 }
