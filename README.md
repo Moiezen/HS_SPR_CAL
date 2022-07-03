@@ -4,11 +4,15 @@ Hearthstone Spectral Pillager Rogue Calculator
 
 使用说明
 
-**新增** UI.cpp应该是比较可用的带UI版本 **其他复杂的输入格式可以暂时忽略** 编译结果UI.exe同时上传 和APP.exe一样不对任何后果负责 如果不信任请自行生成编译结果 且能和AUTO.cpp一样自动读取 手动修改路径即可（只需要\Logs\power.log前面的部分）
+**新增** UI.cpp应该是比较可用的带UI版本 **其他复杂的输入格式可以暂时忽略** 编译结果UI.exe同时上传 和APP.exe一样不对任何后果负责 如果不信任请自行生成编译结果
+
+且和APP.cpp一样能修改目标eh和时限tlim
+
+且和AUTO.cpp一样能自动读取 手动修改路径即可（只需要\Logs\power.log前面的部分）
 
 BF.cpp输出最大伤害
 
-APP.cpp可以输出最大伤害和方案，且可以设置：伤害超出特定值（修改int eh=）或者到达时间限制（修改int tlim=）就立即输出
+APP.cpp可以输出最大伤害和方案，且可以设置：伤害超出目标（修改int eh=）或者到达时间限制（修改int tlim=）就立即输出
 
 以上两者需要手动修改samplecons()内的代码以设置局面
 
