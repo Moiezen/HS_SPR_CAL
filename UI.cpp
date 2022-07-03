@@ -1230,8 +1230,6 @@ namespace autor{
 		
 		autost.mana=atoi(resources.c_str());
 		
-		cout<<lines<<endl;
-		
 		fclose(stdin);
 	}
 }
@@ -1242,7 +1240,7 @@ state autoread(string s){
 }
 
 int main(){
-	//ShowWindow(GetForegroundWindow(),0);
+	ShowWindow(GetForegroundWindow(),0);
 	
 	init();
 	attention();
