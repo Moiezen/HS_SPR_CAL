@@ -4,6 +4,8 @@ Hearthstone Spectral Pillager Rogue Calculator
 
 使用说明
 
+*新增** UI.cpp应该是比较可用的UI版本 其他复杂的输入方式可以忽略了
+
 BF.cpp输出最大伤害
 
 APP.cpp可以输出最大伤害和方案，且可以设置：伤害超出特定值（修改int eh=）或者到达时间限制（修改int tlim=）就立即输出
