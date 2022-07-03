@@ -732,6 +732,38 @@ color_t bdc=EGERGB(0,0,0);
 color_t slc=EGERGB(0,255,0);
 color_t txc=EGERGB(0,0,255);
 
+void init(){
+	initgraph(W,H);
+	setb(bgc);
+}
+
+rect _all=rectcons(0,0,1280,640);
+rect _start=rectcons(1060,560,1180,640);
+
+void drawatt(){
+	textr(_all,txc,"点击开始使用，代表你已经阅读过https://github.com/Moiezen/HS_SPR_CAL的README.md，并且该UI.exe是直接获取的最新版本");
+	
+	barr(_start,bdc);
+	barr(cutedge(_start,1),bgc);
+	textr(_start,txc,"开始使用");
+}
+
+void attention(){
+	drawatt();
+	refresh;
+	
+	mouse_msg e={0};
+	while(true){
+		while(mousemsg()){
+            e=getmouse();
+        }
+        
+        if(e.is_down()&&inrect(e.x,e.y,_start)){
+        	return;
+		}
+	}
+}
+
 void drawdom(domain a,bool sl){
 	rect r=a.r;
 	
@@ -776,7 +808,7 @@ int manaid;
 int cardsdomid[10];
 int ansdomid;
 
-string n1[14]={"鱼灵","老千","刀油","鬼灵","腾武","暗步","背刺","硬币","伺机","幻药","随从","法术","垃圾",""}; 
+string n1[14]={"鱼灵","老千","刀油","鬼灵","腾武","暗步","背刺","硬币","伺机","幻药","随从","法术","垃圾",""};
 
 void getdoms(){
 	doms.clear();
@@ -837,10 +869,8 @@ state doms2st(vector<domain> a){
 	return st;
 }
 
-void init(){
+void loaddoms(){
 	setcaption("暗歌是猪");
-	initgraph(W,H);
-	setb(bgc);
 	vector<domain>::iterator i=doms.begin();
 	while(i!=doms.end()){
 		drawdom(*i,0);
@@ -918,14 +948,16 @@ void click(int x,int y){
 int main(){
 	ShowWindow(GetForegroundWindow(),0);
 	
-	getdoms();
 	init();
+	attention();
+	cleardevice();
+	
+	getdoms();
+	loaddoms();
 	refresh;
 
 	mouse_msg e={0};
 	int last=0;
-	setrendermode(RENDER_MANUAL);
-	
 	while(true){
 		while(mousemsg()){
             e=getmouse();
@@ -936,7 +968,7 @@ int main(){
 			if(last==0){
 				//避免长点 
 				click(e.x,e.y);
-				delay_ms(0);
+				refresh;
 			}
         	last=1;
 		}
