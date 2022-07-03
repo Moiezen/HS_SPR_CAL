@@ -4,9 +4,7 @@ Hearthstone Spectral Pillager Rogue Calculator
 
 使用说明
 
-**新增** UI.cpp应该是比较可用的带UI版本 **其他复杂的输入格式可以暂时忽略** 编译结果UI.exe同时上传 和APP.exe一样不对任何后果负责 如果不信任请自行生成编译结果
-
-UI.cpp已经能和AUTO.cpp一样自动读取了 手动修改路径即可（只需要\Logs\power.log前面的部分）
+**新增** UI.cpp应该是比较可用的带UI版本 **其他复杂的输入格式可以暂时忽略** 编译结果UI.exe同时上传 和APP.exe一样不对任何后果负责 如果不信任请自行生成编译结果 且能和AUTO.cpp一样自动读取 手动修改路径即可（只需要\Logs\power.log前面的部分）
 
 BF.cpp输出最大伤害
 
