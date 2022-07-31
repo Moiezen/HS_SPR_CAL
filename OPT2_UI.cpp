@@ -1,4 +1,3 @@
-#include <windows.h>
 #include <bits/stdc++.h>
 #include <graphics.h>
 #define rep(i,l,r) for(int i=l;i<=r;i++)
@@ -310,7 +309,7 @@ ope opecons(int a,kpm b,scm c){
 	d.target=c;
 	return d;
 }
-bool rmv1(minion*a,int&n,scm b){
+bool rmv1(minion* a,int& n,scm b){
 	rep(i,0,n-1){
 		if(a[i].name==b){
 			rep(j,i+1,n-1) a[j-1]=a[j];
@@ -320,7 +319,7 @@ bool rmv1(minion*a,int&n,scm b){
 	}
 	return false;
 }
-bool rmv2(card*a,int&n,kpm b,int c){
+bool rmv2(card* a,int& n,kpm b,int c){
 	rep(i,0,n-1){
 		if(a[i].name==b&&a[i].cost==c){
 			rep(j,i+1,n-1) a[j-1]=a[j];
@@ -1008,27 +1007,28 @@ int ehdomid;
 int tlimdomid;
 int lkdomid;
 int modedomid;
+int numdomid;
+int asjdfdomid;
+int ahrlqdomid;
+int ady1domid;
+int ady2domid;
 
 domain id2dom(int id){
-	vector<domain>::iterator i=doms.begin();
-	while(i!=doms.end()){
-		if(id==(*i).id){
-			return (*i);
+	for(auto i:doms){
+		if(id==i.id){
+			return i;
 			break;
 		}
-		i++;
 	}
 	return nodomain;
 }
 
 void follow(domain a){
-	vector<domain>::iterator i=doms.begin();
-	while(i!=doms.end()){
-		if(a.id==(*i).id){
-			(*i)=a;
+	for(auto& i:doms){
+		if(a.id==i.id){
+			i=a;
 			break;
 		}
-		i++;
 	}
 }
 
@@ -1061,8 +1061,18 @@ void getdoms(){
 	//42
 	addd(60,40,120,80,lk2,"读取",0,43);
 	//43
-	addd(0,80,120,120,vxb,"背刺可用",1,modedomid=44);
+	addd(200,400,320,440,vxb,"背刺可用",1,modedomid=44);
 	//44
+	addd(360,400,480,440,vx,"已用牌数",0,numdomid=45);
+	//45
+	addd(200,480,320,520,vx,"伺机层数",0,asjdfdomid=46);
+	//46
+	addd(360,480,480,520,vx,"老千层数",0,ahrlqdomid=47);
+	//47
+	addd(520,480,640,520,vx,"刀一层数",0,ady1domid=48);
+	//48
+	addd(680,480,800,520,vx,"刀二层数",0,ady2domid=49);
+	//49
 }
 
 kpm str2k(string s){
@@ -1106,14 +1116,18 @@ state doms2st(vector<domain> a){
 		if(tmp.name!="清除") st.fields[st.F++]=minioncons(k2s(str2k(tmp.name))); 
 	}
 	
-	st.auras=emptyau;
+	st.auras.asjdf=min(id2dom(asjdfdomid).x,sjdflim);
+	st.auras.ahrlq=min(id2dom(ahrlqdomid).x,hrlqlim);
+	st.auras.ady1 =min(id2dom( ady1domid).x, dy1lim);
+	st.auras.ady2 =min(id2dom( ady2domid).x, dy2lim);
 	st.mana=id2dom(manadomid).x;
-	st.num=0;
+	st. num=id2dom( numdomid).x;
 	return st;
 }
 
 void st2doms(state st){
 	domain tmp;
+	
 	rep(i,0,st.H-1){
 		tmp=id2dom(cardsdomid[i]);
 		tmp.name=k2str(st.hands[i].name);
@@ -1138,9 +1152,25 @@ void st2doms(state st){
 		follow(tmp);
 	}
 	
-	domain _mana=id2dom(manadomid);
-	_mana.x=st.mana;
-	follow(_mana);
+	tmp=id2dom(asjdfdomid);
+	tmp.x=st.auras.asjdf;
+	follow(tmp);
+	tmp=id2dom(ahrlqdomid);
+	tmp.x=st.auras.ahrlq;
+	follow(tmp);
+	tmp=id2dom(ady1domid);
+	tmp.x=st.auras.ady1;
+	follow(tmp);
+	tmp=id2dom(ady2domid);
+	tmp.x=st.auras.ady2;
+	follow(tmp);
+	
+	tmp=id2dom(manadomid);
+	tmp.x=st.mana;
+	follow(tmp);
+	tmp=id2dom(numdomid);
+	tmp.x=st.num;
+	follow(tmp);
 }
 
 void drawdom(domain a,bool sl){
@@ -1200,10 +1230,8 @@ void drawdom(domain a,bool sl){
 
 void loaddoms(){
 	setcaption("暗歌是猪");
-	vector<domain>::iterator i=doms.begin();
-	while(i!=doms.end()){
-		drawdom(*i,0);
-		i++;
+	for(auto i:doms){
+		drawdom(i,0);
 	}
 	selected=nodomain;
 }
@@ -1218,13 +1246,11 @@ state autoread(string s);
 
 void click(int x,int y){
 	domain toselect=nodomain;
-	vector<domain>::iterator i=doms.begin();
-	while(i!=doms.end()){
-		if(indom(x,y,*i)){
-			toselect=*i;
+	for(auto i:doms){
+		if(indom(x,y,i)){
+			toselect=i;
 			break;
 		}
-		i++;
 	}
 	switch(toselect.type){
 		case nodomt:{
@@ -1450,9 +1476,7 @@ namespace autor{
 		}
 		
 		secrets=0;
-		vector<string>::iterator i=hand.begin();
-		while(i!=hand.end()){
-			s1=*i;
+		for(auto s1:hand){
 			s2=id2cid[s1];
 			s3=id2cost[s1];
 			if(s3=="") s3="0";
@@ -1471,7 +1495,6 @@ namespace autor{
 			
 			id2zone[s1]="";
 			//防止（可交易牌）被统计两次 
-			i++;
 		}
 		
 		autost.mana=atoi(resources.c_str());
