@@ -4,9 +4,7 @@ Hearthstone Spectral Pillager Rogue Calculator
 
 使用说明
 
-**新增**
-
-已经整合成了多文件版本，请使用cmake以得到可执行文件
+**已经整合成了多文件版本，请使用cmake以得到可执行文件**
 
 </br>
 
