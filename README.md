@@ -6,6 +6,8 @@ Hearthstone Spectral Pillager Rogue Calculator
 
 **已经整合成了多文件版本，请使用cmake以得到可执行文件**
 
+/buildw目录有Windows的可执行版本HSSPRCAL.exe，结合fml.txt使用
+
 </br>
 
 当前考虑范围：
