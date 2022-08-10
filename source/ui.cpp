@@ -1,5 +1,6 @@
 #include "solve.h"
 #include "pre.h"
+#include "auto.h"
 #include "ui.h"
 
 #include <graphics.h>
@@ -343,7 +344,12 @@ bool legalcn4vn(string s) {
 	return false;
 }
 
-state autoread(string s);
+void passans(string _s) {
+	domain ans = id2dom(ansdomid);
+	ans.name = _s;
+	drawdom(ans, 0);
+	follow(ans);
+}
 
 void click(int x, int y) {
 	domain toselect = nodomain;

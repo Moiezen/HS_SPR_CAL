@@ -14,13 +14,13 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
 	"source/trans.cpp" "source/trans.h"
 	"source/output.cpp" "source/output.h"
 	"source/formula.cpp" "source/formula.h"
-	"source/solve.cpp" "source/solve.h"
+	"source/solve_refresh.cpp" "source/solve_refresh.h"
 	"source/gen.cpp" "source/gen.h"
 	"source/pre.cpp" "source/pre.h"
 	"source/auto.h" "source/auto.cpp"
 	"source/ui.cpp" "source/ui.h"
 	"source/HSSPRCAL_W.cpp"
-   )
+  )
 endif()
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")

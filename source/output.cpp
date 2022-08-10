@@ -15,6 +15,7 @@ string o2s(ope o) {
 
 string output(opes o, int d, int u, ll t) {
 	string s = "";
+	if (u == -1) s += "(正在计算)\n";
 	if (u == 0) s += "(穷尽掐断)\n";
 	if (u == 1) s += "(达标掐断)\n";
 	if (u == 2) s += "(时限掐断)\n";
