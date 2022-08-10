@@ -1,0 +1,3 @@
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles/HSSPRCAL.dir

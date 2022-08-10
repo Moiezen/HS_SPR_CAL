@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/HSSPRCAL.dir/basic.cpp.o CMakeFiles/HSSPRCAL.dir/offer.cpp.o CMakeFiles/HSSPRCAL.dir/trans.cpp.o CMakeFiles/HSSPRCAL.dir/output.cpp.o CMakeFiles/HSSPRCAL.dir/formula.cpp.o CMakeFiles/HSSPRCAL.dir/solve.cpp.o CMakeFiles/HSSPRCAL.dir/gen.cpp.o CMakeFiles/HSSPRCAL.dir/pre.cpp.o CMakeFiles/HSSPRCAL.dir/HSSPRCAL_L.cpp.o  -o HSSPRCAL 
