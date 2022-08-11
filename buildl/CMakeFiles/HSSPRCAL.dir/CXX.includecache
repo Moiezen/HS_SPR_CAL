@@ -6,19 +6,73 @@
 
 #IncludeRegexTransform: 
 
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/HSSPRCAL_L.cpp
+basic.h
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/basic.h
+offer.h
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/offer.h
+trans.h
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/trans.h
+output.h
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/output.h
+formula.h
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/formula.h
+solve.h
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/solve.h
+gen.h
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/gen.h
+pre.h
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/pre.h
+
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/basic.cpp
+basic.h
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/basic.h
+
 /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/basic.h
 bits/stdc++.h
 -
+
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/formula.cpp
+formula.h
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/formula.h
 
 /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/formula.h
 basic.h
 /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/basic.h
 
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/gen.cpp
+gen.h
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/gen.h
+
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/gen.h
+basic.h
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/basic.h
+
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/offer.cpp
+offer.h
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/offer.h
+
 /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/offer.h
 basic.h
 /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/basic.h
 
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/output.cpp
+output.h
 /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/output.h
+
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/output.h
+basic.h
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/basic.h
+
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/pre.cpp
+formula.h
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/formula.h
+solve.h
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/solve.h
+gen.h
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/gen.h
+
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/pre.h
 basic.h
 /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/basic.h
 
@@ -39,6 +93,10 @@ ui.h
 /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/solve.h
 basic.h
 /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/basic.h
+
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/trans.cpp
+trans.h
+/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/trans.h
 
 /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/trans.h
 basic.h
