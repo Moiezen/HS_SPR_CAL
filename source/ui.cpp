@@ -344,7 +344,7 @@ bool legalcn4vn(string s) {
 	return false;
 }
 
-void passans(string _s) {
+void refreshans(string _s) {
 	domain ans = id2dom(ansdomid);
 	ans.name = _s;
 	drawdom(ans, 0);
@@ -440,6 +440,44 @@ void click(int x, int y) {
 	}
 }
 
+state initstcons() {
+	state a;
+	a.H = 10;
+	a.hands[0] = cardcons(jb, 0);
+	a.hands[1] = cardcons(jb, 0);
+	a.hands[2] = cardcons(jb, 0);
+	a.hands[3] = cardcons(ayb, 0);
+	a.hands[4] = cardcons(sjdf, 0);
+	a.hands[5] = cardcons(hrlq, 2);
+	a.hands[6] = cardcons(dy, 4);
+	a.hands[7] = cardcons(tw, 2);
+	a.hands[8] = cardcons(glfz, 6);
+	a.hands[9] = cardcons(hjys, 4);
+	srand(time(0));
+	random_shuffle(a.hands, a.hands + 10);
+	a.F = 0;
+	rep(i, 0, 3) a.auras[i] = 0;
+	a.mana = 10;
+	a.num = 0;
+	return a;
+}
+state initst = initstcons();
+
+void loadsample() {
+	st2doms(initst);
+	rep(i, 0, 9) drawdom(id2dom(cardsdomid[i]), 0);
+	drawdom(id2dom(manadomid), 0);
+	domain a;
+	a = id2dom(tlimdomid);
+	a.x = 999;
+	follow(a);
+	drawdom(a, 0);
+	a = id2dom(ehdomid);
+	a.x = 60;
+	follow(a);
+	drawdom(a, 0);
+}
+
 void ui_main() {
 	Load();
 
@@ -451,6 +489,9 @@ void ui_main() {
 
 	getdoms();
 	loaddoms();
+
+	loadsample();
+
 	refresh;
 
 	mouse_msg e = { 0 };

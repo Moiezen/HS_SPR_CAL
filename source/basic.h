@@ -77,8 +77,8 @@ struct quiz {
 	int qnd;
 };
 quiz emptyqcons();
-extern vector<quiz> quizs;
 
-const int clsbd = 10;
+const int dmgbd = 10;
+extern vector<quiz> quizs;
 extern vector<opes> cls;
 extern vector<opes> allcls;

@@ -2,5 +2,5 @@
 
 #include "basic.h"
 
-void passans(string s);
+void refreshans(string s);
 void ui_main();

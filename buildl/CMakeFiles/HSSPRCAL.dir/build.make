@@ -46,7 +46,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /mnt/c/Users/Moiez/Desktop/HSSPRCAL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/Moiez/Desktop/HSSPRCAL/build
+CMAKE_BINARY_DIR = /mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl
 
 # Include any dependencies generated for this target.
 include CMakeFiles/HSSPRCAL.dir/depend.make
@@ -57,150 +57,150 @@ include CMakeFiles/HSSPRCAL.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/HSSPRCAL.dir/flags.make
 
-CMakeFiles/HSSPRCAL.dir/basic.cpp.o: CMakeFiles/HSSPRCAL.dir/flags.make
-CMakeFiles/HSSPRCAL.dir/basic.cpp.o: ../basic.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/HSSPRCAL.dir/basic.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HSSPRCAL.dir/basic.cpp.o -c /mnt/c/Users/Moiez/Desktop/HSSPRCAL/basic.cpp
+CMakeFiles/HSSPRCAL.dir/source/basic.cpp.o: CMakeFiles/HSSPRCAL.dir/flags.make
+CMakeFiles/HSSPRCAL.dir/source/basic.cpp.o: ../source/basic.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/HSSPRCAL.dir/source/basic.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HSSPRCAL.dir/source/basic.cpp.o -c /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/basic.cpp
 
-CMakeFiles/HSSPRCAL.dir/basic.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HSSPRCAL.dir/basic.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Moiez/Desktop/HSSPRCAL/basic.cpp > CMakeFiles/HSSPRCAL.dir/basic.cpp.i
+CMakeFiles/HSSPRCAL.dir/source/basic.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HSSPRCAL.dir/source/basic.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/basic.cpp > CMakeFiles/HSSPRCAL.dir/source/basic.cpp.i
 
-CMakeFiles/HSSPRCAL.dir/basic.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HSSPRCAL.dir/basic.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Moiez/Desktop/HSSPRCAL/basic.cpp -o CMakeFiles/HSSPRCAL.dir/basic.cpp.s
+CMakeFiles/HSSPRCAL.dir/source/basic.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HSSPRCAL.dir/source/basic.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/basic.cpp -o CMakeFiles/HSSPRCAL.dir/source/basic.cpp.s
 
-CMakeFiles/HSSPRCAL.dir/offer.cpp.o: CMakeFiles/HSSPRCAL.dir/flags.make
-CMakeFiles/HSSPRCAL.dir/offer.cpp.o: ../offer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/HSSPRCAL.dir/offer.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HSSPRCAL.dir/offer.cpp.o -c /mnt/c/Users/Moiez/Desktop/HSSPRCAL/offer.cpp
+CMakeFiles/HSSPRCAL.dir/source/offer.cpp.o: CMakeFiles/HSSPRCAL.dir/flags.make
+CMakeFiles/HSSPRCAL.dir/source/offer.cpp.o: ../source/offer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/HSSPRCAL.dir/source/offer.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HSSPRCAL.dir/source/offer.cpp.o -c /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/offer.cpp
 
-CMakeFiles/HSSPRCAL.dir/offer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HSSPRCAL.dir/offer.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Moiez/Desktop/HSSPRCAL/offer.cpp > CMakeFiles/HSSPRCAL.dir/offer.cpp.i
+CMakeFiles/HSSPRCAL.dir/source/offer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HSSPRCAL.dir/source/offer.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/offer.cpp > CMakeFiles/HSSPRCAL.dir/source/offer.cpp.i
 
-CMakeFiles/HSSPRCAL.dir/offer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HSSPRCAL.dir/offer.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Moiez/Desktop/HSSPRCAL/offer.cpp -o CMakeFiles/HSSPRCAL.dir/offer.cpp.s
+CMakeFiles/HSSPRCAL.dir/source/offer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HSSPRCAL.dir/source/offer.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/offer.cpp -o CMakeFiles/HSSPRCAL.dir/source/offer.cpp.s
 
-CMakeFiles/HSSPRCAL.dir/trans.cpp.o: CMakeFiles/HSSPRCAL.dir/flags.make
-CMakeFiles/HSSPRCAL.dir/trans.cpp.o: ../trans.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/HSSPRCAL.dir/trans.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HSSPRCAL.dir/trans.cpp.o -c /mnt/c/Users/Moiez/Desktop/HSSPRCAL/trans.cpp
+CMakeFiles/HSSPRCAL.dir/source/trans.cpp.o: CMakeFiles/HSSPRCAL.dir/flags.make
+CMakeFiles/HSSPRCAL.dir/source/trans.cpp.o: ../source/trans.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/HSSPRCAL.dir/source/trans.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HSSPRCAL.dir/source/trans.cpp.o -c /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/trans.cpp
 
-CMakeFiles/HSSPRCAL.dir/trans.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HSSPRCAL.dir/trans.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Moiez/Desktop/HSSPRCAL/trans.cpp > CMakeFiles/HSSPRCAL.dir/trans.cpp.i
+CMakeFiles/HSSPRCAL.dir/source/trans.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HSSPRCAL.dir/source/trans.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/trans.cpp > CMakeFiles/HSSPRCAL.dir/source/trans.cpp.i
 
-CMakeFiles/HSSPRCAL.dir/trans.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HSSPRCAL.dir/trans.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Moiez/Desktop/HSSPRCAL/trans.cpp -o CMakeFiles/HSSPRCAL.dir/trans.cpp.s
+CMakeFiles/HSSPRCAL.dir/source/trans.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HSSPRCAL.dir/source/trans.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/trans.cpp -o CMakeFiles/HSSPRCAL.dir/source/trans.cpp.s
 
-CMakeFiles/HSSPRCAL.dir/output.cpp.o: CMakeFiles/HSSPRCAL.dir/flags.make
-CMakeFiles/HSSPRCAL.dir/output.cpp.o: ../output.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/HSSPRCAL.dir/output.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HSSPRCAL.dir/output.cpp.o -c /mnt/c/Users/Moiez/Desktop/HSSPRCAL/output.cpp
+CMakeFiles/HSSPRCAL.dir/source/output.cpp.o: CMakeFiles/HSSPRCAL.dir/flags.make
+CMakeFiles/HSSPRCAL.dir/source/output.cpp.o: ../source/output.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/HSSPRCAL.dir/source/output.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HSSPRCAL.dir/source/output.cpp.o -c /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/output.cpp
 
-CMakeFiles/HSSPRCAL.dir/output.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HSSPRCAL.dir/output.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Moiez/Desktop/HSSPRCAL/output.cpp > CMakeFiles/HSSPRCAL.dir/output.cpp.i
+CMakeFiles/HSSPRCAL.dir/source/output.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HSSPRCAL.dir/source/output.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/output.cpp > CMakeFiles/HSSPRCAL.dir/source/output.cpp.i
 
-CMakeFiles/HSSPRCAL.dir/output.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HSSPRCAL.dir/output.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Moiez/Desktop/HSSPRCAL/output.cpp -o CMakeFiles/HSSPRCAL.dir/output.cpp.s
+CMakeFiles/HSSPRCAL.dir/source/output.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HSSPRCAL.dir/source/output.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/output.cpp -o CMakeFiles/HSSPRCAL.dir/source/output.cpp.s
 
-CMakeFiles/HSSPRCAL.dir/formula.cpp.o: CMakeFiles/HSSPRCAL.dir/flags.make
-CMakeFiles/HSSPRCAL.dir/formula.cpp.o: ../formula.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/HSSPRCAL.dir/formula.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HSSPRCAL.dir/formula.cpp.o -c /mnt/c/Users/Moiez/Desktop/HSSPRCAL/formula.cpp
+CMakeFiles/HSSPRCAL.dir/source/formula.cpp.o: CMakeFiles/HSSPRCAL.dir/flags.make
+CMakeFiles/HSSPRCAL.dir/source/formula.cpp.o: ../source/formula.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/HSSPRCAL.dir/source/formula.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HSSPRCAL.dir/source/formula.cpp.o -c /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/formula.cpp
 
-CMakeFiles/HSSPRCAL.dir/formula.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HSSPRCAL.dir/formula.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Moiez/Desktop/HSSPRCAL/formula.cpp > CMakeFiles/HSSPRCAL.dir/formula.cpp.i
+CMakeFiles/HSSPRCAL.dir/source/formula.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HSSPRCAL.dir/source/formula.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/formula.cpp > CMakeFiles/HSSPRCAL.dir/source/formula.cpp.i
 
-CMakeFiles/HSSPRCAL.dir/formula.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HSSPRCAL.dir/formula.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Moiez/Desktop/HSSPRCAL/formula.cpp -o CMakeFiles/HSSPRCAL.dir/formula.cpp.s
+CMakeFiles/HSSPRCAL.dir/source/formula.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HSSPRCAL.dir/source/formula.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/formula.cpp -o CMakeFiles/HSSPRCAL.dir/source/formula.cpp.s
 
-CMakeFiles/HSSPRCAL.dir/solve.cpp.o: CMakeFiles/HSSPRCAL.dir/flags.make
-CMakeFiles/HSSPRCAL.dir/solve.cpp.o: ../solve.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/HSSPRCAL.dir/solve.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HSSPRCAL.dir/solve.cpp.o -c /mnt/c/Users/Moiez/Desktop/HSSPRCAL/solve.cpp
+CMakeFiles/HSSPRCAL.dir/source/solve.cpp.o: CMakeFiles/HSSPRCAL.dir/flags.make
+CMakeFiles/HSSPRCAL.dir/source/solve.cpp.o: ../source/solve.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/HSSPRCAL.dir/source/solve.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HSSPRCAL.dir/source/solve.cpp.o -c /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/solve.cpp
 
-CMakeFiles/HSSPRCAL.dir/solve.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HSSPRCAL.dir/solve.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Moiez/Desktop/HSSPRCAL/solve.cpp > CMakeFiles/HSSPRCAL.dir/solve.cpp.i
+CMakeFiles/HSSPRCAL.dir/source/solve.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HSSPRCAL.dir/source/solve.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/solve.cpp > CMakeFiles/HSSPRCAL.dir/source/solve.cpp.i
 
-CMakeFiles/HSSPRCAL.dir/solve.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HSSPRCAL.dir/solve.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Moiez/Desktop/HSSPRCAL/solve.cpp -o CMakeFiles/HSSPRCAL.dir/solve.cpp.s
+CMakeFiles/HSSPRCAL.dir/source/solve.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HSSPRCAL.dir/source/solve.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/solve.cpp -o CMakeFiles/HSSPRCAL.dir/source/solve.cpp.s
 
-CMakeFiles/HSSPRCAL.dir/gen.cpp.o: CMakeFiles/HSSPRCAL.dir/flags.make
-CMakeFiles/HSSPRCAL.dir/gen.cpp.o: ../gen.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/HSSPRCAL.dir/gen.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HSSPRCAL.dir/gen.cpp.o -c /mnt/c/Users/Moiez/Desktop/HSSPRCAL/gen.cpp
+CMakeFiles/HSSPRCAL.dir/source/gen.cpp.o: CMakeFiles/HSSPRCAL.dir/flags.make
+CMakeFiles/HSSPRCAL.dir/source/gen.cpp.o: ../source/gen.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/HSSPRCAL.dir/source/gen.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HSSPRCAL.dir/source/gen.cpp.o -c /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/gen.cpp
 
-CMakeFiles/HSSPRCAL.dir/gen.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HSSPRCAL.dir/gen.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Moiez/Desktop/HSSPRCAL/gen.cpp > CMakeFiles/HSSPRCAL.dir/gen.cpp.i
+CMakeFiles/HSSPRCAL.dir/source/gen.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HSSPRCAL.dir/source/gen.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/gen.cpp > CMakeFiles/HSSPRCAL.dir/source/gen.cpp.i
 
-CMakeFiles/HSSPRCAL.dir/gen.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HSSPRCAL.dir/gen.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Moiez/Desktop/HSSPRCAL/gen.cpp -o CMakeFiles/HSSPRCAL.dir/gen.cpp.s
+CMakeFiles/HSSPRCAL.dir/source/gen.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HSSPRCAL.dir/source/gen.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/gen.cpp -o CMakeFiles/HSSPRCAL.dir/source/gen.cpp.s
 
-CMakeFiles/HSSPRCAL.dir/pre.cpp.o: CMakeFiles/HSSPRCAL.dir/flags.make
-CMakeFiles/HSSPRCAL.dir/pre.cpp.o: ../pre.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/HSSPRCAL.dir/pre.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HSSPRCAL.dir/pre.cpp.o -c /mnt/c/Users/Moiez/Desktop/HSSPRCAL/pre.cpp
+CMakeFiles/HSSPRCAL.dir/source/pre.cpp.o: CMakeFiles/HSSPRCAL.dir/flags.make
+CMakeFiles/HSSPRCAL.dir/source/pre.cpp.o: ../source/pre.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/HSSPRCAL.dir/source/pre.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HSSPRCAL.dir/source/pre.cpp.o -c /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/pre.cpp
 
-CMakeFiles/HSSPRCAL.dir/pre.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HSSPRCAL.dir/pre.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Moiez/Desktop/HSSPRCAL/pre.cpp > CMakeFiles/HSSPRCAL.dir/pre.cpp.i
+CMakeFiles/HSSPRCAL.dir/source/pre.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HSSPRCAL.dir/source/pre.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/pre.cpp > CMakeFiles/HSSPRCAL.dir/source/pre.cpp.i
 
-CMakeFiles/HSSPRCAL.dir/pre.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HSSPRCAL.dir/pre.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Moiez/Desktop/HSSPRCAL/pre.cpp -o CMakeFiles/HSSPRCAL.dir/pre.cpp.s
+CMakeFiles/HSSPRCAL.dir/source/pre.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HSSPRCAL.dir/source/pre.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/pre.cpp -o CMakeFiles/HSSPRCAL.dir/source/pre.cpp.s
 
-CMakeFiles/HSSPRCAL.dir/HSSPRCAL_L.cpp.o: CMakeFiles/HSSPRCAL.dir/flags.make
-CMakeFiles/HSSPRCAL.dir/HSSPRCAL_L.cpp.o: ../HSSPRCAL_L.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/HSSPRCAL.dir/HSSPRCAL_L.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HSSPRCAL.dir/HSSPRCAL_L.cpp.o -c /mnt/c/Users/Moiez/Desktop/HSSPRCAL/HSSPRCAL_L.cpp
+CMakeFiles/HSSPRCAL.dir/source/HSSPRCAL_L.cpp.o: CMakeFiles/HSSPRCAL.dir/flags.make
+CMakeFiles/HSSPRCAL.dir/source/HSSPRCAL_L.cpp.o: ../source/HSSPRCAL_L.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/HSSPRCAL.dir/source/HSSPRCAL_L.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HSSPRCAL.dir/source/HSSPRCAL_L.cpp.o -c /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/HSSPRCAL_L.cpp
 
-CMakeFiles/HSSPRCAL.dir/HSSPRCAL_L.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HSSPRCAL.dir/HSSPRCAL_L.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Moiez/Desktop/HSSPRCAL/HSSPRCAL_L.cpp > CMakeFiles/HSSPRCAL.dir/HSSPRCAL_L.cpp.i
+CMakeFiles/HSSPRCAL.dir/source/HSSPRCAL_L.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HSSPRCAL.dir/source/HSSPRCAL_L.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/HSSPRCAL_L.cpp > CMakeFiles/HSSPRCAL.dir/source/HSSPRCAL_L.cpp.i
 
-CMakeFiles/HSSPRCAL.dir/HSSPRCAL_L.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HSSPRCAL.dir/HSSPRCAL_L.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Moiez/Desktop/HSSPRCAL/HSSPRCAL_L.cpp -o CMakeFiles/HSSPRCAL.dir/HSSPRCAL_L.cpp.s
+CMakeFiles/HSSPRCAL.dir/source/HSSPRCAL_L.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HSSPRCAL.dir/source/HSSPRCAL_L.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/HSSPRCAL_L.cpp -o CMakeFiles/HSSPRCAL.dir/source/HSSPRCAL_L.cpp.s
 
 # Object files for target HSSPRCAL
 HSSPRCAL_OBJECTS = \
-"CMakeFiles/HSSPRCAL.dir/basic.cpp.o" \
-"CMakeFiles/HSSPRCAL.dir/offer.cpp.o" \
-"CMakeFiles/HSSPRCAL.dir/trans.cpp.o" \
-"CMakeFiles/HSSPRCAL.dir/output.cpp.o" \
-"CMakeFiles/HSSPRCAL.dir/formula.cpp.o" \
-"CMakeFiles/HSSPRCAL.dir/solve.cpp.o" \
-"CMakeFiles/HSSPRCAL.dir/gen.cpp.o" \
-"CMakeFiles/HSSPRCAL.dir/pre.cpp.o" \
-"CMakeFiles/HSSPRCAL.dir/HSSPRCAL_L.cpp.o"
+"CMakeFiles/HSSPRCAL.dir/source/basic.cpp.o" \
+"CMakeFiles/HSSPRCAL.dir/source/offer.cpp.o" \
+"CMakeFiles/HSSPRCAL.dir/source/trans.cpp.o" \
+"CMakeFiles/HSSPRCAL.dir/source/output.cpp.o" \
+"CMakeFiles/HSSPRCAL.dir/source/formula.cpp.o" \
+"CMakeFiles/HSSPRCAL.dir/source/solve.cpp.o" \
+"CMakeFiles/HSSPRCAL.dir/source/gen.cpp.o" \
+"CMakeFiles/HSSPRCAL.dir/source/pre.cpp.o" \
+"CMakeFiles/HSSPRCAL.dir/source/HSSPRCAL_L.cpp.o"
 
 # External object files for target HSSPRCAL
 HSSPRCAL_EXTERNAL_OBJECTS =
 
-HSSPRCAL: CMakeFiles/HSSPRCAL.dir/basic.cpp.o
-HSSPRCAL: CMakeFiles/HSSPRCAL.dir/offer.cpp.o
-HSSPRCAL: CMakeFiles/HSSPRCAL.dir/trans.cpp.o
-HSSPRCAL: CMakeFiles/HSSPRCAL.dir/output.cpp.o
-HSSPRCAL: CMakeFiles/HSSPRCAL.dir/formula.cpp.o
-HSSPRCAL: CMakeFiles/HSSPRCAL.dir/solve.cpp.o
-HSSPRCAL: CMakeFiles/HSSPRCAL.dir/gen.cpp.o
-HSSPRCAL: CMakeFiles/HSSPRCAL.dir/pre.cpp.o
-HSSPRCAL: CMakeFiles/HSSPRCAL.dir/HSSPRCAL_L.cpp.o
+HSSPRCAL: CMakeFiles/HSSPRCAL.dir/source/basic.cpp.o
+HSSPRCAL: CMakeFiles/HSSPRCAL.dir/source/offer.cpp.o
+HSSPRCAL: CMakeFiles/HSSPRCAL.dir/source/trans.cpp.o
+HSSPRCAL: CMakeFiles/HSSPRCAL.dir/source/output.cpp.o
+HSSPRCAL: CMakeFiles/HSSPRCAL.dir/source/formula.cpp.o
+HSSPRCAL: CMakeFiles/HSSPRCAL.dir/source/solve.cpp.o
+HSSPRCAL: CMakeFiles/HSSPRCAL.dir/source/gen.cpp.o
+HSSPRCAL: CMakeFiles/HSSPRCAL.dir/source/pre.cpp.o
+HSSPRCAL: CMakeFiles/HSSPRCAL.dir/source/HSSPRCAL_L.cpp.o
 HSSPRCAL: CMakeFiles/HSSPRCAL.dir/build.make
 HSSPRCAL: CMakeFiles/HSSPRCAL.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable HSSPRCAL"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable HSSPRCAL"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/HSSPRCAL.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -213,6 +213,6 @@ CMakeFiles/HSSPRCAL.dir/clean:
 .PHONY : CMakeFiles/HSSPRCAL.dir/clean
 
 CMakeFiles/HSSPRCAL.dir/depend:
-	cd /mnt/c/Users/Moiez/Desktop/HSSPRCAL/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/c/Users/Moiez/Desktop/HSSPRCAL /mnt/c/Users/Moiez/Desktop/HSSPRCAL /mnt/c/Users/Moiez/Desktop/HSSPRCAL/build /mnt/c/Users/Moiez/Desktop/HSSPRCAL/build /mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles/HSSPRCAL.dir/DependInfo.cmake --color=$(COLOR)
+	cd /mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/c/Users/Moiez/Desktop/HSSPRCAL /mnt/c/Users/Moiez/Desktop/HSSPRCAL /mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl /mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl /mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles/HSSPRCAL.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/HSSPRCAL.dir/depend
 

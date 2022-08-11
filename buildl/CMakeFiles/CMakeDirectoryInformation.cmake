@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/mnt/c/Users/Moiez/Desktop/HSSPRCAL")
-set(CMAKE_RELATIVE_PATH_TOP_BINARY "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl")
 
 # Force unix paths in dependencies.
 set(CMAKE_FORCE_UNIX_PATHS 1)

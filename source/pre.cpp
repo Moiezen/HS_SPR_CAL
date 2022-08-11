@@ -25,7 +25,7 @@ void Coll() {
 			iseq[isn++] = o2i(j);
 		}
 
-		rep(i, 0, isn - 1) rep(j, i - flim + 1, i - 1) {
+		rep(i, 0, isn - 1) rep(j, i - flimr + 1, i - 1) {
 			value[ishash(j, i, iseq)] += exp(rho * (i - j));
 		}
 	}
@@ -184,5 +184,5 @@ void pre_main() {
 	Load(); cerr << "load complete" << endl;
 	Getq(); cerr << "getq complete" << endl;
 
-	Test(3);
+	//Test(3);
 }

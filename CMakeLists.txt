@@ -24,6 +24,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
 endif()
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  set(CMAKE_CXX_FLAGS "-O3")
   add_executable (
 	HSSPRCAL
 	"source/basic.cpp" "source/basic.h"

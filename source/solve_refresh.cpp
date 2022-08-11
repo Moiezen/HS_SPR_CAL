@@ -16,6 +16,10 @@ bool operator<(syn a, syn b) {
 	return a.pri < b.pri;
 }
 
+double optf(double x, double y) {
+	return log(x / y);
+}
+
 ll tlim, tbegin;
 int need;
 int collect, addquiz, print;
@@ -28,27 +32,27 @@ int done, curdmg;
 opes curos;
 int testcnt;
 
-double optf(double x, double y) {
-	return log(x / y);
-}
+int tick;
 
 void solve(syn q) {
 	if (q.pa.second >= curdmg) {
-		if (collect == 1 && q.pa.second >= clsbd) {
+		if (collect == 1 && q.pa.second >= dmgbd) {
 			if (q.pa.second > curdmg) cls.clear();
 			cls.push_back(q.os);
 		}
 		if (q.pa.second > curdmg) {
 			curos = q.os;
 			curdmg = q.pa.second;
-			passans(output(curos, curdmg, -1, time(0) - tbegin));
+			if (curdmg >= dmgbd) {
+				refreshans(output(curos, curdmg, -1, time(0) - tbegin));
+			}
 		}
 	}
 	if (q.pa.second >= need) {
 		done = 1;
 		return;
 	}
-	if (time(0) >= tbegin + tlim) {
+	if ((tick++ & 8) == 0 && time(0) >= tbegin + tlim) {
 		done = 2;
 		return;
 	}
@@ -77,7 +81,7 @@ void solve(syn q) {
 			iseq[isn++] = o2i(i);
 
 			sum = sumbasic;
-			rep(i, (isn - 1) - flim + 1, isn - 1) {
+			rep(i, (isn - 1) - flimr + 1, (isn - 1) - fliml + 1) {
 				sum += value[ishash(i, isn - 1, iseq)];
 			}
 			sums.push_back(sum);
@@ -137,6 +141,8 @@ string _solve(state st, int _need, int _tlim, int _collect, int _addquiz, int _p
 	if (collect == 1) cls.clear();
 	if (test == 1) testcnt = 0;
 
+	tick = 0;
+
 	if (exbound == 0) {
 		bound = 1e9;
 		solve(syncons(make_pair(st, 0), 0, emptyos));
@@ -154,12 +160,12 @@ string _solve(state st, int _need, int _tlim, int _collect, int _addquiz, int _p
 
 	//if(print==1) show(curos,curdmg);
 	if (collect == 1 && done == 0) {
-		if (curdmg >= clsbd) {
+		if (curdmg >= dmgbd) {
 			allcls.insert(allcls.end(), cls.begin(), cls.end());
 		}
 	}
 	if (addquiz == 1 && done == 0) {
-		if (curdmg >= clsbd) {
+		if (curdmg >= dmgbd) {
 			quiz q = emptyqcons();
 			q.qnd = curdmg;
 			q.qst = st;

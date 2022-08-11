@@ -51,7 +51,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /mnt/c/Users/Moiez/Desktop/HSSPRCAL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/Moiez/Desktop/HSSPRCAL/build
+CMAKE_BINARY_DIR = /mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles /mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles /mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -123,248 +123,248 @@ HSSPRCAL/fast:
 	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/build
 .PHONY : HSSPRCAL/fast
 
-HSSPRCAL_L.o: HSSPRCAL_L.cpp.o
+source/HSSPRCAL_L.o: source/HSSPRCAL_L.cpp.o
 
-.PHONY : HSSPRCAL_L.o
-
-# target to build an object file
-HSSPRCAL_L.cpp.o:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/HSSPRCAL_L.cpp.o
-.PHONY : HSSPRCAL_L.cpp.o
-
-HSSPRCAL_L.i: HSSPRCAL_L.cpp.i
-
-.PHONY : HSSPRCAL_L.i
-
-# target to preprocess a source file
-HSSPRCAL_L.cpp.i:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/HSSPRCAL_L.cpp.i
-.PHONY : HSSPRCAL_L.cpp.i
-
-HSSPRCAL_L.s: HSSPRCAL_L.cpp.s
-
-.PHONY : HSSPRCAL_L.s
-
-# target to generate assembly for a file
-HSSPRCAL_L.cpp.s:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/HSSPRCAL_L.cpp.s
-.PHONY : HSSPRCAL_L.cpp.s
-
-basic.o: basic.cpp.o
-
-.PHONY : basic.o
+.PHONY : source/HSSPRCAL_L.o
 
 # target to build an object file
-basic.cpp.o:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/basic.cpp.o
-.PHONY : basic.cpp.o
+source/HSSPRCAL_L.cpp.o:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/HSSPRCAL_L.cpp.o
+.PHONY : source/HSSPRCAL_L.cpp.o
 
-basic.i: basic.cpp.i
+source/HSSPRCAL_L.i: source/HSSPRCAL_L.cpp.i
 
-.PHONY : basic.i
+.PHONY : source/HSSPRCAL_L.i
 
 # target to preprocess a source file
-basic.cpp.i:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/basic.cpp.i
-.PHONY : basic.cpp.i
+source/HSSPRCAL_L.cpp.i:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/HSSPRCAL_L.cpp.i
+.PHONY : source/HSSPRCAL_L.cpp.i
 
-basic.s: basic.cpp.s
+source/HSSPRCAL_L.s: source/HSSPRCAL_L.cpp.s
 
-.PHONY : basic.s
+.PHONY : source/HSSPRCAL_L.s
 
 # target to generate assembly for a file
-basic.cpp.s:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/basic.cpp.s
-.PHONY : basic.cpp.s
+source/HSSPRCAL_L.cpp.s:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/HSSPRCAL_L.cpp.s
+.PHONY : source/HSSPRCAL_L.cpp.s
 
-formula.o: formula.cpp.o
+source/basic.o: source/basic.cpp.o
 
-.PHONY : formula.o
+.PHONY : source/basic.o
 
 # target to build an object file
-formula.cpp.o:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/formula.cpp.o
-.PHONY : formula.cpp.o
+source/basic.cpp.o:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/basic.cpp.o
+.PHONY : source/basic.cpp.o
 
-formula.i: formula.cpp.i
+source/basic.i: source/basic.cpp.i
 
-.PHONY : formula.i
+.PHONY : source/basic.i
 
 # target to preprocess a source file
-formula.cpp.i:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/formula.cpp.i
-.PHONY : formula.cpp.i
+source/basic.cpp.i:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/basic.cpp.i
+.PHONY : source/basic.cpp.i
 
-formula.s: formula.cpp.s
+source/basic.s: source/basic.cpp.s
 
-.PHONY : formula.s
+.PHONY : source/basic.s
 
 # target to generate assembly for a file
-formula.cpp.s:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/formula.cpp.s
-.PHONY : formula.cpp.s
+source/basic.cpp.s:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/basic.cpp.s
+.PHONY : source/basic.cpp.s
 
-gen.o: gen.cpp.o
+source/formula.o: source/formula.cpp.o
 
-.PHONY : gen.o
+.PHONY : source/formula.o
 
 # target to build an object file
-gen.cpp.o:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/gen.cpp.o
-.PHONY : gen.cpp.o
+source/formula.cpp.o:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/formula.cpp.o
+.PHONY : source/formula.cpp.o
 
-gen.i: gen.cpp.i
+source/formula.i: source/formula.cpp.i
 
-.PHONY : gen.i
+.PHONY : source/formula.i
 
 # target to preprocess a source file
-gen.cpp.i:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/gen.cpp.i
-.PHONY : gen.cpp.i
+source/formula.cpp.i:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/formula.cpp.i
+.PHONY : source/formula.cpp.i
 
-gen.s: gen.cpp.s
+source/formula.s: source/formula.cpp.s
 
-.PHONY : gen.s
+.PHONY : source/formula.s
 
 # target to generate assembly for a file
-gen.cpp.s:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/gen.cpp.s
-.PHONY : gen.cpp.s
+source/formula.cpp.s:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/formula.cpp.s
+.PHONY : source/formula.cpp.s
 
-offer.o: offer.cpp.o
+source/gen.o: source/gen.cpp.o
 
-.PHONY : offer.o
+.PHONY : source/gen.o
 
 # target to build an object file
-offer.cpp.o:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/offer.cpp.o
-.PHONY : offer.cpp.o
+source/gen.cpp.o:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/gen.cpp.o
+.PHONY : source/gen.cpp.o
 
-offer.i: offer.cpp.i
+source/gen.i: source/gen.cpp.i
 
-.PHONY : offer.i
+.PHONY : source/gen.i
 
 # target to preprocess a source file
-offer.cpp.i:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/offer.cpp.i
-.PHONY : offer.cpp.i
+source/gen.cpp.i:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/gen.cpp.i
+.PHONY : source/gen.cpp.i
 
-offer.s: offer.cpp.s
+source/gen.s: source/gen.cpp.s
 
-.PHONY : offer.s
+.PHONY : source/gen.s
 
 # target to generate assembly for a file
-offer.cpp.s:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/offer.cpp.s
-.PHONY : offer.cpp.s
+source/gen.cpp.s:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/gen.cpp.s
+.PHONY : source/gen.cpp.s
 
-output.o: output.cpp.o
+source/offer.o: source/offer.cpp.o
 
-.PHONY : output.o
+.PHONY : source/offer.o
 
 # target to build an object file
-output.cpp.o:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/output.cpp.o
-.PHONY : output.cpp.o
+source/offer.cpp.o:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/offer.cpp.o
+.PHONY : source/offer.cpp.o
 
-output.i: output.cpp.i
+source/offer.i: source/offer.cpp.i
 
-.PHONY : output.i
+.PHONY : source/offer.i
 
 # target to preprocess a source file
-output.cpp.i:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/output.cpp.i
-.PHONY : output.cpp.i
+source/offer.cpp.i:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/offer.cpp.i
+.PHONY : source/offer.cpp.i
 
-output.s: output.cpp.s
+source/offer.s: source/offer.cpp.s
 
-.PHONY : output.s
+.PHONY : source/offer.s
 
 # target to generate assembly for a file
-output.cpp.s:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/output.cpp.s
-.PHONY : output.cpp.s
+source/offer.cpp.s:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/offer.cpp.s
+.PHONY : source/offer.cpp.s
 
-pre.o: pre.cpp.o
+source/output.o: source/output.cpp.o
 
-.PHONY : pre.o
+.PHONY : source/output.o
 
 # target to build an object file
-pre.cpp.o:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/pre.cpp.o
-.PHONY : pre.cpp.o
+source/output.cpp.o:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/output.cpp.o
+.PHONY : source/output.cpp.o
 
-pre.i: pre.cpp.i
+source/output.i: source/output.cpp.i
 
-.PHONY : pre.i
+.PHONY : source/output.i
 
 # target to preprocess a source file
-pre.cpp.i:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/pre.cpp.i
-.PHONY : pre.cpp.i
+source/output.cpp.i:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/output.cpp.i
+.PHONY : source/output.cpp.i
 
-pre.s: pre.cpp.s
+source/output.s: source/output.cpp.s
 
-.PHONY : pre.s
+.PHONY : source/output.s
 
 # target to generate assembly for a file
-pre.cpp.s:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/pre.cpp.s
-.PHONY : pre.cpp.s
+source/output.cpp.s:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/output.cpp.s
+.PHONY : source/output.cpp.s
 
-solve.o: solve.cpp.o
+source/pre.o: source/pre.cpp.o
 
-.PHONY : solve.o
+.PHONY : source/pre.o
 
 # target to build an object file
-solve.cpp.o:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/solve.cpp.o
-.PHONY : solve.cpp.o
+source/pre.cpp.o:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/pre.cpp.o
+.PHONY : source/pre.cpp.o
 
-solve.i: solve.cpp.i
+source/pre.i: source/pre.cpp.i
 
-.PHONY : solve.i
+.PHONY : source/pre.i
 
 # target to preprocess a source file
-solve.cpp.i:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/solve.cpp.i
-.PHONY : solve.cpp.i
+source/pre.cpp.i:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/pre.cpp.i
+.PHONY : source/pre.cpp.i
 
-solve.s: solve.cpp.s
+source/pre.s: source/pre.cpp.s
 
-.PHONY : solve.s
+.PHONY : source/pre.s
 
 # target to generate assembly for a file
-solve.cpp.s:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/solve.cpp.s
-.PHONY : solve.cpp.s
+source/pre.cpp.s:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/pre.cpp.s
+.PHONY : source/pre.cpp.s
 
-trans.o: trans.cpp.o
+source/solve.o: source/solve.cpp.o
 
-.PHONY : trans.o
+.PHONY : source/solve.o
 
 # target to build an object file
-trans.cpp.o:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/trans.cpp.o
-.PHONY : trans.cpp.o
+source/solve.cpp.o:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/solve.cpp.o
+.PHONY : source/solve.cpp.o
 
-trans.i: trans.cpp.i
+source/solve.i: source/solve.cpp.i
 
-.PHONY : trans.i
+.PHONY : source/solve.i
 
 # target to preprocess a source file
-trans.cpp.i:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/trans.cpp.i
-.PHONY : trans.cpp.i
+source/solve.cpp.i:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/solve.cpp.i
+.PHONY : source/solve.cpp.i
 
-trans.s: trans.cpp.s
+source/solve.s: source/solve.cpp.s
 
-.PHONY : trans.s
+.PHONY : source/solve.s
 
 # target to generate assembly for a file
-trans.cpp.s:
-	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/trans.cpp.s
-.PHONY : trans.cpp.s
+source/solve.cpp.s:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/solve.cpp.s
+.PHONY : source/solve.cpp.s
+
+source/trans.o: source/trans.cpp.o
+
+.PHONY : source/trans.o
+
+# target to build an object file
+source/trans.cpp.o:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/trans.cpp.o
+.PHONY : source/trans.cpp.o
+
+source/trans.i: source/trans.cpp.i
+
+.PHONY : source/trans.i
+
+# target to preprocess a source file
+source/trans.cpp.i:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/trans.cpp.i
+.PHONY : source/trans.cpp.i
+
+source/trans.s: source/trans.cpp.s
+
+.PHONY : source/trans.s
+
+# target to generate assembly for a file
+source/trans.cpp.s:
+	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/source/trans.cpp.s
+.PHONY : source/trans.cpp.s
 
 # Help Target
 help:
@@ -375,33 +375,33 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... HSSPRCAL"
-	@echo "... HSSPRCAL_L.o"
-	@echo "... HSSPRCAL_L.i"
-	@echo "... HSSPRCAL_L.s"
-	@echo "... basic.o"
-	@echo "... basic.i"
-	@echo "... basic.s"
-	@echo "... formula.o"
-	@echo "... formula.i"
-	@echo "... formula.s"
-	@echo "... gen.o"
-	@echo "... gen.i"
-	@echo "... gen.s"
-	@echo "... offer.o"
-	@echo "... offer.i"
-	@echo "... offer.s"
-	@echo "... output.o"
-	@echo "... output.i"
-	@echo "... output.s"
-	@echo "... pre.o"
-	@echo "... pre.i"
-	@echo "... pre.s"
-	@echo "... solve.o"
-	@echo "... solve.i"
-	@echo "... solve.s"
-	@echo "... trans.o"
-	@echo "... trans.i"
-	@echo "... trans.s"
+	@echo "... source/HSSPRCAL_L.o"
+	@echo "... source/HSSPRCAL_L.i"
+	@echo "... source/HSSPRCAL_L.s"
+	@echo "... source/basic.o"
+	@echo "... source/basic.i"
+	@echo "... source/basic.s"
+	@echo "... source/formula.o"
+	@echo "... source/formula.i"
+	@echo "... source/formula.s"
+	@echo "... source/gen.o"
+	@echo "... source/gen.i"
+	@echo "... source/gen.s"
+	@echo "... source/offer.o"
+	@echo "... source/offer.i"
+	@echo "... source/offer.s"
+	@echo "... source/output.o"
+	@echo "... source/output.i"
+	@echo "... source/output.s"
+	@echo "... source/pre.o"
+	@echo "... source/pre.i"
+	@echo "... source/pre.s"
+	@echo "... source/solve.o"
+	@echo "... source/solve.i"
+	@echo "... source/solve.s"
+	@echo "... source/trans.o"
+	@echo "... source/trans.i"
+	@echo "... source/trans.s"
 .PHONY : help
 
 

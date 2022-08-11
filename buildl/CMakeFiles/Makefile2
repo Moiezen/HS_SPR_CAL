@@ -47,7 +47,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /mnt/c/Users/Moiez/Desktop/HSSPRCAL
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/Moiez/Desktop/HSSPRCAL/build
+CMAKE_BINARY_DIR = /mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -74,14 +74,14 @@ clean: CMakeFiles/HSSPRCAL.dir/clean
 CMakeFiles/HSSPRCAL.dir/all:
 	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/depend
 	$(MAKE) -f CMakeFiles/HSSPRCAL.dir/build.make CMakeFiles/HSSPRCAL.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10 "Built target HSSPRCAL"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10 "Built target HSSPRCAL"
 .PHONY : CMakeFiles/HSSPRCAL.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/HSSPRCAL.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles 10
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles 10
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/HSSPRCAL.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles 0
 .PHONY : CMakeFiles/HSSPRCAL.dir/rule
 
 # Convenience name for target.

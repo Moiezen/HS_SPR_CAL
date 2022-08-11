@@ -4,15 +4,15 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/HSSPRCAL_L.cpp" "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles/HSSPRCAL.dir/HSSPRCAL_L.cpp.o"
-  "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/basic.cpp" "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles/HSSPRCAL.dir/basic.cpp.o"
-  "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/formula.cpp" "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles/HSSPRCAL.dir/formula.cpp.o"
-  "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/gen.cpp" "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles/HSSPRCAL.dir/gen.cpp.o"
-  "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/offer.cpp" "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles/HSSPRCAL.dir/offer.cpp.o"
-  "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/output.cpp" "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles/HSSPRCAL.dir/output.cpp.o"
-  "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/pre.cpp" "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles/HSSPRCAL.dir/pre.cpp.o"
-  "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/solve.cpp" "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles/HSSPRCAL.dir/solve.cpp.o"
-  "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/trans.cpp" "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/build/CMakeFiles/HSSPRCAL.dir/trans.cpp.o"
+  "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/HSSPRCAL_L.cpp" "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles/HSSPRCAL.dir/source/HSSPRCAL_L.cpp.o"
+  "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/basic.cpp" "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles/HSSPRCAL.dir/source/basic.cpp.o"
+  "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/formula.cpp" "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles/HSSPRCAL.dir/source/formula.cpp.o"
+  "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/gen.cpp" "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles/HSSPRCAL.dir/source/gen.cpp.o"
+  "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/offer.cpp" "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles/HSSPRCAL.dir/source/offer.cpp.o"
+  "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/output.cpp" "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles/HSSPRCAL.dir/source/output.cpp.o"
+  "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/pre.cpp" "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles/HSSPRCAL.dir/source/pre.cpp.o"
+  "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/solve.cpp" "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles/HSSPRCAL.dir/source/solve.cpp.o"
+  "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/source/trans.cpp" "/mnt/c/Users/Moiez/Desktop/HSSPRCAL/buildl/CMakeFiles/HSSPRCAL.dir/source/trans.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
