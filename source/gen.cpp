@@ -62,3 +62,34 @@ state gen() {
 	st.num = 0;
 	return st;
 }
+
+state gen_special() {
+	state st;
+
+	cT = 0;
+	madd(getrand(3, 7, 2, 1), cardcons(hrlq, 2));
+	madd(getrand(3, 3, 1, 0), cardcons(yxwz, 2));
+	//madd(getrand(2, 1, 5), cardcons(dy, 4));
+	madd(getrand(3, 0, 1, 1), cardcons(glfz, 6));
+	madd(getrand(2, 1, 3), cardcons(tw, 2));
+	madd(getrand(3, 1, 4, 3), cardcons(ayb, 0));
+	madd(getrand(3, 4, 5, 1), cardcons(hjys, 4));
+	madd(getrand(3, 3, 2, 1), cardcons(jb, 0));
+	madd(getrand(3, 3, 4, 1), cardcons(bc, 0));
+	madd(getrand(3, 3, 2, 1), cardcons(sjdf, 0));
+	madd(getrand(2, 1, 1), cardcons(ljfs, 1));
+
+	random_shuffle(ctmp, ctmp + cT);
+	st.H = min(cT, hlim - 1);
+	rep(i, 0, st.H - 1) {
+		st.hands[i] = ctmp[i];
+	}
+
+	st.hands[st.H++] = cardcons(dy, 4);
+
+	st.F = 0;
+	rep(i, 0, 3) st.auras[i] = 0;
+	st.mana = getrand(10, 0, 0, 0, 0, 1, 2, 4, 4, 2, 1);
+	st.num = 0;
+	return st;
+}

@@ -178,11 +178,27 @@ void Test(int term) {
 }
 
 void pre_main() {
-	Coll();
-	Genq();
+	//Coll();
+	//Genq();
 
 	Load(); cerr << "load complete" << endl;
-	Getq(); cerr << "getq complete" << endl;
+	//Getq(); cerr << "getq complete" << endl;
 
-	//Test(3);
-}
+	int sumdy = 0;
+	int sumsy = 0;
+	rep(i, 1, 100) {
+		state st = gen_special();
+		_solve(st, 999, 15, 0, 0, 0, 1, 1, 0, 0);
+		int dmgdy = curdmg;
+
+		assert(st.hands[st.H - 1].name == dy);
+		st.hands[st.H - 1].name = syzl;
+		_solve(st, 999, 15, 0, 0, 0, 1, 1, 0, 0);
+		int dmgsy = curdmg;
+
+		cerr << dmgdy << " " << dmgsy << endl;
+		sumdy += (dmgdy > dmgsy);
+		sumsy += (dmgsy > dmgdy);
+	}
+	cerr << sumdy << ":" << sumsy << endl;
+}	

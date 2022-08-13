@@ -349,6 +349,7 @@ void refreshans(string _s) {
 	ans.name = _s;
 	drawdom(ans, 0);
 	follow(ans);
+	refresh;
 }
 
 void click(int x, int y) {
