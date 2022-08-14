@@ -4,6 +4,12 @@ Hearthstone Spectral Pillager Rogue Calculator
 
 使用说明
 
+目前UI支持鼠标和键盘，鼠标为选中-修改模式，键盘简化部分鼠标操作，支持上下左右移动选中（仅限手牌区和站场区），0-9修改数字（选中后首次修改从零起，可依次输入多位但有上限），backspace清除数字，字母修改牌名（根据二字短名的首字母），delete清除牌名，enter计算。
+
+目前UI已经能保存读取路径至dft.txt中。
+
+已经修复了一些引起UI混乱的bug。
+
 **已经整合成了多文件版本，请使用cmake以得到可执行文件**
 
 buildw/有Windows的可执行版本HSSPRCAL.exe，结合fml.txt使用。不对该exe运行产生的任何后果负责，如不信任请自行cmake。
