@@ -11,7 +11,7 @@ string s2str(scm a) {
 			break;
 		}
 		case myxwz: {
-			return "ÏäÎè";
+			return "ÓÊÏä";
 			break;
 		}
 		case mdy: {
@@ -61,7 +61,7 @@ string k2str(kpm a) {
 			break;
 		}
 		case yxwz: {
-			return "ÏäÎè";
+			return "ÓÊÏä";
 			break;
 		}
 		case dy: {
@@ -89,7 +89,7 @@ string k2str(kpm a) {
 			break;
 		}
 		case jb: {
-			return "¼Ù±Ò";
+			return "Ó²±Ò";
 			break;
 		}
 		case sjdf: {
