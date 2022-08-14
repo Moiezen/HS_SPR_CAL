@@ -9,7 +9,7 @@
 #define setf setfillcolor
 #define sett settextjustify
 #define refresh delay_ms(0)
-#define addd(a,b,c,d,e,f,g,h) doms.push_back(domaincons(rectcons(a,b,c,d),e,f,g,h));
+#define adddd(a,b,c,d,e,f,g,h,i,j) doms.push_back(domaincons(rectcons(a,b,c,d),e,f,g,h,i,j));
 
 int H = 640;
 int W = 1280;
@@ -30,6 +30,10 @@ void barr(rect a, color_t b) {
 	setf(b);
 	bar(a.x1, a.y1, a.x2, a.y2);
 }
+void rectr(rect a, color_t b) {
+	setc(b);
+	rectangle(a.x1, a.y1, a.x2, a.y2);
+}
 void textr(rect a, color_t b, string c) {
 	setc(b);
 	sett(CENTER_TEXT, CENTER_TEXT);
@@ -49,14 +53,13 @@ void textra(rect a, color_t b, string c) {
 			xx += 200;
 		}
 	}
-
 }
 bool inrect(int x, int y, rect a) {
 	return x >= a.x1 && x < a.x2&& y >= a.y1 && y < a.y2;
 }
 
 enum domt {
-	nodomt, vnx, vx, vn, cn, cx, go, ans, vxa, lk, lk1, lk2, vxb
+	nodomt, vnx, vx, vn, cn, c0, cx, go, ans, lk, lk1, lk2, exa
 };
 struct domain {
 	rect r;
@@ -64,13 +67,15 @@ struct domain {
 	string name;
 	int x;
 	int id;
+	int key;
+	int lim;
 };
-domain domaincons(rect a, domt b, string c, int d, int e) {
+domain domaincons(rect a, domt b, string c, int d, int e, int f, int g) {
 	domain dom;
-	dom.r = a; dom.type = b; dom.name = c; dom.x = d; dom.id = e;
+	dom.r = a; dom.type = b; dom.name = c; dom.x = d; dom.id = e; dom.key = f; dom.lim = g;
 	return dom;
 }
-domain nodomain = domaincons(norect, nodomt, "", -1, -1);
+domain nodomain = domaincons(norect, nodomt, "", -1, -1, -1, -1);
 bool indom(int x, int y, domain a) {
 	return inrect(x, y, a.r);
 }
@@ -115,6 +120,8 @@ void attention() {
 
 vector<domain> doms;
 domain selected;
+bool inputing;
+
 int manadomid;
 int cardsdomid[10];
 int minionsdomid[7];
@@ -125,6 +132,7 @@ int lkdomid;
 int modedomid;
 int numdomid;
 int aurasdomid[4];
+int exadomid;
 
 domain id2dom(int id) {
 	for (auto i : doms) {
@@ -145,53 +153,78 @@ void follow(domain a) {
 	}
 }
 
-string n1[15] = { "鱼灵","老千","邮箱","刀油","鬼灵","腾武","暗步","背刺","硬币","伺机","幻药","随从","法术","垃圾","清除" };
+string n1[15] = { "鱼灵","老千","箱舞","刀油","鬼灵","腾武","暗步","背刺","假币","伺机","幻药","随从","法术","垃圾","清除" };
+int k1[15] = { 'Y','L','X','D','G','T','A','B','J','S','H',-1,-1,-1,46 };
 string a1[4] = { "伺机层数","老千层数","刀一层数","刀二层数" };
-string defaultlk = "D:\\Hearthstone";
+
+string getdftlk() {
+	FILE* f = freopen("dft.txt", "r", stdin);
+
+	char s[105];
+	scanf("%100s", s);
+
+	fclose(stdin);
+
+	return s;
+}
+
+void savedftlk(string s) {
+	FILE* f = freopen("dft.txt", "w", stdout);
+
+	printf("%s\n", s.c_str());
+
+	fclose(stdout);
+}
 
 void getdoms() {
 	doms.clear();
-	addd(860, 600, 920, 640, vx, "水晶", 0, manadomid = 1);
+
+	adddd(860, 600, 920, 640, vx, "水晶", 0, manadomid = 1, -1, 10);
 	//1
-	rep(i, 0, 9) addd(200 + i * 60, 600, 260 + i * 60, 640, vnx, "清除", 0, cardsdomid[i] = 2 + i);
+	rep(i, 0, 9) adddd(200 + i * 60, 600, 260 + i * 60, 640, vnx, "清除", 0, cardsdomid[i] = 2 + i, 200000 + 1000 * i, 10);
 	//2 ... 11
-	rep(i, 0, 6) addd(200 + i * 60, 560, 260 + i * 60, 600, vn, "清除", 0, minionsdomid[i] = 101 + i);
+	rep(i, 0, 6) adddd(200 + i * 60, 560, 260 + i * 60, 600, vn, "清除", 0, minionsdomid[i] = 101 + i, 300000 + 1000 * i, -1);
 	//101 ... 107
-	rep(i, 0, 10) addd((i + 2) % 3 * 40, 400 + (i + 2) / 3 * 40, 40 + (i + 2) % 3 * 40, 440 + (i + 2) / 3 * 40, cx, "", i, 12 + i);
-	//12 ... 22
-	rep(i, 0, 14) addd(i % 3 * 40, 160 + i / 3 * 40, 40 + i % 3 * 40, 200 + i / 3 * 40, cn, n1[i], 0, 123 + i);
+	adddd(40, 400, 80, 440, c0, "", 0, 12, 8, -1);
+	//12
+	rep(i, 0, 9) adddd((i + 2) % 3 * 40, 400 + (i + 2) / 3 * 40, 40 + (i + 2) % 3 * 40, 440 + (i + 2) / 3 * 40, cx, "", i, 13 + i, 48 + i, -1);
+	//13 ... 22
+	rep(i, 0, 14) adddd(i % 3 * 40, 160 + i / 3 * 40, 40 + i % 3 * 40, 200 + i / 3 * 40, cn, n1[i], 0, 123 + i, k1[i], -1);
 	//123 ... 137
-	addd(1220, 600, 1280, 640, go, "计算", 0, 37);
+	adddd(1220, 600, 1280, 640, go, "计算", 0, 37, 13, -1);
 	//37
-	addd(880, 0, 1280, 560, ans, "", 0, ansdomid = 38);
+	adddd(880, 0, 1280, 560, ans, "", 0, ansdomid = 38, -1, -1);
 	//38
-	addd(980, 600, 1040, 640, vxa, "时限", 15, tlimdomid = 39);
+	adddd(980, 600, 1040, 640, vx, "时限", 15, tlimdomid = 39, -1, 999);
 	//39
-	addd(1100, 600, 1160, 640, vxa, "目标", 999, ehdomid = 40);
+	adddd(1100, 600, 1160, 640, vx, "目标", 999, ehdomid = 40, -1, 999);
 	//40
-	addd(0, 0, 400, 40, lk, defaultlk, 0, lkdomid = 41);
+	string dftlk = getdftlk();
+	adddd(0, 0, 400, 40, lk, dftlk, 0, lkdomid = 41, -1, -1);
 	//41
-	addd(0, 40, 60, 80, lk1, "修改", 0, 42);
+	adddd(100, 60, 160, 100, lk1, "修改", 0, 42, -1, -1);
 	//42
-	addd(60, 40, 120, 80, lk2, "读取", 0, 43);
+	adddd(240, 60, 300, 100, lk2, "读取", 0, 43, -1, -1);
 	//43
-	addd(200, 400, 320, 440, vxb, "背刺可用", 1, modedomid = 44);
+	adddd(200, 400, 320, 440, vx, "背刺可用", 1, modedomid = 44, -1, 1);
 	//44
-	addd(360, 400, 480, 440, vx, "已用牌数", 0, numdomid = 45);
+	adddd(360, 400, 480, 440, vx, "已用牌数", 0, numdomid = 45, -1, 10);
 	//45
-	rep(i, 0, 3) addd(200 + 160 * i, 480, 320 + 160 * i, 520, vx, a1[i], 0, aurasdomid[i] = 46 + i);
+	rep(i, 0, 3) adddd(200 + 160 * i, 480, 320 + 160 * i, 520, vx, a1[i], 0, aurasdomid[i] = 46 + i, -1, alim[i]);
 	//46 ... 49
+	adddd(0, 600, 120, 640, exa, "查看样例", 0, exadomid = 50, -1, -1);
+	//50
 }
 
 kpm str2k(string s) {
 	if (s == "暗步") return ayb;
 	if (s == "背刺") return bc;
-	if (s == "硬币") return jb;
+	if (s == "假币") return jb;
 	if (s == "伺机") return sjdf;
 	if (s == "幻药") return hjys;
 	if (s == "鱼灵") return syzl;
 	if (s == "老千") return hrlq;
-	if (s == "邮箱") return yxwz;
+	if (s == "箱舞") return yxwz;
 	if (s == "刀油") return dy;
 	if (s == "腾武") return tw;
 	if (s == "鬼灵") return glfz;
@@ -203,6 +236,113 @@ kpm str2k(string s) {
 
 int __eh = 999;
 int __tlim = 999999;
+
+void drawdom(domain a, bool sl) {
+	rect r = a.r;
+
+	barr(r, bdc);
+	if (sl) {
+		barr(cutedge(r, 1), slc);
+		barr(cutedge(r, 5), bgc);
+	}
+	else {
+		barr(cutedge(r, 1), bgc);
+	}
+
+	switch (a.type) {
+		case nodomt: {
+
+			break;
+		}
+		case vnx: {
+			if (a.name == "清除") textr(r, txc, "");
+			else textr(r, txc, a.name + to_string(a.x));
+			break;
+		}
+		case vx: {
+			textr(r, txc, a.name + to_string(a.x));
+			break;
+		}
+		case vn: {
+			if (a.name == "清除") textr(r, txc, "");
+			else textr(r, txc, a.name);
+			break;
+		}
+		case cn:
+		case go:
+		case lk1:
+		case lk2:
+		case exa: {
+			textr(r, txc, a.name);
+			break;
+		}
+		case c0: {
+			textr(r, txc, "清");
+			break;
+		}
+		case cx: {
+			textr(r, txc, to_string(a.x));
+			break;
+		}
+		case ans: {
+			textra(r, txc, a.name);
+			break;
+		}
+		case lk: {
+			textr(r, txc, a.name + "\\Logs\\power.log");
+			break;
+		}
+	}
+}
+
+void st2doms(state st) {
+	domain tmp;
+
+	rep(i, 0, st.H - 1) {
+		tmp = id2dom(cardsdomid[i]);
+		tmp.name = k2str(st.hands[i].name);
+		tmp.x = st.hands[i].cost;
+		drawdom(tmp, 0);
+		follow(tmp);
+	}
+	rep(i, st.H, 9) {
+		tmp = id2dom(cardsdomid[i]);
+		tmp.name = "清除";
+		tmp.x = 0;
+		drawdom(tmp, 0);
+		follow(tmp);
+	}
+
+	rep(i, 0, st.F - 1) {
+		tmp = id2dom(minionsdomid[i]);
+		tmp.name = s2str(st.fields[i].name);
+		drawdom(tmp, 0);
+		follow(tmp);
+	}
+	rep(i, st.F, 6) {
+		tmp = id2dom(minionsdomid[i]);
+		tmp.name = "清除";
+		drawdom(tmp, 0);
+		follow(tmp);
+	}
+
+	rep(i, 0, 3) {
+		tmp = id2dom(aurasdomid[i]);
+		tmp.x = st.auras[i];
+		drawdom(tmp, 0);
+		follow(tmp);
+	}
+
+	tmp = id2dom(manadomid);
+	tmp.x = st.mana;
+	drawdom(tmp, 0);
+	follow(tmp);
+
+	tmp = id2dom(numdomid);
+	tmp.x = st.num;
+	drawdom(tmp, 0);
+	follow(tmp);
+}
 
 state doms2st(vector<domain> a) {
 	openmode = id2dom(modedomid).x;
@@ -235,107 +375,12 @@ state doms2st(vector<domain> a) {
 	return st;
 }
 
-void st2doms(state st) {
-	domain tmp;
-
-	rep(i, 0, st.H - 1) {
-		tmp = id2dom(cardsdomid[i]);
-		tmp.name = k2str(st.hands[i].name);
-		tmp.x = st.hands[i].cost;
-		follow(tmp);
-	}
-	rep(i, st.H, 9) {
-		tmp = id2dom(cardsdomid[i]);
-		tmp.name = "清除";
-		tmp.x = 0;
-		follow(tmp);
-	}
-
-	rep(i, 0, st.F - 1) {
-		tmp = id2dom(minionsdomid[i]);
-		tmp.name = s2str(st.fields[i].name);
-		follow(tmp);
-	}
-	rep(i, st.F, 6) {
-		tmp = id2dom(minionsdomid[i]);
-		tmp.name = "清除";
-		follow(tmp);
-	}
-
-	rep(i, 0, 3) {
-		tmp = id2dom(aurasdomid[i]);
-		tmp.x = st.auras[i];
-		follow(tmp);
-	}
-
-	tmp = id2dom(manadomid);
-	tmp.x = st.mana;
-	follow(tmp);
-	tmp = id2dom(numdomid);
-	tmp.x = st.num;
-	follow(tmp);
-}
-
-void drawdom(domain a, bool sl) {
-	rect r = a.r;
-
-	barr(r, bdc);
-	if (sl) {
-		barr(cutedge(r, 1), slc);
-		barr(cutedge(r, 5), bgc);
-	}
-	else {
-		barr(cutedge(r, 1), bgc);
-	}
-
-	switch (a.type) {
-	case nodomt: {
-
-		break;
-	}
-	case vnx: {
-		if (a.name == "清除") textr(r, txc, "");
-		else textr(r, txc, a.name + to_string(a.x));
-		break;
-	}
-	case vx:
-	case vxa:
-	case vxb: {
-		textr(r, txc, a.name + to_string(a.x));
-		break;
-	}
-	case vn: {
-		if (a.name == "清除") textr(r, txc, "");
-		else textr(r, txc, a.name);
-		break;
-	}
-	case cn:
-	case go:
-	case lk1:
-	case lk2: {
-		textr(r, txc, a.name);
-		break;
-	}
-	case cx: {
-		textr(r, txc, to_string(a.x));
-		break;
-	}
-	case ans: {
-		textra(r, txc, a.name);
-		break;
-	}
-	case lk: {
-		textr(r, txc, a.name + "\\Logs\\power.log");
-		break;
-	}
-	}
-}
-
 void loaddoms() {
 	for (auto i : doms) {
 		drawdom(i, 0);
 	}
 	selected = nodomain;
+	inputing = false;
 }
 
 bool legalcn4vn(string s) {
@@ -350,95 +395,6 @@ void refreshans(string _s) {
 	drawdom(ans, 0);
 	follow(ans);
 	refresh;
-}
-
-void click(int x, int y) {
-	domain toselect = nodomain;
-	for (auto i : doms) {
-		if (indom(x, y, i)) {
-			toselect = i;
-			break;
-		}
-	}
-	switch (toselect.type) {
-	case nodomt: {
-
-		break;
-	}
-	case vnx:
-	case vn:
-	case vx:
-	case vxa:
-	case vxb: {
-		if (selected.id == toselect.id) {
-			drawdom(selected, 0);
-			selected = nodomain;
-		}
-		else {
-			drawdom(selected, 0);
-			drawdom(toselect, 1);
-			selected = toselect;
-		}
-		break;
-	}
-	case cn: {
-		if (selected.type == vnx || (selected.type == vn && legalcn4vn(toselect.name))) {
-			//非随从在UI上就不允许被放置在随从位
-			selected.name = toselect.name;
-			drawdom(selected, 1);
-			follow(selected);
-		}
-		break;
-	}
-	case cx: {
-		if (selected.type == vx || selected.type == vnx) {
-			selected.x = toselect.x;
-			drawdom(selected, 1);
-			follow(selected);
-		}
-		if (selected.type == vxa) {
-			if (toselect.x == 0) selected.x = 0;
-			else selected.x = min(selected.x * 10 + (toselect.x % 10), 999);
-			drawdom(selected, 1);
-			follow(selected);
-		}
-		if (selected.type == vxb) {
-			selected.x = (bool)toselect.x;
-			drawdom(selected, 1);
-			follow(selected);
-		}
-		break;
-	}
-	case go: {
-		state st = doms2st(doms);
-		domain ans = id2dom(ansdomid);
-		ans.name = _solve(st, __eh, __tlim, 0, 0, 0, 1, 1, 0, 0);
-		drawdom(ans, 0);
-		follow(ans);
-		break;
-	}
-	case ans:
-	case lk: {
-
-		break;
-	}
-	case lk1: {
-		char _lk[100];
-		inputbox_getline("请输入炉石传说本地路径（回车确认）", "宇宙甜心", _lk, 100);
-		domain lk = id2dom(lkdomid);
-		lk.name = (string)_lk;
-		drawdom(lk, 0);
-		follow(lk);
-		break;
-	}
-	case lk2: {
-		state st = autoread(id2dom(lkdomid).name);
-		st2doms(st);
-		rep(i, 0, 9) drawdom(id2dom(cardsdomid[i]), 0);
-		drawdom(id2dom(manadomid), 0);
-		break;
-	}
-	}
 }
 
 state initstcons() {
@@ -462,21 +418,165 @@ state initstcons() {
 	a.num = 0;
 	return a;
 }
-state initst = initstcons();
 
 void loadsample() {
+	state initst = initstcons();
+	domain tmp;
+
 	st2doms(initst);
-	rep(i, 0, 9) drawdom(id2dom(cardsdomid[i]), 0);
-	drawdom(id2dom(manadomid), 0);
-	domain a;
-	a = id2dom(tlimdomid);
-	a.x = 999;
-	follow(a);
-	drawdom(a, 0);
-	a = id2dom(ehdomid);
-	a.x = 60;
-	follow(a);
-	drawdom(a, 0);
+	
+	tmp = id2dom(tlimdomid);
+	tmp.x = 999;
+	drawdom(tmp, 0);
+	follow(tmp);
+
+	tmp = id2dom(ehdomid);
+	tmp.x = 60;
+	drawdom(tmp, 0);
+	follow(tmp);
+}
+
+void touch(domain toselect) {
+	rect r = toselect.r;
+	rectr(cutedge(r, 3), slc);
+	delay_ms(100);
+	rectr(cutedge(r, 3), bgc);
+
+	switch (toselect.type) {
+		case nodomt: {
+
+			break;
+		}
+		case vnx:
+		case vn:
+		case vx: {
+			if (selected.id == toselect.id) {
+				inputing = false;
+
+				drawdom(selected, 0);
+				selected = nodomain;
+			}
+			else {
+				inputing = false;
+
+				drawdom(selected, 0);
+				drawdom(toselect, 1);
+				selected = toselect;
+			}
+			break;
+		}
+		case cn: {
+			if (selected.type == vnx || (selected.type == vn && legalcn4vn(toselect.name))) {
+				//非随从在UI上就不允许被放置在随从位
+				inputing = false;
+
+				selected.name = toselect.name;
+				drawdom(selected, 1);
+				follow(selected);
+			}
+			break;
+		}
+		case c0: {
+			if (selected.type == vx || selected.type == vnx) {
+				inputing = true;
+				
+				selected.x = 0;
+				drawdom(selected, 1);
+				follow(selected);
+			}
+			break;
+		}
+		case cx: {
+			if (selected.type == vx || selected.type == vnx) {
+				if (!inputing) {
+					selected.x = 0;
+				}
+				inputing = true;
+
+				selected.x = min(selected.x * 10 + toselect.x, selected.lim);
+				drawdom(selected, 1);
+				follow(selected);
+			}
+			break;
+		}
+		case go: {
+			inputing = false;
+
+			state st = doms2st(doms);
+			domain ans = id2dom(ansdomid);
+			ans.name = _solve(st, __eh, __tlim, 0, 0, 0, 1, 1, 0, 0);
+			drawdom(ans, 0);
+			follow(ans);
+			break;
+		}
+		case ans:
+		case lk: {
+
+			break;
+		}
+		case lk1: {
+			inputing = false;
+
+			char _lk[105];
+			inputbox_getline("请输入炉石传说本地路径（回车确认）", "宇宙甜心", _lk, 100);
+			domain lk = id2dom(lkdomid);
+			lk.name = (string)_lk;
+			savedftlk(lk.name);
+			drawdom(lk, 0);
+			follow(lk);
+			break;
+		}
+		case lk2: {
+			inputing = false;
+
+			state st = autoread(id2dom(lkdomid).name);
+			st2doms(st);
+			selected = nodomain;
+			break;
+		}
+		case exa: {
+			inputing = false;
+
+			loadsample();
+			selected = nodomain;
+			break;
+		}
+	}
+}
+
+void click(int x, int y) {
+	domain t = nodomain;
+	for (auto i : doms) {
+		if (indom(x, y, i)) {
+			t = i;
+			break;
+		}
+	}
+	touch(t);
+}
+
+void press(int k) {
+	if (k == 37) {
+		k = selected.key - 1000;
+	}
+	if (k == 38) {
+		k = selected.key + 100000;
+	}
+	if (k == 39) {
+		k = selected.key + 1000;
+	}
+	if (k == 40) {
+		k = selected.key - 100000;
+	}
+
+	domain t = nodomain;
+	for (auto i : doms) {
+		if (i.key == k) {
+			t = i;
+			break;
+		}
+	}
+	touch(t);
 }
 
 void ui_main() {
@@ -491,25 +591,34 @@ void ui_main() {
 	getdoms();
 	loaddoms();
 
-	loadsample();
-
 	refresh;
 
+	key_msg k = { 0 };
 	mouse_msg e = { 0 };
 	int last = 0;
 	while (true) {
-		while (mousemsg()) {
-			e = getmouse();
+		if (kbmsg()) {
+			k = getkey();
+			/*
+			while (kbmsg()) {
+				k = getkey();
+			}
+			*/
+			//按键消息不需要使用while控制至最后
+			if (k.msg == key_msg_down) {
+				press(k.key);
+				refresh;
+			}
 		}
-
-		if (!e.is_down()) last = 0;
-		else {
-			if (last == 0) {
-				//避免长点 
+		if (mousemsg()) {
+			e = getmouse();
+			while (mousemsg()) {
+				e = getmouse();
+			}
+			if (e.is_down()) {
 				click(e.x, e.y);
 				refresh;
 			}
-			last = 1;
 		}
 	}
 
