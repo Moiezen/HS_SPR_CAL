@@ -1,37 +1,5 @@
 #include "auto.h"
 
-map<string, string> id2cid;
-map<string, string> id2cost;
-map<string, string> id2zone;
-map<string, string> id2err;
-
-void getafter(string s, string a, string& t) {
-	if (t != "") return;
-	auto p = s.find(a);
-	if (p == -1) return;
-	p = p + a.size();
-	while (s[p] != ' ' && s[p] != '\0') {
-		t = t + s[p]; p++;
-	}
-}
-void getid(string s, string& t) {
-	getafter(s, "tag=ENTITY_ID value=", t);
-	getafter(s, " id=", t);
-}
-void getcid(string s, string& t) {
-	getafter(s, "CardID=", t);
-	getafter(s, "cardId=", t);
-}
-void getcost(string s, string& t) {
-	getafter(s, "tag=COST value=", t);
-}
-void getzone(string s, string& t) {
-	getafter(s, "tag=ZONE value=", t);
-	getafter(s, "zone=", t);
-}
-
-int secrets;
-
 kpm cid2kpm(string s) {
 	if (s.find("EX1_144") != -1) return ayb;
 	if (s.find("CS2_072") != -1) return bc;
@@ -47,126 +15,229 @@ kpm cid2kpm(string s) {
 	if (s.find("DMF_071") != -1) return tw;
 	if (s.find("ICC_910") != -1) return glfz;
 	if (s.find("DMF_512") != -1) return ljfs;
-	if (s.find("LOOT_214") != -1 && secrets == 0) {
-		secrets = 1;
-		return ljfs;
-	}
+	if (s.find("LOOT_214") != -1) return ljfs;
 	return lj;
 }
 
-vector<string> hand;
-state autoread(string _s) {
-	state autost = emptyst;
-	//现在可能多次调用，需要每次清空 
+string idhandle[4] = {
+	" id=",
+	" ID=",
+	" Entity=",
+	" EntityID="
+};
 
-	//更新结构： 
-	//id->cid,cost,zone
-	//resource(mana)
-	//op->id,err
-	//此处为简便，直接令op.id->err 
+string pidhandle = " PlayerID=";
+string namehandle = " PlayerName=";
 
+int mycid = -1;
+int myid = -1;
+int mypid = -1;
+string myname;
+int myhid = -1;
+
+int yourcid = -1;
+int yourid = -1;
+int yourpid = -1;
+string yourname;
+int yourhid = -1;
+
+const int Gid = 1;
+const string Gname = "GameEntity";
+
+map<int, map<string, pair<int, string>  > > id2tag2stampandvalue;
+int stampcnt;
+
+void updid(int x) {
+	if (x == 0) {
+		return;
+	}
+
+	if (mycid == -1 && id2tag2stampandvalue[x]["ZONE"].second == "HAND") {
+		mycid = id2tag2stampandvalue[x]["CONTROLLER"].second[0] - 48;
+
+		rep(i, 2, 3) {
+			if (mycid == id2tag2stampandvalue[i]["CONTROLLER"].second[0] - 48) {
+				myid = i;
+				mypid = id2tag2stampandvalue[i]["PlayerID"].second[0] - 48;
+			}
+		}
+
+		assert(mycid == 1 || mycid == 2);
+		assert(mycid + 1 == myid);
+		assert(mycid == mypid);
+
+		yourcid = 3 - mycid;
+		yourid = yourcid + 1;
+		yourpid = yourcid;
+	}
+
+	if (id2tag2stampandvalue[x]["CARDTYPE"].second == "HERO") {
+		if (mycid != -1 && mycid == id2tag2stampandvalue[x]["CONTROLLER"].second[0] - 48) {
+			myhid = x;
+		}
+		if (yourcid != -1 && yourcid == id2tag2stampandvalue[x]["CONTROLLER"].second[0] - 48) {
+			yourhid = x;
+		}
+	}
+}
+
+void updname(string s) {
+	auto p = s.find(namehandle);
+	if (p != -1) {
+		p = p + namehandle.length();
+		string t = s.substr(p);
+		p = t.find(" ");
+		if (p != -1) {
+			t = t.substr(0, p - 1);
+		}
+
+		p = s.find(pidhandle);
+		p = p + pidhandle.length();
+		if (mypid == s[p] - 48) {
+			myname = t;
+		}
+		if (yourpid == s[p] - 48) {
+			yourname = t;
+		}
+	}
+}
+
+int updcurid(string s, int x) {
+	rep(i, 0, 3) {
+		if (s.find(idhandle[i] + Gname) != -1) {
+			return Gid;
+		}
+		if (myname.length() > 0 && s.find(idhandle[i] + myname) != -1) {
+			return myid;
+		}
+		if (yourname.length() > 0 && s.find(idhandle[i] + yourname) != -1) {
+			return yourid;
+		}
+
+		auto p = s.find(idhandle[i]);
+		if (p != -1) {
+			x = 0;
+			p = p + idhandle[i].length();
+			while (p < s.length() && s[p] >= '0' && s[p] <= '9') {
+				x = x * 10 + s[p] - '0';
+				p = p + 1;
+			}
+			if (x == 0) cout << s << endl << myname << endl;
+			return x;
+		}
+	}
+	return x;
+}
+
+state autoread(string _s, int& _tar) {
 	cin.clear();
 	//重置输入流，防止无法读取 
 
 	FILE* f = freopen((_s + "\\Logs\\power.log").c_str(), "r", stdin);
 
-	id2cid.clear();
-	id2cost.clear();
-	id2zone.clear();
-	id2err.clear();
-	hand.clear();
-
-	string s, s0;
-	string s1, s2, s3, s4;
-	string s5, resources;
-	string s6;
-
+	string s;
 	int lines = 0;
+
+	int curid = 0;
+	string t, u, v, lu, lv;
 
 	while (getline(cin, s)) {
 		lines++;
 		if (s.find("- CREATE_GAME") != -1) {
-			id2cid.clear();
-			id2cost.clear();
-			id2zone.clear();
-			id2err.clear();
-			hand.clear();
+			mycid = -1;
+			myid = -1;
+			mypid = -1;
+			myname = "";
+			myhid = -1;
+
+			yourcid = -1;
+			yourid = -1;
+			yourpid = -1;
+			yourname = "";
+			yourhid = -1;
+
+			id2tag2stampandvalue.clear();
+			stampcnt = 0;
+
+			curid = 0;
 		}
 
-		while (s.find("-     SHOW_ENTITY") != -1) {
-			getline(cin, s0);
-			while (s0.find("-         tag=") != -1) {
-				s = s + " " + s0;
-				getline(cin, s0);
-			}
-			s1 = s2 = s3 = s4 = "";
-			getid(s, s1);
-			getcid(s, s2);
-			getcost(s, s3);
-			getzone(s, s4);
-			if (s1 != "") {
-				if (s2 != "") id2cid[s1] = s2;
-				if (s3 != "") id2cost[s1] = s3;
-				if (s4 != "") id2zone[s1] = s4;
-			}
+		updid(curid);
 
-			s = s0;
-			//s0不属于这部分却已经被读入了，应当直接视为下一次的s 
-			//且这个s可能立即属于新部分，故外层使用while 
-		}
+		updname(s);
 
-		if (s.find("TAG_CHANGE") != -1) {
-			s1 = s2 = s3 = s4 = s5 = "";
-			getid(s, s1);
-			getcid(s, s2);
-			getcost(s, s3);
-			getzone(s, s4);
-			getafter(s, "tag=RESOURCES value=", s5);
-			if (s1 != "") {
-				if (s2 != "") id2cid[s1] = s2;
-				if (s3 != "") id2cost[s1] = s3;
-				if (s4 != "") id2zone[s1] = s4;
+		curid = updcurid(s, curid);
+
+		while (s.length() > 0) {
+			auto p = min(min(s.find("["), s.find("]")), s.find(" "));
+			if (p != -1) {
+				t = s.substr(0, p);
+				s = s.substr(p + 1);
 			}
-			if (s5 != "") resources = s5;
-			continue;
-		}
+			else {
+				t = s;
+				s = "";
+			}
+			p = t.find("=");
+			if (p != -1) {
+				u = t.substr(0, p);
+				v = t.substr(p + 1);
 
-		if (s.find("Options() - id=") != -1) hand.clear();
-		if (s.find("Options()") != -1 && s.find("option") != -1) {
-			s1 = s6 = "";
-			getid(s, s1);
-			getafter(s, "error=", s6);
-			if (s1 != "") hand.push_back(s1);
-			if (s1 != "" && s6 != "") id2err[s1] = s6;
-			//此处有可能存在error=项但项为空，不必区分 
+				if (lu == "tag" && u == "value") {
+					u = lv;
+					lu = "";
+					lv = "";
+				}
+
+				id2tag2stampandvalue[curid][u] = make_pair(stampcnt++, v);
+
+				lu = u;
+				lv = v;
+			}
 		}
 	}
-
-	secrets = 0;
-	for (auto s1 : hand) {
-		s2 = id2cid[s1];
-		s3 = id2cost[s1];
-		if (s3 == "") s3 = "0";
-		s4 = id2zone[s1];
-		if (s4 == "HAND" || s4 == "DECK") {
-			//偶尔手牌会保持显示zone=DECK 
-			//虽然很奇怪但能work 
-			autost.hands[autost.H++] = cardcons(cid2kpm(s2), atoi(s3.c_str()));
-		}
-		s6 = id2err[s1];
-		if (cid2kpm(s2) == bc && s6 != "") {
-			openmode = 0;
-			//模式检定，将无法直接通过bc->nul 
-		}
-		else openmode = 1;
-
-		id2zone[s1] = "";
-		//防止（可交易牌）被统计两次 
-	}
-
-	autost.mana = atoi(resources.c_str());
 
 	fclose(stdin);
+
+	//读取完毕，开始转化
+
+	state autost = emptyst;
+
+	for (auto i : id2tag2stampandvalue) {
+		auto j = i.second;
+
+		if (j["ZONE"].second == "HAND" && j["player"].second == to_string(mypid)) {
+			kpm a = cid2kpm(j["CardID"].second);
+			int b = atoi(j["COST"].second.c_str());
+
+			autost.hands[autost.H++] = cardcons(a, b);
+
+			if (a == bc) {
+				if (j["error"].second == "NONE") {
+					openmode = 1;
+				}
+				else {
+					openmode = 0;
+				}
+			}
+		}
+
+		if (j["ZONE"].second == "PLAY" && j["CARDTYPE"].second == "MINION" && j["player"].second == to_string(mypid)) {
+			scm a = k2s(cid2kpm(j["CardID"].second));
+
+			autost.fields[autost.F++] = minioncons(a);
+		}
+	}
+
+	autost.mana = atoi(id2tag2stampandvalue[myid]["RESOURCES"].second.c_str())
+		- atoi(id2tag2stampandvalue[myid]["RESOURCES_USED"].second.c_str())
+		+ atoi(id2tag2stampandvalue[myid]["TEMP_RESOURCES"].second.c_str());
+
+	autost.num = atoi(id2tag2stampandvalue[myid]["NUM_CARDS_PLAYED_THIS_TURN"].second.c_str());
+
+	_tar = atoi(id2tag2stampandvalue[yourhid]["HEALTH"].second.c_str())
+		- atoi(id2tag2stampandvalue[yourhid]["DAMAGE"].second.c_str())
+		+ atoi(id2tag2stampandvalue[yourhid]["ARMOR"].second.c_str());
 
 	return autost;
 }

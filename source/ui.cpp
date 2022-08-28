@@ -87,7 +87,7 @@ color_t txc = EGERGB(0, 0, 255);
 
 void init() {
 	initgraph(W, H);
-	setcaption("暗歌是猪");
+	setcaption(".829.002");
 	setb(bgc);
 }
 
@@ -126,7 +126,7 @@ int manadomid;
 int cardsdomid[10];
 int minionsdomid[7];
 int ansdomid;
-int ehdomid;
+int tardomid;
 int tlimdomid;
 int lkdomid;
 int modedomid;
@@ -197,7 +197,7 @@ void getdoms() {
 	//38
 	adddd(980, 600, 1040, 640, vx, "时限", 15, tlimdomid = 39, -1, 999);
 	//39
-	adddd(1100, 600, 1160, 640, vx, "目标", 999, ehdomid = 40, -1, 999);
+	adddd(1100, 600, 1160, 640, vx, "目标", 999, tardomid = 40, -1, 999);
 	//40
 	string dftlk = getdftlk();
 	adddd(0, 0, 400, 40, lk, dftlk, 0, lkdomid = 41, -1, -1);
@@ -234,7 +234,7 @@ kpm str2k(string s) {
 	return lj;
 }
 
-int __eh = 999;
+int __tar = 999;
 int __tlim = 999999;
 
 void drawdom(domain a, bool sl) {
@@ -298,6 +298,11 @@ void drawdom(domain a, bool sl) {
 void st2doms(state st) {
 	domain tmp;
 
+	tmp = id2dom(modedomid);
+	tmp.x = openmode;
+	drawdom(tmp, 0);
+	follow(tmp);
+
 	rep(i, 0, st.H - 1) {
 		tmp = id2dom(cardsdomid[i]);
 		tmp.name = k2str(st.hands[i].name);
@@ -347,7 +352,7 @@ void st2doms(state st) {
 state doms2st(vector<domain> a) {
 	openmode = id2dom(modedomid).x;
 
-	__eh = id2dom(ehdomid).x;
+	__tar = id2dom(tardomid).x;
 	__tlim = id2dom(tlimdomid).x;
 
 	state st;
@@ -419,6 +424,24 @@ state initstcons() {
 	return a;
 }
 
+void loadauto() {
+	int _tar = 999;
+	state st = autoread(id2dom(lkdomid).name, _tar);
+	domain tmp;
+
+	st2doms(st);
+
+	tmp = id2dom(tlimdomid);
+	tmp.x = 15;
+	drawdom(tmp, 0);
+	follow(tmp);
+
+	tmp = id2dom(tardomid);
+	tmp.x = _tar;
+	drawdom(tmp, 0);
+	follow(tmp);
+}
+
 void loadsample() {
 	state initst = initstcons();
 	domain tmp;
@@ -430,7 +453,7 @@ void loadsample() {
 	drawdom(tmp, 0);
 	follow(tmp);
 
-	tmp = id2dom(ehdomid);
+	tmp = id2dom(tardomid);
 	tmp.x = 60;
 	drawdom(tmp, 0);
 	follow(tmp);
@@ -504,7 +527,7 @@ void touch(domain toselect) {
 
 			state st = doms2st(doms);
 			domain ans = id2dom(ansdomid);
-			ans.name = _solve(st, __eh, __tlim, 0, 0, 0, 1, 1, 0, 0);
+			ans.name = _solve(st, __tar, __tlim, 0, 0, 0, 1, 1, 0, 0);
 			drawdom(ans, 0);
 			follow(ans);
 			break;
@@ -529,8 +552,7 @@ void touch(domain toselect) {
 		case lk2: {
 			inputing = false;
 
-			state st = autoread(id2dom(lkdomid).name);
-			st2doms(st);
+			loadauto();
 			selected = nodomain;
 			break;
 		}

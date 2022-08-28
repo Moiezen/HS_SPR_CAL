@@ -2,4 +2,4 @@
 
 #include "basic.h"
 
-state autoread(string _s);
+state autoread(string _s, int& _eh);
