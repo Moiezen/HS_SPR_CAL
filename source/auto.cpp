@@ -52,7 +52,7 @@ void updid(int x) {
 		return;
 	}
 
-	if (mycid == -1 && id2tag2stampandvalue[x]["ZONE"].second == "HAND") {
+	if (mycid == -1 && id2tag2stampandvalue[x]["ZONE"].second == "HAND" && id2tag2stampandvalue[x]["CardID"].second.length() > 0) {
 		mycid = id2tag2stampandvalue[x]["CONTROLLER"].second[0] - 48;
 
 		rep(i, 2, 3) {
