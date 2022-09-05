@@ -2,12 +2,12 @@
 
 string o2s(ope o) {
 	string s = "";
-	s = s + k2str(o.name);
+	s = s + cn2str(o.name);
 	s = s + "(";
 	s = s + to_string(o.cost);
 	s = s + ")";
 	if (o.target != nul) {
-		s = s + "->" + s2str(o.target);
+		s = s + "->" + mn2str(o.target);
 	}
 	s = s + "\n";
 	return s;

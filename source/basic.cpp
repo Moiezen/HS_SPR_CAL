@@ -1,40 +1,40 @@
 #include "basic.h"
 
-string s2str(scm a) {
+string mn2str(minionname a) {
 	switch (a) {
-		case msyzl: {
+		case sharkspirit_m: {
 			return "”„¡È";
 			break;
 		}
-		case mhrlq: {
+		case foxyfraud_m: {
 			return "¿œ«ß";
 			break;
 		}
-		case myxwz: {
+		case mailboxdancer_m: {
 			return "œ‰ŒË";
 			break;
 		}
-		case mdy: {
+		case cutterbutter_m: {
 			return "µ∂”Õ";
 			break;
 		}
-		case mtw: {
+		case redsmoke_m: {
 			return "Ã⁄Œ‰";
 			break;
 		}
-		case mglfz: {
+		case spectralpillager_m: {
 			return "πÌ¡È";
 			break;
 		}
-		case mljsc: {
+		case anyminion_m: {
 			return "¿¨ª¯";
 			break;
 		}
-		case dfyx: {
+		case enemyhero: {
 			return "∂‘ ÷";
 			break;
 		}
-		case dfsc: {
+		case enemyminion: {
 			assert(0);
 			return "";
 			break;
@@ -50,61 +50,61 @@ string s2str(scm a) {
 		}
 	}
 }
-string k2str(kpm a) {
+string cn2str(cardname a) {
 	switch (a) {
-		case syzl: {
+		case sharkspirit: {
 			return "”„¡È";
 			break;
 		}
-		case hrlq: {
+		case foxyfraud: {
 			return "¿œ«ß";
 			break;
 		}
-		case yxwz: {
+		case mailboxdancer: {
 			return "œ‰ŒË";
 			break;
 		}
-		case dy: {
+		case cutterbutter: {
 			return "µ∂”Õ";
 			break;
 		}
-		case tw: {
+		case redsmoke: {
 			return "Ã⁄Œ‰";
 			break;
 		}
-		case glfz: {
+		case spectralpillager: {
 			return "πÌ¡È";
 			break;
 		}
-		case ljsc: {
+		case anyminion: {
 			return "ÀÊ¥”";
 			break;
 		}
-		case ayb: {
+		case shadowstep: {
 			return "∞µ≤Ω";
 			break;
 		}
-		case bc: {
+		case backstab: {
 			return "±≥¥Ã";
 			break;
 		}
-		case jb: {
+		case fakecoin: {
 			return "ºŸ±“";
 			break;
 		}
-		case sjdf: {
+		case preparation: {
 			return "À≈ª˙";
 			break;
 		}
-		case hjys: {
+		case illusionpotion: {
 			return "ª√“©";
 			break;
 		}
-		case ljfs: {
+		case anyspell: {
 			return "∑® ı";
 			break;
 		}
-		case lj: {
+		case invalid: {
 			return "¿¨ª¯";
 			break;
 		}
@@ -115,89 +115,89 @@ string k2str(kpm a) {
 		}
 	}
 }
-kpm s2k(scm a) {
+cardname mn2cn(minionname a) {
 	switch (a) {
-		case msyzl: {
-			return syzl;
+		case sharkspirit_m: {
+			return sharkspirit;
 			break;
 		}
-		case mhrlq: {
-			return hrlq;
+		case foxyfraud_m: {
+			return foxyfraud;
 			break;
 		}
-		case myxwz: {
-			return yxwz;
+		case mailboxdancer_m: {
+			return mailboxdancer;
 			break;
 		}
-		case mdy: {
-			return dy;
+		case cutterbutter_m: {
+			return cutterbutter;
 			break;
 		}
-		case mtw: {
-			return tw;
+		case redsmoke_m: {
+			return redsmoke;
 			break;
 		}
-		case mglfz: {
-			return glfz;
+		case spectralpillager_m: {
+			return spectralpillager;
 			break;
 		}
-		case mljsc: {
-			return ljsc;
+		case anyminion_m: {
+			return anyminion;
 			break;
 		}
 		default: {
 			assert(0);
-			return ljsc;
+			return anyminion;
 			break;
 		}
 	}
 }
-scm k2s(kpm a) {
+minionname cn2mn(cardname a) {
 	switch (a) {
-		case syzl: {
-			return msyzl;
+		case sharkspirit: {
+			return sharkspirit_m;
 			break;
 		}
-		case hrlq: {
-			return mhrlq;
+		case foxyfraud: {
+			return foxyfraud_m;
 			break;
 		}
-		case yxwz: {
-			return myxwz;
+		case mailboxdancer: {
+			return mailboxdancer_m;
 			break;
 		}
-		case dy: {
-			return mdy;
+		case cutterbutter: {
+			return cutterbutter_m;
 			break;
 		}
-		case tw: {
-			return mtw;
+		case redsmoke: {
+			return redsmoke_m;
 			break;
 		}
-		case glfz: {
-			return mglfz;
+		case spectralpillager: {
+			return spectralpillager_m;
 			break;
 		}
-		case ljsc: {
-			return mljsc;
+		case anyminion: {
+			return anyminion_m;
 			break;
 		}
 		default: {
 			assert(0);
-			return mljsc;
+			return anyminion_m;
 			break;
 		}
 	}
 }
-bool legalk2s(kpm a) {
+bool legalcn2mn(cardname a) {
 	switch (a) {
-		case syzl:
-		case hrlq:
-		case yxwz:
-		case dy:
-		case tw:
-		case glfz:
-		case ljsc: {
+		case sharkspirit:
+		case foxyfraud:
+		case mailboxdancer:
+		case cutterbutter:
+		case redsmoke:
+		case spectralpillager:
+		case anyminion: {
 			return true;
 			break;
 		}
@@ -207,42 +207,42 @@ bool legalk2s(kpm a) {
 		}
 	}
 }
-int bcost(scm a) {
+int bcost(minionname a) {
 	switch (a) {
-		case msyzl: {
+		case sharkspirit_m: {
 			return 4;
 			break;
 		}
-		case mhrlq: {
+		case foxyfraud_m: {
 			return 2;
 			break;
 		}
-		case myxwz: {
+		case mailboxdancer_m: {
 			return 2;
 			break;
 		}
-		case mdy: {
+		case cutterbutter_m: {
 			return 4;
 			break;
 		}
-		case mtw: {
+		case redsmoke_m: {
 			return 2;
 			break;
 		}
-		case mglfz: {
+		case spectralpillager_m: {
 			return 6;
 			break;
 		}
-		case mljsc: {
+		case anyminion_m: {
 			return 20;
 			break;
 		}
-		case dfyx: {
+		case enemyhero: {
 			assert(0);
 			return 0;
 			break;
 		}
-		case dfsc: {
+		case enemyminion: {
 			assert(0);
 			return 0;
 			break;
@@ -255,13 +255,13 @@ int bcost(scm a) {
 	}
 }
 
-card cardcons(kpm a, int b) {
+card cardcons(cardname a, int b) {
 	card c;
 	c.name = a;
 	c.cost = b;
 	return c;
 }
-minion minioncons(scm a) {
+minion minioncons(minionname a) {
 	minion b;
 	b.name = a;
 	return b;
@@ -276,7 +276,7 @@ state emptystcons() {
 	return a;
 }
 state emptyst = emptystcons();
-ope opecons(int a, kpm b, scm c) {
+ope opecons(int a, cardname b, minionname c) {
 	ope d;
 	d.cost = a;
 	d.name = b;
@@ -292,6 +292,9 @@ opes emptyoscons() {
 opes emptyos = emptyoscons();
 
 int openmode;
+int spelldebuff;
+int miniondebuff;
+int battlecrydebuff;
 
 int iseq[999], isn;
 

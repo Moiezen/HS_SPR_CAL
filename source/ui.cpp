@@ -87,7 +87,7 @@ color_t txc = EGERGB(0, 0, 255);
 
 void init() {
 	initgraph(W, H);
-	setcaption(".829.002");
+	setcaption(".20220905.001");
 	setb(bgc);
 }
 
@@ -129,6 +129,9 @@ int ansdomid;
 int tardomid;
 int tlimdomid;
 int lkdomid;
+int sdbdomid;
+int mdbdomid;
+int bdbdomid;
 int modedomid;
 int numdomid;
 int aurasdomid[4];
@@ -206,9 +209,15 @@ void getdoms() {
 	//42
 	adddd(240, 60, 300, 100, lk2, "读取", 0, 43, -1, -1);
 	//43
-	adddd(200, 400, 320, 440, vx, "背刺可用", 1, modedomid = 44, -1, 1);
+	adddd(360, 320, 480, 360, vx, "法术加费", 0, sdbdomid = 70, -1, 10);
+	//70
+	adddd(520, 320, 640, 360, vx, "随从加费", 0, mdbdomid = 71, -1, 10);
+	//71
+	adddd(680, 320, 800, 360, vx, "战吼加费", 0, bdbdomid = 72, -1, 10);
+	//72
+	adddd(200, 320, 320, 360, vx, "背刺可用", 1, modedomid = 44, -1, 1);
 	//44
-	adddd(360, 400, 480, 440, vx, "已用牌数", 0, numdomid = 45, -1, 10);
+	adddd(200, 400, 320, 440, vx, "已用牌数", 0, numdomid = 45, -1, 10);
 	//45
 	rep(i, 0, 3) adddd(200 + 160 * i, 480, 320 + 160 * i, 520, vx, a1[i], 0, aurasdomid[i] = 46 + i, -1, alim[i]);
 	//46 ... 49
@@ -216,22 +225,22 @@ void getdoms() {
 	//50
 }
 
-kpm str2k(string s) {
-	if (s == "暗步") return ayb;
-	if (s == "背刺") return bc;
-	if (s == "假币") return jb;
-	if (s == "伺机") return sjdf;
-	if (s == "幻药") return hjys;
-	if (s == "鱼灵") return syzl;
-	if (s == "老千") return hrlq;
-	if (s == "箱舞") return yxwz;
-	if (s == "刀油") return dy;
-	if (s == "腾武") return tw;
-	if (s == "鬼灵") return glfz;
-	if (s == "法术") return ljfs;
-	if (s == "随从") return ljsc;
-	if (s == "垃圾") return lj;
-	return lj;
+cardname str2cn(string s) {
+	if (s == "暗步") return shadowstep;
+	if (s == "背刺") return backstab;
+	if (s == "假币") return fakecoin;
+	if (s == "伺机") return preparation;
+	if (s == "幻药") return illusionpotion;
+	if (s == "鱼灵") return sharkspirit;
+	if (s == "老千") return foxyfraud;
+	if (s == "箱舞") return mailboxdancer;
+	if (s == "刀油") return cutterbutter;
+	if (s == "腾武") return redsmoke;
+	if (s == "鬼灵") return spectralpillager;
+	if (s == "法术") return anyspell;
+	if (s == "随从") return anyminion;
+	if (s == "垃圾") return invalid;
+	return invalid;
 }
 
 int __tar = 999;
@@ -298,6 +307,21 @@ void drawdom(domain a, bool sl) {
 void st2doms(state st) {
 	domain tmp;
 
+	tmp = id2dom(sdbdomid);
+	tmp.x = spelldebuff;
+	drawdom(tmp, 0);
+	follow(tmp);
+
+	tmp = id2dom(mdbdomid);
+	tmp.x = miniondebuff;
+	drawdom(tmp, 0);
+	follow(tmp);
+
+	tmp = id2dom(bdbdomid);
+	tmp.x = battlecrydebuff;
+	drawdom(tmp, 0);
+	follow(tmp);
+
 	tmp = id2dom(modedomid);
 	tmp.x = openmode;
 	drawdom(tmp, 0);
@@ -305,7 +329,7 @@ void st2doms(state st) {
 
 	rep(i, 0, st.H - 1) {
 		tmp = id2dom(cardsdomid[i]);
-		tmp.name = k2str(st.hands[i].name);
+		tmp.name = cn2str(st.hands[i].name);
 		tmp.x = st.hands[i].cost;
 		drawdom(tmp, 0);
 		follow(tmp);
@@ -320,7 +344,7 @@ void st2doms(state st) {
 
 	rep(i, 0, st.F - 1) {
 		tmp = id2dom(minionsdomid[i]);
-		tmp.name = s2str(st.fields[i].name);
+		tmp.name = mn2str(st.fields[i].name);
 		drawdom(tmp, 0);
 		follow(tmp);
 	}
@@ -350,6 +374,9 @@ void st2doms(state st) {
 }
 
 state doms2st(vector<domain> a) {
+	spelldebuff = id2dom(sdbdomid).x;
+	miniondebuff = id2dom(mdbdomid).x;
+	battlecrydebuff = id2dom(bdbdomid).x;
 	openmode = id2dom(modedomid).x;
 
 	__tar = id2dom(tardomid).x;
@@ -361,13 +388,13 @@ state doms2st(vector<domain> a) {
 	st.H = 0;
 	rep(i, 0, 9) {
 		tmp = id2dom(cardsdomid[i]);
-		if (tmp.name != "清除") st.hands[st.H++] = cardcons(str2k(tmp.name), tmp.x);
+		if (tmp.name != "清除") st.hands[st.H++] = cardcons(str2cn(tmp.name), tmp.x);
 	}
 
 	st.F = 0;
 	rep(i, 0, 6) {
 		tmp = id2dom(minionsdomid[i]);
-		if (tmp.name != "清除") st.fields[st.F++] = minioncons(k2s(str2k(tmp.name)));
+		if (tmp.name != "清除") st.fields[st.F++] = minioncons(cn2mn(str2cn(tmp.name)));
 	}
 
 	rep(i, 0, 3) {
@@ -390,7 +417,7 @@ void loaddoms() {
 
 bool legalcn4vn(string s) {
 	if (s == "清除") return true;
-	if (legalk2s(str2k(s))) return true;
+	if (legalcn2mn(str2cn(s))) return true;
 	return false;
 }
 
@@ -403,18 +430,23 @@ void refreshans(string _s) {
 }
 
 state initstcons() {
+	spelldebuff = 0;
+	miniondebuff = 0;
+	battlecrydebuff = 0;
+	openmode = 1;
+
 	state a;
 	a.H = 10;
-	a.hands[0] = cardcons(jb, 0);
-	a.hands[1] = cardcons(jb, 0);
-	a.hands[2] = cardcons(jb, 0);
-	a.hands[3] = cardcons(ayb, 0);
-	a.hands[4] = cardcons(sjdf, 0);
-	a.hands[5] = cardcons(hrlq, 2);
-	a.hands[6] = cardcons(dy, 4);
-	a.hands[7] = cardcons(tw, 2);
-	a.hands[8] = cardcons(glfz, 6);
-	a.hands[9] = cardcons(hjys, 4);
+	a.hands[0] = cardcons(fakecoin, 0);
+	a.hands[1] = cardcons(fakecoin, 0);
+	a.hands[2] = cardcons(fakecoin, 0);
+	a.hands[3] = cardcons(shadowstep, 0);
+	a.hands[4] = cardcons(preparation, 0);
+	a.hands[5] = cardcons(foxyfraud, 2);
+	a.hands[6] = cardcons(cutterbutter, 4);
+	a.hands[7] = cardcons(redsmoke, 2);
+	a.hands[8] = cardcons(spectralpillager, 6);
+	a.hands[9] = cardcons(illusionpotion, 4);
 	srand(time(0));
 	random_shuffle(a.hands, a.hands + 10);
 	a.F = 0;

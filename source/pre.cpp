@@ -110,13 +110,13 @@ quiz quizread() {
 	q.qst.H = 0;
 	while (n--) {
 		sc = scanf("%d %d", &s, &a);
-		q.qst.hands[q.qst.H++] = cardcons((kpm)s, a);
+		q.qst.hands[q.qst.H++] = cardcons((cardname)s, a);
 	}
 	sc = scanf("%d", &n);
 	q.qst.F = 0;
 	while (n--) {
 		sc = scanf("%d%d", &s, &a);
-		q.qst.fields[q.qst.F++] = minioncons((scm)s);
+		q.qst.fields[q.qst.F++] = minioncons((minionname)s);
 	}
 	rep(i, 0, 3) {
 		sc = scanf("%d", &q.qst.auras[i]);
@@ -191,8 +191,8 @@ void pre_main() {
 		_solve(st, 999, 15, 0, 0, 0, 1, 1, 0, 0);
 		int dmgdy = curdmg;
 
-		assert(st.hands[st.H - 1].name == dy);
-		st.hands[st.H - 1].name = syzl;
+		assert(st.hands[st.H - 1].name == cutterbutter);
+		st.hands[st.H - 1].name = sharkspirit;
 		_solve(st, 999, 15, 0, 0, 0, 1, 1, 0, 0);
 		int dmgsy = curdmg;
 

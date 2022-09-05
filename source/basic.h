@@ -5,36 +5,38 @@
 typedef long long ll;
 typedef unsigned long long ull;
 using namespace std;
-enum kpm {
-	ayb, bc, jb, sjdf, hjys, syzl, hrlq, yxwz, dy, tw, glfz, ljsc, ljfs, lj
+enum cardname {
+	shadowstep, backstab, fakecoin, preparation, illusionpotion, sharkspirit, foxyfraud, mailboxdancer, cutterbutter, redsmoke, spectralpillager, 
+	anyminion, anyspell, invalid
 };
-enum scm {
-	msyzl, mhrlq, myxwz, mdy, mtw, mglfz, mljsc, dfyx, dfsc, nul
+enum minionname {
+	sharkspirit_m, foxyfraud_m, mailboxdancer_m, cutterbutter_m, redsmoke_m, spectralpillager_m,
+	anyminion_m, enemyhero, enemyminion, nul
 	//敌方英雄-可以是鬼灵匪贼的目标
 	//敌方随从-可以是背刺的目标
 	//空目标
 	//以上虚目标均归入随从名以简化操作目标
 };
-string s2str(scm a);
-string k2str(kpm a);
-kpm s2k(scm a);
-scm k2s(kpm a);
-bool legalk2s(kpm a);
-int bcost(scm a);
+string mn2str(minionname a);
+string cn2str(cardname a);
+cardname mn2cn(minionname a);
+minionname cn2mn(cardname a);
+bool legalcn2mn(cardname a);
+int bcost(minionname a);
 
 struct card {
-	kpm name;
+	cardname name;
 	int cost;
 	//int health;
 };
-card cardcons(kpm a, int b);
+card cardcons(cardname a, int b);
 
 struct minion {
-	scm name;
+	minionname name;
 	//int health;
 	//已假设 背刺只用于去除老千和腾武 而鬼灵匪贼总能去除 因此略去health 
 };
-minion minioncons(scm a);
+minion minioncons(minionname a);
 
 struct state {
 	card hands[10]; int H;
@@ -53,11 +55,11 @@ const int alim[4] = { 1,3,2,2 };
 
 struct ope {
 	int cost;
-	kpm name;
-	scm target;
+	cardname name;
+	minionname target;
 	//由于随从暂时不区分血量，因此操作目标仅需要随从名（且已可以包括敌方英雄，敌方随从，空目标） 
 };
-ope opecons(int a, kpm b, scm c);
+ope opecons(int a, cardname b, minionname c);
 
 struct opes {
 	vector<ope> os;
@@ -69,6 +71,9 @@ opes emptyoscons();
 extern opes emptyos;
 
 extern int openmode;
+extern int spelldebuff;
+extern int miniondebuff;
+extern int battlecrydebuff;
 
 extern int iseq[999], isn;
 

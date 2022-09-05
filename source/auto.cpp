@@ -1,22 +1,22 @@
 #include "auto.h"
 
-kpm cid2kpm(string s) {
-	if (s.find("EX1_144") != -1) return ayb;
-	if (s.find("CS2_072") != -1) return bc;
-	if (s.find("CFM_630") != -1) return jb;
-	if (s.find("COIN") != -1) return jb;
-	if (s.find("GAME_005") != -1) return jb;
-	if (s.find("EX1_145") != -1) return sjdf;
-	if (s.find("SCH_352") != -1) return hjys;
-	if (s.find("TRL_092") != -1) return syzl;
-	if (s.find("DMF_511") != -1) return hrlq;
-	if (s.find("SW_070") != -1) return yxwz;
-	if (s.find("BAR_552") != -1) return dy;
-	if (s.find("DMF_071") != -1) return tw;
-	if (s.find("ICC_910") != -1) return glfz;
-	if (s.find("DMF_512") != -1) return ljfs;
-	if (s.find("LOOT_214") != -1) return ljfs;
-	return lj;
+cardname cid2kpm(string s) {
+	if (s.find("EX1_144") != -1) return shadowstep;
+	if (s.find("CS2_072") != -1) return backstab;
+	if (s.find("CFM_630") != -1) return fakecoin;
+	if (s.find("COIN") != -1) return fakecoin;
+	if (s.find("GAME_005") != -1) return fakecoin;
+	if (s.find("EX1_145") != -1) return preparation;
+	if (s.find("SCH_352") != -1) return illusionpotion;
+	if (s.find("TRL_092") != -1) return sharkspirit;
+	if (s.find("DMF_511") != -1) return foxyfraud;
+	if (s.find("SW_070") != -1) return mailboxdancer;
+	if (s.find("BAR_552") != -1) return cutterbutter;
+	if (s.find("DMF_071") != -1) return redsmoke;
+	if (s.find("ICC_910") != -1) return spectralpillager;
+	if (s.find("DMF_512") != -1) return anyspell;
+	if (s.find("LOOT_214") != -1) return anyspell;
+	return invalid;
 }
 
 string idhandle[4] = {
@@ -207,12 +207,16 @@ state autoread(string _s, int& _tar) {
 		auto j = i.second;
 
 		if (j["ZONE"].second == "HAND" && j["player"].second == to_string(mypid)) {
-			kpm a = cid2kpm(j["CardID"].second);
+			cardname a = cid2kpm(j["CardID"].second);
 			int b = atoi(j["COST"].second.c_str());
 
 			autost.hands[autost.H++] = cardcons(a, b);
 
-			if (a == bc) {
+			spelldebuff = 0;
+			miniondebuff = 0;
+			battlecrydebuff = 0;
+
+			if (a == backstab) {
 				if (j["error"].second == "NONE") {
 					openmode = 1;
 				}
@@ -223,7 +227,7 @@ state autoread(string _s, int& _tar) {
 		}
 
 		if (j["ZONE"].second == "PLAY" && j["CARDTYPE"].second == "MINION" && j["player"].second == to_string(mypid)) {
-			scm a = k2s(cid2kpm(j["CardID"].second));
+			minionname a = cn2mn(cid2kpm(j["CardID"].second));
 
 			autost.fields[autost.F++] = minioncons(a);
 		}
