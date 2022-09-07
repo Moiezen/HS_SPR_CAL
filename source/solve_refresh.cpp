@@ -34,7 +34,51 @@ int testcnt;
 
 int tick;
 
+ull statehb = 77232917;
+ull p1 = 1000000123;
+ull p2 = 1000000181;
+ull statehash(state a) {
+	ull d1 = 1;
+	rep(i, 0, a.H - 1) d1 = d1 * (a.hands[i].name * 100 + a.hands[i].cost + p1);
+	ull d2 = 1;
+	rep(i, 0, a.F - 1) d2 = d2 * (a.fields[i].name + p2);
+	//暂时当作无序
+	//事实上在trans处理中已经当作无序
+
+	ull h = d1 * statehb + d2;
+	rep(i, 0, 3) h = h * statehb + a.auras[i];
+	h = h * statehb + a.num;
+	h = h * statehb + a.mana;
+	return h;
+}
+
+map<ull, int> st2hidmg;
+int st2hidmgcountlim = (1 << 21);
+int st2hidmgcount = 0;
+int allcount = 0;
+int hashon = 1;
+
 void solve(syn q) {
+	if (hashon) {
+		allcount++;
+
+		ull hq = statehash(q.pa.first);
+		if (q.pa.second <= st2hidmg[hq] - 1) {
+			return;
+		}
+		else {
+			if (st2hidmg[hq] == 0) {
+				if (st2hidmgcount < st2hidmgcountlim) {
+					st2hidmgcount++;
+					st2hidmg[hq] = q.pa.second + 1;
+				}
+			}
+			else {
+				st2hidmg[hq] = q.pa.second + 1;
+			}
+		}
+	}
+
 	if (q.pa.second >= curdmg) {
 		if (collect == 1 && q.pa.second >= dmgbd) {
 			if (q.pa.second > curdmg) cls.clear();
@@ -111,7 +155,6 @@ void solve(syn q) {
 			pair<state, int> p = trans(q.pa.first, i); if (test == 1) testcnt++;
 			solve(syncons(make_pair(p.first, q.pa.second + p.second), q.pri + lost, os));
 			if (done > 0) return;
-
 		}
 
 	}
@@ -148,17 +191,27 @@ string _solve(state st, int _need, int _tlim, int _collect, int _addquiz, int _p
 		solve(syncons(make_pair(st, 0), 0, emptyos));
 	}
 	if (exbound == 1) {
+		st2hidmg.clear();
+		st2hidmgcount = 0;
+		allcount = 0;
+
 		bound = -boundbasic;
 		bounded = 0;
+
 		solve(syncons(make_pair(st, 0), 0, emptyos));
+
 		while (done == 0 && bounded == 1) {
+			st2hidmg.clear();
+			st2hidmgcount = 0;
+			allcount = 0;
+
 			bound -= boundbasic;
 			bounded = 0;
+
 			solve(syncons(make_pair(st, 0), 0, emptyos));
 		}
 	}
 
-	//if(print==1) show(curos,curdmg);
 	if (collect == 1 && done == 0) {
 		if (curdmg >= dmgbd) {
 			allcls.insert(allcls.end(), cls.begin(), cls.end());

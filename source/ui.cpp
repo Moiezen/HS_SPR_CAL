@@ -87,7 +87,7 @@ color_t txc = EGERGB(0, 0, 255);
 
 void init() {
 	initgraph(W, H);
-	setcaption(".20220907.001");
+	setcaption(".20220907.002");
 	setb(bgc);
 }
 
@@ -448,7 +448,7 @@ state initstcons() {
 	a.hands[8] = cardcons(spectralpillager, 6);
 	a.hands[9] = cardcons(illusionpotion, 4);
 	srand(time(0));
-	random_shuffle(a.hands, a.hands + 10);
+	//random_shuffle(a.hands, a.hands + 10);
 	a.F = 0;
 	rep(i, 0, 3) a.auras[i] = 0;
 	a.mana = 10;

@@ -106,7 +106,6 @@ void solve(syn q) {
 			pair<state, int> p = trans(q.pa.first, i); if (test == 1) testcnt++;
 			solve(syncons(make_pair(p.first, q.pa.second + p.second), q.pri + lost, os));
 			if (done > 0) return;
-
 		}
 
 	}
@@ -153,7 +152,6 @@ string _solve(state st, int _need, int _tlim, int _collect, int _addquiz, int _p
 		}
 	}
 
-	//if(print==1) show(curos,curdmg);
 	if (collect == 1 && done == 0) {
 		if (curdmg >= dmgbd) {
 			allcls.insert(allcls.end(), cls.begin(), cls.end());
