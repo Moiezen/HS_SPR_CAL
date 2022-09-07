@@ -87,7 +87,7 @@ color_t txc = EGERGB(0, 0, 255);
 
 void init() {
 	initgraph(W, H);
-	setcaption(".20220905.001");
+	setcaption(".20220907.001");
 	setb(bgc);
 }
 
