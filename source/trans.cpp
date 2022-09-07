@@ -43,7 +43,7 @@ pair<state, int> trans(state st, ope op) {
 			st.mana -= max(op.cost - st.auras[0] * 2 - st.auras[2] * 3 + spelldebuff, 0);
 			if (st.mana < 0) return badpair;
 
-			st.hands[st.H++] = cardcons(mn2cn(op.target), bcost(op.target) - 2);
+			st.hands[st.H++] = cardcons(mn2cn(op.target), originalcost(op.target) - 2);
 			st.auras[0] = 0;
 			st.auras[2] = st.auras[3];
 			st.auras[3] = 0;

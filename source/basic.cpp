@@ -207,7 +207,7 @@ bool legalcn2mn(cardname a) {
 		}
 	}
 }
-int bcost(minionname a) {
+int originalcost(minionname a) {
 	switch (a) {
 		case sharkspirit_m: {
 			return 4;

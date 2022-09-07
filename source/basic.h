@@ -22,7 +22,7 @@ string cn2str(cardname a);
 cardname mn2cn(minionname a);
 minionname cn2mn(cardname a);
 bool legalcn2mn(cardname a);
-int bcost(minionname a);
+int originalcost(minionname a);
 
 struct card {
 	cardname name;
