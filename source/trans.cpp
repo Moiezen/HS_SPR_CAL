@@ -1,24 +1,16 @@
 #include "trans.h"
 
-bool rmv1(minion* a, int& n, minionname b) {
-	rep(i, 0, n - 1) {
-		if (a[i].name == b) {
-			rep(j, i + 1, n - 1) a[j - 1] = a[j];
-			n--;
-			return true;
-		}
+void rmvh(card* a, int& n, int x) {
+	rep(i, x, n - 1) {
+		a[i] = a[i + 1];
 	}
-	return false;
+	n--;
 }
-bool rmv2(card* a, int& n, cardname b, int c) {
-	rep(i, 0, n - 1) {
-		if (a[i].name == b && a[i].cost == c) {
-			rep(j, i + 1, n - 1) a[j - 1] = a[j];
-			n--;
-			return true;
-		}
+void rmvf(minion* a, int& n, int x) {
+	rep(i, x, n - 1) {
+		a[i] = a[i + 1];
 	}
-	return false;
+	n--;
 }
 
 pair<state, int> badpair = make_pair(emptyst, -999999);
@@ -31,19 +23,25 @@ int twice(state st) {
 	return 1;
 }
 
-pair<state, int> trans(state st, ope op) {
+pair<state, int> trans(state st, oxy ox) {
+	if (ox.x >= st.H || ox.x < 0 || ox.y >= st.F || ox.y < -2) {
+		return badpair;
+	}
+	ope op = exact(st, ox);
+
 	int dmg = 0;
 	bool flag = true;
 	switch (op.name) {
 		case shadowstep: {
-			flag = rmv2(st.hands, st.H, op.name, op.cost);
-			if (!flag) return badpair;
-			flag = rmv1(st.fields, st.F, op.target);
-			if (!flag) return badpair;
-			st.mana -= max(op.cost - st.auras[0] * 2 - st.auras[2] * 3 + spelldebuff, 0);
-			if (st.mana < 0) return badpair;
+			rmvh(st.hands, st.H, ox.x);
+			if (ox.y < 0) return badpair;
+			rmvf(st.fields, st.F, ox.y);
 
 			st.hands[st.H++] = cardcons(mn2cn(op.target), originalcost(op.target) - 2);
+
+			st.mana -= max(op.cost - st.auras[0] * 2 - st.auras[2] + spelldebuff, 0);
+			if (st.mana < 0) return badpair;
+
 			st.auras[0] = 0;
 			st.auras[2] = st.auras[3];
 			st.auras[3] = 0;
@@ -51,29 +49,23 @@ pair<state, int> trans(state st, ope op) {
 			break;
 		}
 		case backstab: {
-			//暂时未考虑区分背刺敌方随从和背刺血量>2的友方随从，统一记作null，且认为总能这么做 
-			//用作去除时，仅考虑去除狐人老千和赤烟腾武 
-			flag = rmv2(st.hands, st.H, op.name, op.cost);
-			if (!flag) return badpair;
-			if (op.target == nul) {
+			rmvh(st.hands, st.H, ox.x);
+			if (ox.y == -1) {
 				if (openmode == 0) {
-					flag = false;
-					rep(i, 0, st.F - 1) {
-						if (st.fields[i].name == sharkspirit_m || st.fields[i].name == cutterbutter_m || st.fields[i].name == spectralpillager_m) {
-							flag = true;
-							break;
-						}
-					}
-					if (!flag) return badpair;
+					return badpair;
 				}
 			}
-			else {
-				flag = (op.target == foxyfraud_m) || (op.target == mailboxdancer_m) || (op.target == redsmoke_m);
-				if (!flag) return badpair;
-				flag = rmv1(st.fields, st.F, op.target);
-				if (!flag) return badpair;
+			else if (ox.y >= 0) {
+				if (st.fields[ox.y].curhealth != st.fields[ox.y].health) {
+					return badpair;
+				}
+				st.fields[ox.y].curhealth -= 2;
+				if (st.fields[ox.y].curhealth <= 0) {
+					rmvf(st.fields, st.F, ox.y);
+				}
 			}
-			st.mana -= max(op.cost - st.auras[0] * 2 - st.auras[2] * 3 + spelldebuff, 0);
+
+			st.mana -= max(op.cost - st.auras[0] * 2 - st.auras[2] + spelldebuff, 0);
 			if (st.mana < 0) return badpair;
 
 			st.auras[0] = 0;
@@ -82,10 +74,34 @@ pair<state, int> trans(state st, ope op) {
 			st.num++;
 			break;
 		}
+		case bonespike: {
+			rmvh(st.hands, st.H, ox.x);
+			int kill = 0;
+			if (ox.y == -1) {
+				return badpair;
+			}
+			else if (ox.y >= 0) {
+				st.fields[ox.y].curhealth -= 3;
+				if (st.fields[ox.y].curhealth <= 0) {
+					rmvf(st.fields, st.F, ox.y);
+					kill = 1;
+				}
+			}
+
+			st.mana -= max(op.cost - st.auras[0] * 2 - st.auras[2] + spelldebuff, 0);
+			if (st.mana < 0) return badpair;
+
+			st.auras[0] = 0;
+			st.auras[2] = st.auras[3] + kill * 2;
+			st.auras[3] = 0;
+			st.num++;
+			break;
+		}
 		case fakecoin: {
-			flag = rmv2(st.hands, st.H, op.name, op.cost) && (op.target == nul);
-			if (!flag) return badpair;
-			st.mana -= max(op.cost - st.auras[0] * 2 - st.auras[2] * 3 + spelldebuff, 0);
+			rmvh(st.hands, st.H, ox.x);
+			if (ox.y != -1) return badpair;
+
+			st.mana -= max(op.cost - st.auras[0] * 2 - st.auras[2] + spelldebuff, 0);
 			if (st.mana < 0) return badpair;
 
 			st.mana = min(st.mana + 1, manalim);
@@ -96,9 +112,10 @@ pair<state, int> trans(state st, ope op) {
 			break;
 		}
 		case preparation: {
-			flag = rmv2(st.hands, st.H, op.name, op.cost) && (op.target == nul);
-			if (!flag) return badpair;
-			st.mana -= max(op.cost - st.auras[0] * 2 - st.auras[2] * 3 + spelldebuff, 0);
+			rmvh(st.hands, st.H, ox.x);
+			if (ox.y != -1) return badpair;
+
+			st.mana -= max(op.cost - st.auras[0] * 2 - st.auras[2] + spelldebuff, 0);
 			if (st.mana < 0) return badpair;
 
 			st.auras[0] = 1;
@@ -108,15 +125,17 @@ pair<state, int> trans(state st, ope op) {
 			break;
 		}
 		case illusionpotion: {
-			flag = rmv2(st.hands, st.H, op.name, op.cost) && (op.target == nul);
-			if (!flag) return badpair;
-			st.mana -= max(op.cost - st.auras[0] * 2 - st.auras[2] * 3 + spelldebuff, 0);
-			if (st.mana < 0) return badpair;
+			rmvh(st.hands, st.H, ox.x);
+			if (ox.y != -1) return badpair;
 
 			rep(i, 0, st.F - 1) {
 				if (st.H >= hlim) break;
-				st.hands[st.H++] = cardcons(mn2cn(st.fields[i].name), 1);
+				st.hands[st.H++] = cardcons(mn2cn(st.fields[i].name), 1, 1);
 			}
+
+			st.mana -= max(op.cost - st.auras[0] * 2 - st.auras[2] + spelldebuff, 0);
+			if (st.mana < 0) return badpair;
+
 			st.auras[0] = 0;
 			st.auras[2] = st.auras[3];
 			st.auras[3] = 0;
@@ -124,12 +143,15 @@ pair<state, int> trans(state st, ope op) {
 			break;
 		}
 		case sharkspirit: {
-			flag = rmv2(st.hands, st.H, op.name, op.cost) && (op.target == nul);
-			if (!flag) return badpair;
-			if (st.F >= mlim) flag = false;
-			else st.fields[st.F++] = minioncons(cn2mn(op.name));
-			if (!flag) return badpair;
-			st.mana -= max(op.cost - st.auras[2] * 3 + miniondebuff, 0);
+			int h = st.hands[ox.x].health;
+			rmvh(st.hands, st.H, ox.x);
+			if (ox.y != -1) return badpair;
+			if (st.F >= mlim) {
+				return badpair;
+			}
+			st.fields[st.F++] = minioncons(cn2mn(op.name), h, h);
+
+			st.mana -= max(op.cost - st.auras[2] + miniondebuff, 0);
 			if (st.mana < 0) return badpair;
 
 			st.auras[2] = st.auras[3];
@@ -139,12 +161,15 @@ pair<state, int> trans(state st, ope op) {
 		}
 		case foxyfraud: {
 			int twi = twice(st);
-			flag = rmv2(st.hands, st.H, op.name, op.cost) && (op.target == nul);
-			if (!flag) return badpair;
-			if (st.F >= mlim) flag = false;
-			else st.fields[st.F++] = minioncons(cn2mn(op.name));
-			if (!flag) return badpair;
-			st.mana -= max(op.cost - st.auras[2] * 3 + miniondebuff + battlecrydebuff, 0);
+			int h = st.hands[ox.x].health;
+			rmvh(st.hands, st.H, ox.x);
+			if (ox.y != -1) return badpair;
+			if (st.F >= mlim) {
+				return badpair;
+			}
+			st.fields[st.F++] = minioncons(cn2mn(op.name), h, h);
+
+			st.mana -= max(op.cost - st.auras[2] + miniondebuff + battlecrydebuff, 0);
 			if (st.mana < 0) return badpair;
 
 			st.auras[1] = min(st.auras[1] + twi, alim[1]);
@@ -155,12 +180,15 @@ pair<state, int> trans(state st, ope op) {
 		}
 		case mailboxdancer: {
 			int twi = twice(st);
-			flag = rmv2(st.hands, st.H, op.name, op.cost) && (op.target == nul);
-			if (!flag) return badpair;
-			if (st.F >= mlim) flag = false;
-			else st.fields[st.F++] = minioncons(cn2mn(op.name));
-			if (!flag) return badpair;
-			st.mana -= max(op.cost - st.auras[2] * 3 + miniondebuff + battlecrydebuff, 0);
+			int h = st.hands[ox.x].health;
+			rmvh(st.hands, st.H, ox.x);
+			if (ox.y != -1) return badpair;
+			if (st.F >= mlim) {
+				return badpair;
+			}
+			st.fields[st.F++] = minioncons(cn2mn(op.name), h, h);
+
+			st.mana -= max(op.cost - st.auras[2] + miniondebuff + battlecrydebuff, 0);
 			if (st.mana < 0) return badpair;
 
 			while (twi--) {
@@ -174,18 +202,21 @@ pair<state, int> trans(state st, ope op) {
 		}
 		case cutterbutter: {
 			int twi = twice(st);
-			flag = rmv2(st.hands, st.H, op.name, op.cost) && (op.target == nul);
-			if (!flag) return badpair;
-			if (st.F >= mlim) flag = false;
-			else st.fields[st.F++] = minioncons(cn2mn(op.name));
-			if (!flag) return badpair;
-			st.mana -= max(op.cost - st.auras[1] * 2 - st.auras[2] * 3 + miniondebuff, 0);
+			int h = st.hands[ox.x].health;
+			rmvh(st.hands, st.H, ox.x);
+			if (ox.y != -1) return badpair;
+			if (st.F >= mlim) {
+				return badpair;
+			}
+			st.fields[st.F++] = minioncons(cn2mn(op.name), h, h);
+
+			st.mana -= max(op.cost - st.auras[1] * 2 - st.auras[2] + miniondebuff, 0);
 			if (st.mana < 0) return badpair;
 
 			st.auras[1] = 0;
 			if (st.num) {
-				st.auras[2] = min(st.auras[3] + twi, alim[2]);
-				st.auras[3] = twi;
+				st.auras[2] = min(st.auras[3] + twi * 3, alim[2]);
+				st.auras[3] = twi * 3;
 			}
 			else {
 				st.auras[2] = st.auras[3];
@@ -195,20 +226,26 @@ pair<state, int> trans(state st, ope op) {
 			break;
 		}
 		case redsmoke: {
-			flag = rmv2(st.hands, st.H, op.name, op.cost);
-			if (!flag) return badpair;
-			if (st.F >= mlim) flag = false;
-			else st.fields[st.F++] = minioncons(cn2mn(op.name));
-			if (!flag) return badpair;
-			if (op.target == nul && st.F == 1) {
-				//空场，腾武可空交 
+			int twi = twice(st);
+			int h = st.hands[ox.x].health;
+			rmvh(st.hands, st.H, ox.x);
+			if (st.F >= mlim) {
+				return badpair;
 			}
-			else {
-				flag = rmv1(st.fields, st.F, op.target);
-				if (!flag) return badpair;
+			st.fields[st.F++] = minioncons(cn2mn(op.name), h, h);
+
+			if (ox.y == -1 && st.F == 1) {
+				//腾武可空交（空场限定）
+			}
+			else if (ox.y >= 0) {
+				rmvf(st.fields, st.F, ox.y);
 				st.hands[st.H++] = cardcons(mn2cn(op.target), 1);
 			}
-			st.mana -= max(op.cost - st.auras[2] * 3 + miniondebuff + battlecrydebuff, 0);
+			else {
+				return badpair;
+			}
+
+			st.mana -= max(op.cost - st.auras[2] + miniondebuff + battlecrydebuff, 0);
 			if (st.mana < 0) return badpair;
 
 			st.auras[2] = st.auras[3];
@@ -218,20 +255,25 @@ pair<state, int> trans(state st, ope op) {
 		}
 		case spectralpillager: {
 			int twi = twice(st);
-			flag = rmv2(st.hands, st.H, op.name, op.cost);
-			if (!flag) return badpair;
-			if (st.F >= mlim) flag = false;
-			else st.fields[st.F++] = minioncons(cn2mn(op.name));
-			if (!flag) return badpair;
-			if (op.target == enemyhero) {
+			int h = st.hands[ox.x].health;
+			rmvh(st.hands, st.H, ox.x);
+			if (st.F >= mlim) {
+				return badpair;
+			}
+			st.fields[st.F++] = minioncons(cn2mn(op.name), h, h);
+
+			if (ox.y == -2) {
 				dmg = st.num * twi;
 			}
-			else {
+			else if (ox.y >= 0) {
 				//应用总能去除的假定 
-				bool flag = rmv1(st.fields, st.F, op.target);
-				if (!flag) return badpair;
+				rmvf(st.fields, st.F, ox.y);
 			}
-			st.mana -= max(op.cost - st.auras[1] * 2 - st.auras[2] * 3 + miniondebuff, 0);
+			else {
+				return badpair;
+			}
+
+			st.mana -= max(op.cost - st.auras[1] * 2 - st.auras[2] + miniondebuff, 0);
 			if (st.mana < 0) return badpair;
 
 			st.auras[1] = 0;
@@ -242,12 +284,14 @@ pair<state, int> trans(state st, ope op) {
 		}
 		case anyminion: {
 			//假设为无词条随从，不适用于吉尔尼斯 
-			bool flag = rmv2(st.hands, st.H, op.name, op.cost) && (op.target == nul);
-			if (!flag) return badpair;
-			if (st.F >= mlim) flag = false;
-			else st.fields[st.F++] = minioncons(cn2mn(op.name));
-			if (!flag) return badpair;
-			st.mana -= max(op.cost - st.auras[2] * 3 + miniondebuff, 0);
+			int h = st.hands[ox.x].health;
+			rmvh(st.hands, st.H, ox.x);
+			if (st.F >= mlim) {
+				return badpair;
+			}
+			st.fields[st.F++] = minioncons(cn2mn(op.name), h, h);
+
+			st.mana -= max(op.cost - st.auras[2] + miniondebuff, 0);
 			if (st.mana < 0) return badpair;
 
 			st.auras[2] = st.auras[3];
@@ -256,12 +300,39 @@ pair<state, int> trans(state st, ope op) {
 			break;
 		}
 		case anyspell: {
-			bool flag = rmv2(st.hands, st.H, op.name, op.cost) && (op.target == nul);
-			if (!flag) return badpair;
-			st.mana -= max(op.cost - st.auras[0] * 2 - st.auras[2] * 3 + spelldebuff, 0);
+			rmvh(st.hands, st.H, ox.x);
+			if (ox.y != -1) return badpair;
+
+			st.mana -= max(op.cost - st.auras[0] * 2 - st.auras[2] + spelldebuff, 0);
 			if (st.mana < 0) return badpair;
 
 			st.auras[0] = 0;
+			st.auras[2] = st.auras[3];
+			st.auras[3] = 0;
+			st.num++;
+			break;
+		}
+		case anyweapon: {
+			rmvh(st.hands, st.H, ox.x);
+			if (ox.y != -1) return badpair;
+
+			st.mana -= max(op.cost - st.auras[2], 0);
+			if (st.mana < 0) return badpair;
+
+			st.auras[2] = st.auras[3];
+			st.auras[3] = 0;
+			st.num++;
+			break;
+		}
+		case anycombospell: {
+			rmvh(st.hands, st.H, ox.x);
+			if (ox.y != -1) return badpair;
+
+			st.mana -= max(op.cost - st.auras[0] * 2 - st.auras[1] * 2 - st.auras[2] + spelldebuff, 0);
+			if (st.mana < 0) return badpair;
+
+			st.auras[0] = 0;
+			st.auras[1] = 0;
 			st.auras[2] = st.auras[3];
 			st.auras[3] = 0;
 			st.num++;

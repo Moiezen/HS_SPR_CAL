@@ -6,8 +6,8 @@ typedef long long ll;
 typedef unsigned long long ull;
 using namespace std;
 enum cardname {
-	shadowstep, backstab, fakecoin, preparation, illusionpotion, sharkspirit, foxyfraud, mailboxdancer, cutterbutter, redsmoke, spectralpillager, 
-	anyminion, anyspell, invalid
+	shadowstep, backstab, fakecoin, preparation, illusionpotion, sharkspirit, foxyfraud, mailboxdancer, cutterbutter, redsmoke, spectralpillager,
+	anyminion, anyspell, invalid, anyweapon, anycombospell, bonespike
 };
 enum minionname {
 	sharkspirit_m, foxyfraud_m, mailboxdancer_m, cutterbutter_m, redsmoke_m, spectralpillager_m,
@@ -23,20 +23,24 @@ cardname mn2cn(minionname a);
 minionname cn2mn(cardname a);
 bool legalcn2mn(cardname a);
 int originalcost(minionname a);
+int originalhealth(minionname a);
+int originalhealth_c(cardname a);
 
 struct card {
 	cardname name;
 	int cost;
-	//int health;
+	int health;
 };
 card cardcons(cardname a, int b);
+card cardcons(cardname a, int b, int c);
 
 struct minion {
 	minionname name;
-	//int health;
-	//已假设 背刺只用于去除老千和腾武 而鬼灵匪贼总能去除 因此略去health 
+	int health;
+	int curhealth;
 };
 minion minioncons(minionname a);
+minion minioncons(minionname a, int b, int c);
 
 struct state {
 	card hands[10]; int H;
@@ -51,15 +55,34 @@ extern state emptyst;
 const int hlim = 10;
 const int mlim = 7;
 const int manalim = 10;
-const int alim[4] = { 1,3,2,2 };
+const int alim[4] = { 1,6,12,6 };
+
+struct oxy {
+	int x, y;
+	//x 手牌序号
+	//y 目标序号
+	//y=-1 nul
+	//y=-2 enemyhero
+};
+oxy oxycons(int x, int y);
 
 struct ope {
 	int cost;
 	cardname name;
 	minionname target;
-	//由于随从暂时不区分血量，因此操作目标仅需要随从名（且已可以包括敌方英雄，敌方随从，空目标） 
 };
 ope opecons(int a, cardname b, minionname c);
+
+ope exact(state a, oxy b);
+
+struct oxys {
+	vector<oxy> os;
+	~oxys() {
+		os.clear();
+	}
+};
+oxys emptyoxyscons();
+extern oxys emptyoxys;
 
 struct opes {
 	vector<ope> os;
@@ -67,8 +90,8 @@ struct opes {
 		os.clear();
 	}
 };
-opes emptyoscons();
-extern opes emptyos;
+opes emptyopescons();
+extern opes emptyopes;
 
 extern int openmode;
 extern int spelldebuff;

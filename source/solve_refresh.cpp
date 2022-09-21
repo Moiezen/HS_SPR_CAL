@@ -112,7 +112,7 @@ void solve(syn q) {
 		}
 	}
 
-	opes of = offer(q.pa.first);
+	oxys o0 = offer(q.pa.first);
 
 	vector<double> sums;
 	double sum, allsum, lost;
@@ -121,8 +121,8 @@ void solve(syn q) {
 		sums.clear();
 		allsum = 0;
 
-		for (auto i : of.os) {
-			iseq[isn++] = o2i(i);
+		for (auto i : o0.os) {
+			iseq[isn++] = o2i(exact(q.pa.first, i));
 
 			sum = sumbasic;
 			rep(i, (isn - 1) - flimr + 1, (isn - 1) - fliml + 1) {
@@ -135,9 +135,9 @@ void solve(syn q) {
 	}
 
 	int j = 0;
-	for (auto i : of.os) {
+	for (auto i : o0.os) {
 		opes os = q.os;
-		os.os.push_back(i);
+		os.os.push_back(exact(q.pa.first, i));
 
 		if (optimize == 1) {
 			sum = sums[j++];
@@ -166,7 +166,7 @@ string _solve(state st, int _need, int _tlim, int _collect, int _addquiz, int _p
 
 	need = _need;
 	done = curdmg = 0;
-	curos = emptyos;
+	curos = emptyopes;
 
 	tlim = _tlim;
 	tbegin = time(0);
@@ -188,7 +188,7 @@ string _solve(state st, int _need, int _tlim, int _collect, int _addquiz, int _p
 
 	if (exbound == 0) {
 		bound = 1e9;
-		solve(syncons(make_pair(st, 0), 0, emptyos));
+		solve(syncons(make_pair(st, 0), 0, emptyopes));
 	}
 	if (exbound == 1) {
 		st2hidmg.clear();
@@ -198,7 +198,7 @@ string _solve(state st, int _need, int _tlim, int _collect, int _addquiz, int _p
 		bound = -boundbasic;
 		bounded = 0;
 
-		solve(syncons(make_pair(st, 0), 0, emptyos));
+		solve(syncons(make_pair(st, 0), 0, emptyopes));
 
 		while (done == 0 && bounded == 1) {
 			st2hidmg.clear();
@@ -208,7 +208,7 @@ string _solve(state st, int _need, int _tlim, int _collect, int _addquiz, int _p
 			bound -= boundbasic;
 			bounded = 0;
 
-			solve(syncons(make_pair(st, 0), 0, emptyos));
+			solve(syncons(make_pair(st, 0), 0, emptyopes));
 		}
 	}
 

@@ -3,6 +3,8 @@
 cardname cid2cn(string s) {
 	if (s.find("EX1_144") != -1) return shadowstep;
 	if (s.find("CS2_072") != -1) return backstab;
+	if (s == "SW_412") return backstab;
+	if (s == "REV_939") return bonespike;
 	if (s.find("COIN") != -1) return fakecoin;
 	if (s == "GAME_005") return fakecoin;
 	if (s == "CFM_630") return fakecoin;
@@ -15,20 +17,23 @@ cardname cid2cn(string s) {
 	if (s == "DMF_071") return redsmoke;
 	if (s == "ICC_910") return spectralpillager;
 	if (s.find("REV_938") != -1) return anyspell;
-	if (s == "TSC_916") return anyspell;
+	if (s == "TSC_916") return anycombospell;
 	if (s == "ULD_715") return anyspell;
-	if (s == "DED_004") return anyspell;
-	if (s == "DMF_515") return anyspell;
+	if (s == "DED_004") return anyweapon;
+	if (s == "DMF_515") return anycombospell;
 	if (s == "WC_016") return anyspell;
 	if (s == "REV_825") return anyspell;
 	if (s == "LOOT_214")  return anyspell;
 	if (s == "DMF_512")  return anyspell;
+	if (s == "LOOT_204") return anyspell;
 	return invalid;
 }
 
 int cid2oc(string s) {
 	if (s.find("EX1_144") != -1) return 0;
 	if (s.find("CS2_072") != -1) return 0;
+	if (s == "SW_412") return 1;
+	if (s == "REV_939") return 2;
 	if (s.find("COIN") != -1) return 0;
 	if (s == "GAME_005") return 0;
 	if (s == "CFM_630") return 0;
@@ -49,6 +54,8 @@ int cid2oc(string s) {
 	if (s == "REV_825") return 2;
 	if (s == "LOOT_214") return 2;
 	if (s == "DMF_512") return 4;
+	if (s == "LOOT_204") return 2;
+	return 0;
 }
 
 string idhandle[4] = {
@@ -160,20 +167,33 @@ int updcurid(string s, int x) {
 	return x;
 }
 
+vector<string> valids;
+
 state autoread(string _s, int& _tar) {
 	cin.clear();
 	//重置输入流，防止无法读取 
 
 	FILE* f = freopen((_s + "\\Logs\\power.log").c_str(), "r", stdin);
 
-	string s;
-	int lines = 0;
+	string __s;
+
+	valids.clear();
+
+	while (getline(cin, __s)) {
+		if (__s.find("- CREATE_GAME") != -1) {
+			valids.clear();
+		}
+		valids.push_back(__s);
+	}
+
+	fclose(stdin);
+
+	//将唯一有效段存至valids，以下仅对这段进行读取
 
 	int curid = 0;
 	string t, u, v, lu, lv;
 
-	while (getline(cin, s)) {
-		lines++;
+	for (auto s : valids) {
 		if (s.find("- CREATE_GAME") != -1) {
 			mycid = -1;
 			myid = -1;
@@ -228,8 +248,6 @@ state autoread(string _s, int& _tar) {
 		}
 	}
 
-	fclose(stdin);
-
 	//读取完毕，开始转化
 
 	state autost = emptyst;
@@ -239,13 +257,16 @@ state autoread(string _s, int& _tar) {
 	for (auto i : id2tag2stampandvalue) {
 		auto j = i.second;
 
-		if (j["ZONE"].second == "HAND" && j["player"].second == to_string(mypid)) {
+		if (j["ZONE"].second == "HAND" && j["CONTROLLER"].second == to_string(mycid)) {
 			string cid = j["CardID"].second;
 			cardname a = cid2cn(cid);
 			int b = cid2oc(cid);
+			int c = atoi(j["HEALTH"].second.c_str());
+			int p = atoi(j["ZONE_POSITION"].second.c_str());
 
-			id2pos[i.first] = autost.H;
-			autost.hands[autost.H++] = cardcons(a, b);
+			id2pos[i.first] = p;
+			autost.hands[p - 1] = cardcons(a, b, c);
+			autost.H++;
 
 			spelldebuff = 0;
 			miniondebuff = 0;
@@ -261,10 +282,27 @@ state autoread(string _s, int& _tar) {
 			}
 		}
 
-		if (j["ZONE"].second == "PLAY" && j["CARDTYPE"].second == "MINION" && j["player"].second == to_string(mypid)) {
+		if (j["ZONE"].second == "PLAY" && j["CARDTYPE"].second == "MINION" && j["CONTROLLER"].second == to_string(mycid)) {
 			minionname a = cn2mn(cid2cn(j["CardID"].second));
+			int b = atoi(j["HEALTH"].second.c_str());
+			int c = atoi(j["DAMAGE"].second.c_str());
+			int p = atoi(j["ZONE_POSITION"].second.c_str());
 
-			autost.fields[autost.F++] = minioncons(a);
+			autost.fields[p - 1] = minioncons(a, b, b - c);
+			autost.F++;
+		}
+
+		if (j["ZONE"].second == "PLAY" && j["CARDTYPE"].second == "MINION" && j["CONTROLLER"].second == to_string(yourcid)) {
+			string cid = j["CardID"].second;
+			if (cid == "FP1_017") {
+				battlecrydebuff += 2;
+			}
+			if (cid == "ICC_706") {
+				spelldebuff += 2;
+			}
+			if (cid == "REV_837") {
+				miniondebuff += 2;
+			}
 		}
 
 		if (j["ZONE"].second == "PLAY" && j["CARDTYPE"].second == "ENCHANTMENT") {
@@ -279,11 +317,11 @@ state autoread(string _s, int& _tar) {
 				if (buff == "BAR_552o") {
 					int a = atoi(j["TAG_SCRIPT_DATA_NUM_1"].second.c_str());
 					if (a == 0) {
-						autost.auras[2] += 1;
-						autost.auras[3] += 1;
+						autost.auras[2] += 3;
+						autost.auras[3] += 3;
 					}
 					if (a == 1) {
-						autost.auras[2] += 1;
+						autost.auras[2] += 3;
 					}
 				}
 				if (buff == "FP1_030e") {
@@ -301,17 +339,26 @@ state autoread(string _s, int& _tar) {
 			}
 			else {
 				int a = atoi(j["ATTACHED"].second.c_str());
-				if (buff == "GBL_002e") {
-					autost.hands[id2pos[a]].cost -= 2;
-				}
-				if (buff == "SCH_352e2") {
-					autost.hands[id2pos[a]].cost = 1;
-				}
-				if (buff == "DMF_071e") {
-					autost.hands[id2pos[a]].cost = 1;
-				}
-				if (buff == "DED_004e") {
-					autost.hands[id2pos[a]].cost -= 1;
+				int p = id2pos[a] - 1;
+				if (p >= 0 && p <= 9) {
+					if (buff == "GBL_002e") {
+						autost.hands[p].cost -= 2;
+					}
+					if (buff == "LOOT_204e") {
+						autost.hands[p].cost -= 2;
+					}
+					if (buff == "SCH_352e2") {
+						autost.hands[p].cost = 1;
+					}
+					if (buff == "DMF_071e") {
+						autost.hands[p].cost = 1;
+					}
+					if (buff == "DED_004e") {
+						autost.hands[p].cost -= 1;
+					}
+					if (buff == "BAR_074e") {
+						autost.hands[p].cost += 1;
+					}
 				}
 			}
 		}

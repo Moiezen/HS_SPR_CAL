@@ -2,4 +2,4 @@
 
 #include "basic.h"
 
-opes offer(state a);
+oxys offer(state a);

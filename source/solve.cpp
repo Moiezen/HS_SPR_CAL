@@ -117,7 +117,7 @@ string _solve(state st, int _need, int _tlim, int _collect, int _addquiz, int _p
 
 	need = _need;
 	done = curdmg = 0;
-	curos = emptyos;
+	curos = emptyopes;
 
 	tlim = _tlim;
 	tbegin = time(0);
@@ -139,16 +139,16 @@ string _solve(state st, int _need, int _tlim, int _collect, int _addquiz, int _p
 
 	if (exbound == 0) {
 		bound = 1e9;
-		solve(syncons(make_pair(st, 0), 0, emptyos));
+		solve(syncons(make_pair(st, 0), 0, emptyopes));
 	}
 	if (exbound == 1) {
 		bound = -boundbasic;
 		bounded = 0;
-		solve(syncons(make_pair(st, 0), 0, emptyos));
+		solve(syncons(make_pair(st, 0), 0, emptyopes));
 		while (done == 0 && bounded == 1) {
 			bound -= boundbasic;
 			bounded = 0;
-			solve(syncons(make_pair(st, 0), 0, emptyos));
+			solve(syncons(make_pair(st, 0), 0, emptyopes));
 		}
 	}
 

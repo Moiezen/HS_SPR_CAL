@@ -2,4 +2,4 @@
 
 #include "basic.h"
 
-pair<state, int> trans(state st, ope op);
+pair<state, int> trans(state st, oxy o);

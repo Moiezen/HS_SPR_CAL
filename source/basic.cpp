@@ -104,6 +104,18 @@ string cn2str(cardname a) {
 			return "法术";
 			break;
 		}
+		case anyweapon: {
+			return "武器";
+			break;
+		}
+		case anycombospell: {
+			return "连法";
+			break;
+		}
+		case bonespike: {
+			return "齿刺";
+			break;
+		}
 		case invalid: {
 			return "垃圾";
 			break;
@@ -234,7 +246,7 @@ int originalcost(minionname a) {
 			break;
 		}
 		case anyminion_m: {
-			return 20;
+			return 99;
 			break;
 		}
 		case enemyhero: {
@@ -254,18 +266,92 @@ int originalcost(minionname a) {
 		}
 	}
 }
+int originalhealth(minionname a) {
+	switch (a) {
+		case sharkspirit_m: {
+			return 3;
+			break;
+		}
+		case foxyfraud_m: {
+			return 2;
+			break;
+		}
+		case mailboxdancer_m: {
+			return 2;
+			break;
+		}
+		case cutterbutter_m: {
+			return 3;
+			break;
+		}
+		case redsmoke_m: {
+			return 2;
+			break;
+		}
+		case spectralpillager_m: {
+			return 5;
+			break;
+		}
+		case anyminion_m: {
+			return 99;
+			break;
+		}
+		case enemyhero: {
+			assert(0);
+			return 0;
+			break;
+		}
+		case enemyminion: {
+			assert(0);
+			return 0;
+			break;
+		}
+		default: {
+			assert(0);
+			return 0;
+			break;
+		}
+	}
+}
+int originalhealth_c(cardname a) {
+	if (legalcn2mn(a)) {
+		return originalhealth(cn2mn(a));
+	}
+	else {
+		return 0;
+	}
+}
 
 card cardcons(cardname a, int b) {
 	card c;
 	c.name = a;
 	c.cost = b;
+	c.health = originalhealth_c(a);
 	return c;
 }
+card cardcons(cardname a, int b, int c) {
+	card d;
+	d.name = a;
+	d.cost = b;
+	d.health = c;
+	return d;
+}
+
 minion minioncons(minionname a) {
 	minion b;
 	b.name = a;
+	b.health = originalhealth(a);
+	b.curhealth = b.health;
 	return b;
 }
+minion minioncons(minionname a, int b, int c) {
+	minion d;
+	d.name = a;
+	d.health = b;
+	d.curhealth = c;
+	return d;
+}
+
 state emptystcons() {
 	state a;
 	a.H = 0;
@@ -276,6 +362,13 @@ state emptystcons() {
 	return a;
 }
 state emptyst = emptystcons();
+
+oxy oxycons(int a, int b){
+	oxy c;
+	c.x = a;
+	c.y = b;
+	return c;
+}
 ope opecons(int a, cardname b, minionname c) {
 	ope d;
 	d.cost = a;
@@ -283,13 +376,36 @@ ope opecons(int a, cardname b, minionname c) {
 	d.target = c;
 	return d;
 }
+ope exact(state a, oxy b) {
+	minionname z = nul;
+	if (b.y >= 0) {
+		z = a.fields[b.y].name;
+		if (a.hands[b.x].name == backstab && a.fields[b.y].curhealth > 2) {
+			z = nul;
+		}
+	}
+	else if (b.y == -1) {
+		z = nul;
+	}
+	else {
+		z = enemyhero;
+	}
+	return opecons(a.hands[b.x].cost, a.hands[b.x].name, z);
+}
 
-opes emptyoscons() {
+oxys emptyoxyscons() {
+	oxys a;
+	a.os.clear();
+	return a;
+}
+oxys emptyoxys = emptyoxyscons();
+
+opes emptyopescons() {
 	opes a;
 	a.os.clear();
 	return a;
 }
-opes emptyos = emptyoscons();
+opes emptyopes = emptyopescons();
 
 int openmode;
 int spelldebuff;

@@ -59,7 +59,7 @@ bool inrect(int x, int y, rect a) {
 }
 
 enum domt {
-	nodomt, vnx, vx, vn, cn, c0, cx, go, ans, lk, lk1, lk2, exa
+	nodomt, vnx, vx, vn, cn, c0, cx, go, ans, lk, lk1, lk2, exa, vx0
 };
 struct domain {
 	rect r;
@@ -87,7 +87,7 @@ color_t txc = EGERGB(0, 0, 255);
 
 void init() {
 	initgraph(W, H);
-	setcaption(".20220907.002");
+	setcaption(".20220921.001");
 	setb(bgc);
 }
 
@@ -123,8 +123,8 @@ domain selected;
 bool inputing;
 
 int manadomid;
-int cardsdomid[10];
-int minionsdomid[7];
+int handsdomid[10];
+int fieldsdomid[7];
 int ansdomid;
 int tardomid;
 int tlimdomid;
@@ -136,6 +136,10 @@ int modedomid;
 int numdomid;
 int aurasdomid[4];
 int exadomid;
+
+int chdomid[10];
+int fmhdomid[7];
+int fmchdomid[7];
 
 domain id2dom(int id) {
 	for (auto i : doms) {
@@ -156,8 +160,8 @@ void follow(domain a) {
 	}
 }
 
-string n1[15] = { "鱼灵","老千","箱舞","刀油","鬼灵","腾武","暗步","背刺","假币","伺机","幻药","随从","法术","垃圾","清除" };
-int k1[15] = { 'Y','L','X','D','G','T','A','B','J','S','H',-1,-1,-1,46 };
+string n1[18] = { "鱼灵","老千","箱舞","刀油","鬼灵","腾武","暗步","背刺","齿刺","假币","伺机","幻药","随从","法术","垃圾","武器","连法","清除" };
+int k1[18] = { 'Y','L','X','D','G','T','A','B','C','J','S','H',-1,-1,-1,-1,-1,46 };
 string a1[4] = { "伺机层数","老千层数","刀一层数","刀二层数" };
 
 string getdftlk() {
@@ -184,42 +188,48 @@ void getdoms() {
 
 	adddd(860, 600, 920, 640, vx, "水晶", 0, manadomid = 1, -1, 10);
 	//1
-	rep(i, 0, 9) adddd(200 + i * 60, 600, 260 + i * 60, 640, vnx, "清除", 0, cardsdomid[i] = 2 + i, 200000 + 1000 * i, 10);
+	rep(i, 0, 9) adddd(200 + i * 60, 560, 260 + i * 60, 600, vnx, "清除", 0, handsdomid[i] = 2 + i, 1200000 + 1000 * i, 10);
 	//2 ... 11
-	rep(i, 0, 6) adddd(200 + i * 60, 560, 260 + i * 60, 600, vn, "清除", 0, minionsdomid[i] = 101 + i, 300000 + 1000 * i, -1);
+	rep(i, 0, 9) adddd(200 + i * 60, 600, 260 + i * 60, 640, vx0, "", 0, chdomid[i] = 201 + i, 1100000, 5);
+	//201 ... 210
+	rep(i, 0, 6) adddd(200 + i * 60, 520, 260 + i * 60, 560, vn, "清除", 0, fieldsdomid[i] = 101 + i, 1300000 + 1000 * i, -1);
 	//101 ... 107
+	rep(i, 0, 6) adddd(200 + i * 60, 480, 260 + i * 60, 520, vx0, "", 0, fmhdomid[i] = 301 + i, 1400000, 5);
+	//301 ... 307
+	rep(i, 0, 6) adddd(200 + i * 60, 440, 260 + i * 60, 480, vx0, "", 0, fmchdomid[i] = 401 + i, 1500000, 5);
+	//401 ... 407
 	adddd(40, 400, 80, 440, c0, "", 0, 12, 8, -1);
 	//12
 	rep(i, 0, 9) adddd((i + 2) % 3 * 40, 400 + (i + 2) / 3 * 40, 40 + (i + 2) % 3 * 40, 440 + (i + 2) / 3 * 40, cx, "", i, 13 + i, 48 + i, -1);
 	//13 ... 22
-	rep(i, 0, 14) adddd(i % 3 * 40, 160 + i / 3 * 40, 40 + i % 3 * 40, 200 + i / 3 * 40, cn, n1[i], 0, 123 + i, k1[i], -1);
-	//123 ... 137
+	rep(i, 0, 17) adddd(i % 4 * 40, 160 + i / 4 * 40, 40 + i % 4 * 40, 200 + i / 4 * 40, cn, n1[i], 0, 123 + i, k1[i], -1);
+	//123 ... 139
 	adddd(1220, 600, 1280, 640, go, "计算", 0, 37, 13, -1);
 	//37
 	adddd(880, 0, 1280, 560, ans, "", 0, ansdomid = 38, -1, -1);
 	//38
 	adddd(980, 600, 1040, 640, vx, "时限", 15, tlimdomid = 39, -1, 999);
 	//39
-	adddd(1100, 600, 1160, 640, vx, "目标", 999, tardomid = 40, -1, 999);
+	adddd(1100, 600, 1160, 640, vx, "目标", 30, tardomid = 40, -1, 999);
 	//40
 	string dftlk = getdftlk();
 	adddd(0, 0, 400, 40, lk, dftlk, 0, lkdomid = 41, -1, -1);
 	//41
 	adddd(100, 60, 160, 100, lk1, "修改", 0, 42, -1, -1);
 	//42
-	adddd(240, 60, 300, 100, lk2, "读取", 0, 43, -1, -1);
+	adddd(240, 60, 300, 100, lk2, "读取", 0, 43, 17, -1);
 	//43
-	adddd(320, 400, 440, 440, vx, "法术加费", 0, sdbdomid = 70, -1, 10);
+	adddd(320, 200, 440, 240, vx, "法术加费", 0, sdbdomid = 70, -1, 10);
 	//70
-	adddd(440, 400, 560, 440, vx, "随从加费", 0, mdbdomid = 71, -1, 10);
+	adddd(440, 200, 560, 240, vx, "随从加费", 0, mdbdomid = 71, -1, 10);
 	//71
-	adddd(560, 400, 680, 440, vx, "战吼加费", 0, bdbdomid = 72, -1, 10);
+	adddd(560, 200, 680, 240, vx, "战吼加费", 0, bdbdomid = 72, -1, 10);
 	//72
-	adddd(200, 400, 320, 440, vx, "背刺可用", 1, modedomid = 44, -1, 1);
+	adddd(200, 200, 320, 240, vx, "背刺可用", 1, modedomid = 44, -1, 1);
 	//44
-	adddd(200, 480, 320, 520, vx, "已用牌数", 0, numdomid = 45, -1, 10);
+	adddd(200, 280, 320, 320, vx, "已用牌数", 0, numdomid = 45, -1, 10);
 	//45
-	rep(i, 0, 3) adddd(320 + 120 * i, 480, 440 + 120 * i, 520, vx, a1[i], 0, aurasdomid[i] = 46 + i, -1, alim[i]);
+	rep(i, 0, 3) adddd(320 + 120 * i, 280, 440 + 120 * i, 320, vx, a1[i], 0, aurasdomid[i] = 46 + i, -1, alim[i]);
 	//46 ... 49
 	adddd(0, 600, 120, 640, exa, "查看样例", 0, exadomid = 50, -1, -1);
 	//50
@@ -228,6 +238,7 @@ void getdoms() {
 cardname str2cn(string s) {
 	if (s == "暗步") return shadowstep;
 	if (s == "背刺") return backstab;
+	if (s == "齿刺") return bonespike;
 	if (s == "假币") return fakecoin;
 	if (s == "伺机") return preparation;
 	if (s == "幻药") return illusionpotion;
@@ -239,6 +250,8 @@ cardname str2cn(string s) {
 	if (s == "鬼灵") return spectralpillager;
 	if (s == "法术") return anyspell;
 	if (s == "随从") return anyminion;
+	if (s == "武器") return anyweapon;
+	if (s == "连法") return anycombospell;
 	if (s == "垃圾") return invalid;
 	return invalid;
 }
@@ -270,6 +283,11 @@ void drawdom(domain a, bool sl) {
 		}
 		case vx: {
 			textr(r, txc, a.name + to_string(a.x));
+			break;
+		}
+		case vx0: {
+			if (a.x == 0) textr(r, txc, "");
+			else textr(r, txc, a.name + to_string(a.x));
 			break;
 		}
 		case vn: {
@@ -328,29 +346,59 @@ void st2doms(state st) {
 	follow(tmp);
 
 	rep(i, 0, st.H - 1) {
-		tmp = id2dom(cardsdomid[i]);
+		tmp = id2dom(handsdomid[i]);
 		tmp.name = cn2str(st.hands[i].name);
 		tmp.x = st.hands[i].cost;
 		drawdom(tmp, 0);
 		follow(tmp);
+
+		tmp = id2dom(chdomid[i]);
+		tmp.x = st.hands[i].health;
+		drawdom(tmp, 0);
+		follow(tmp);
 	}
 	rep(i, st.H, 9) {
-		tmp = id2dom(cardsdomid[i]);
+		tmp = id2dom(handsdomid[i]);
 		tmp.name = "清除";
+		tmp.x = 0;
+		drawdom(tmp, 0);
+		follow(tmp);
+
+		tmp = id2dom(chdomid[i]);
 		tmp.x = 0;
 		drawdom(tmp, 0);
 		follow(tmp);
 	}
 
 	rep(i, 0, st.F - 1) {
-		tmp = id2dom(minionsdomid[i]);
+		tmp = id2dom(fieldsdomid[i]);
 		tmp.name = mn2str(st.fields[i].name);
+		drawdom(tmp, 0);
+		follow(tmp);
+
+		tmp = id2dom(fmhdomid[i]);
+		tmp.x = st.fields[i].health;
+		drawdom(tmp, 0);
+		follow(tmp);
+
+		tmp = id2dom(fmchdomid[i]);
+		tmp.x = st.fields[i].curhealth;
 		drawdom(tmp, 0);
 		follow(tmp);
 	}
 	rep(i, st.F, 6) {
-		tmp = id2dom(minionsdomid[i]);
+		tmp = id2dom(fieldsdomid[i]);
 		tmp.name = "清除";
+		drawdom(tmp, 0);
+		follow(tmp);
+
+		tmp = id2dom(fmhdomid[i]);
+		tmp.x = 0;
+		drawdom(tmp, 0);
+		follow(tmp);
+
+		tmp = id2dom(fmchdomid[i]);
+		tmp.x = 0;
 		drawdom(tmp, 0);
 		follow(tmp);
 	}
@@ -383,18 +431,21 @@ state doms2st(vector<domain> a) {
 	__tlim = id2dom(tlimdomid).x;
 
 	state st;
-	domain tmp;
+	domain tmp, tmp2, tmp3;
 
 	st.H = 0;
 	rep(i, 0, 9) {
-		tmp = id2dom(cardsdomid[i]);
-		if (tmp.name != "清除") st.hands[st.H++] = cardcons(str2cn(tmp.name), tmp.x);
+		tmp = id2dom(handsdomid[i]);
+		tmp2 = id2dom(chdomid[i]);
+		if (tmp.name != "清除") st.hands[st.H++] = cardcons(str2cn(tmp.name), tmp.x, tmp2.x);
 	}
 
 	st.F = 0;
 	rep(i, 0, 6) {
-		tmp = id2dom(minionsdomid[i]);
-		if (tmp.name != "清除") st.fields[st.F++] = minioncons(cn2mn(str2cn(tmp.name)));
+		tmp = id2dom(fieldsdomid[i]);
+		tmp2 = id2dom(fmhdomid[i]);
+		tmp3 = id2dom(fmchdomid[i]);
+		if (tmp.name != "清除") st.fields[st.F++] = minioncons(cn2mn(str2cn(tmp.name)), tmp2.x, tmp3.x);
 	}
 
 	rep(i, 0, 3) {
@@ -469,9 +520,11 @@ void loadauto() {
 	follow(tmp);
 
 	tmp = id2dom(tardomid);
-	tmp.x = _tar;
-	drawdom(tmp, 0);
-	follow(tmp);
+	if (tmp.x != 999) {
+		tmp.x = _tar;
+		drawdom(tmp, 0);
+		follow(tmp);
+	}
 }
 
 void loadsample() {
@@ -504,7 +557,8 @@ void touch(domain toselect) {
 		}
 		case vnx:
 		case vn:
-		case vx: {
+		case vx:
+		case vx0: {
 			if (selected.id == toselect.id) {
 				inputing = false;
 
@@ -528,11 +582,37 @@ void touch(domain toselect) {
 				selected.name = toselect.name;
 				drawdom(selected, 1);
 				follow(selected);
+
+				if (selected.id >= handsdomid[0] && selected.id <= handsdomid[9]) {
+					domain tmp;
+					int z = selected.id - handsdomid[0];
+					//then handsdomid[z] = selected.id
+
+					tmp = id2dom(chdomid[z]);
+					tmp.x = originalhealth_c(str2cn(selected.name));
+					drawdom(tmp, 0);
+					follow(tmp);
+				}
+				if (selected.id >= fieldsdomid[0] && selected.id <= fieldsdomid[6]) {
+					domain tmp;
+					int z = selected.id - fieldsdomid[0];
+					//then handsdomid[z] = selected.id
+
+					tmp = id2dom(fmhdomid[z]);
+					tmp.x = originalhealth(cn2mn(str2cn(selected.name)));
+					drawdom(tmp, 0);
+					follow(tmp);
+
+					tmp = id2dom(fmchdomid[z]);
+					tmp.x = originalhealth(cn2mn(str2cn(selected.name)));
+					drawdom(tmp, 0);
+					follow(tmp);
+				}
 			}
 			break;
 		}
 		case c0: {
-			if (selected.type == vx || selected.type == vnx) {
+			if (selected.type == vx || selected.type == vnx || selected.type == vx0) {
 				inputing = true;
 				
 				selected.x = 0;
@@ -542,7 +622,7 @@ void touch(domain toselect) {
 			break;
 		}
 		case cx: {
-			if (selected.type == vx || selected.type == vnx) {
+			if (selected.type == vx || selected.type == vnx || selected.type == vx0) {
 				if (!inputing) {
 					selected.x = 0;
 				}
@@ -586,6 +666,11 @@ void touch(domain toselect) {
 
 			loadauto();
 			selected = nodomain;
+
+			domain tmp = id2dom(ansdomid);
+			tmp.name = "";
+			drawdom(tmp, 0);
+			follow(tmp);
 			break;
 		}
 		case exa: {
@@ -610,6 +695,9 @@ void click(int x, int y) {
 }
 
 void press(int k) {
+	//rect a = rectcons(610, 0, 670, 40);
+	//textr(a, txc, to_string(k));
+
 	if (k == 37) {
 		k = selected.key - 1000;
 	}
@@ -622,6 +710,14 @@ void press(int k) {
 	if (k == 40) {
 		k = selected.key - 100000;
 	}
+
+	//上下左右特例
+
+	if (k >= 96 && k <= 105) {
+		k = k - 48;
+	}
+
+	//小键盘数字键特例
 
 	domain t = nodomain;
 	for (auto i : doms) {
