@@ -66,11 +66,16 @@ string dbfid2cid(int x) {
 int nums[99], nn;
 
 vector<string> deckcode2cids(string s) {
+    vector<string> cids;
+    cids.clear();
+
     int l = s.length();
     string t = "";
     rep(i, 0, l - 1) t = t + plainu6(char2u6(s[i]));
 
     int l2 = t.length();
+    if (l2 % 8) return cids;
+
     int cur = 0;
     int base = 1;
     nn = 0;
@@ -80,18 +85,18 @@ vector<string> deckcode2cids(string s) {
         cur = cur + base * bit;
         base = base * 128;
         if (t[8 * i] == 48) {
+            if (nn >= 50) return cids;
             nums[nn++] = cur;
             cur = 0;
             base = 1;
         }
     }
 
-    vector<string> cids;
-    cids.clear();
-
     int m = nums[5];
+    if (5 + m >= nn) return cids;
     rep(i, 0, m - 1) cids.push_back(dbfid2cid(nums[6 + i]));
     int k = nums[6 + m];
+    if (6 + m + k >= nn) return cids;
     rep(i, 0, k - 1) rep(j, 0, 1) cids.push_back(dbfid2cid(nums[7 + m + i]));
 
     return cids;
@@ -113,6 +118,8 @@ void parsedeck(string _s) {
     fclose(stdin);
 
     auto p = code.find("A");
+    if (p == -1) return;
+
     code = code.substr(p);
 
     vector<string> cids = deckcode2cids(code);
