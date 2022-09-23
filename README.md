@@ -134,6 +134,6 @@ Hearthstone Spectral Pillager Rogue Calculator
 
 小提示3：如果读取失败，可能是因为路径设置错误，或者路径下并不存在power.log，后者可能可以通过使用一次官方记牌器解决。
 
-**已经整合成了多文件版本，请使用cmake以得到可执行文件**
+**已经整合成了多文件版本，请在Windows环境下使用cmake以得到可执行文件HSSPRCAL.exe**
 
-buildw/有Windows的可执行版本HSSPRCAL.exe，结合fml.txt使用。不对该exe运行产生的任何后果负责，如不信任请自行cmake。
+buildw/有Windows环境下的可执行文件HSSPRCAL.exe，结合fml.txt使用。不对该exe运行产生的任何后果负责，如不信任请自行cmake。
