@@ -142,6 +142,27 @@ pair<state, int> trans(state st, oxy ox) {
 			st.num++;
 			break;
 		}
+		case shroud: {
+			rmvh(st.hands, st.H, ox.x);
+			if (ox.y != -1) return badpair;
+
+			if (st.drawmn < deckmn && st.drawmn + 2 >= deckmn) {
+				rep(i, 0, deckmn - 1) {
+					if (st.H >= hlim) break;
+					st.hands[st.H++] = cardcons(mn2cn(deckm[i]), originalcost(deckm[i]));
+				}
+			}
+			st.drawmn += 2;
+
+			st.mana -= max(op.cost - st.auras[0] * 2 - st.auras[2] + spelldebuff, 0);
+			if (st.mana < 0) return badpair;
+
+			st.auras[0] = 0;
+			st.auras[2] = st.auras[3];
+			st.auras[3] = 0;
+			st.num++;
+			break;
+		}
 		case sharkspirit: {
 			int h = st.hands[ox.x].health;
 			rmvh(st.hands, st.H, ox.x);
@@ -149,7 +170,9 @@ pair<state, int> trans(state st, oxy ox) {
 			if (st.F >= mlim) {
 				return badpair;
 			}
-			st.fields[st.F++] = minioncons(cn2mn(op.name), h, h);
+			if (h > 0) {
+				st.fields[st.F++] = minioncons(cn2mn(op.name), h, h);
+			}
 
 			st.mana -= max(op.cost - st.auras[2] + miniondebuff, 0);
 			if (st.mana < 0) return badpair;
@@ -222,6 +245,35 @@ pair<state, int> trans(state st, oxy ox) {
 				st.auras[2] = st.auras[3];
 				st.auras[3] = 0;
 			}
+			st.num++;
+			break;
+		}
+		case elvensinger: {
+			int twi = twice(st);
+			int h = st.hands[ox.x].health;
+			rmvh(st.hands, st.H, ox.x);
+			if (ox.y != -1) return badpair;
+			if (st.F >= mlim) {
+				return badpair;
+			}
+			st.fields[st.F++] = minioncons(cn2mn(op.name), h, h);
+
+			if (st.num) {
+				if (st.drawmn < deckmn && st.drawmn + twi * 2 >= deckmn) {
+					rep(i, 0, deckmn - 1) {
+						if (st.H >= hlim) break;
+						st.hands[st.H++] = cardcons(mn2cn(deckm[i]), originalcost(deckm[i]));
+					}
+				}
+				st.drawmn += twi * 2;
+			}
+			
+			st.mana -= max(op.cost - st.auras[1] * 2 - st.auras[2] + miniondebuff, 0);
+			if (st.mana < 0) return badpair;
+
+			st.auras[1] = 0;
+			st.auras[2] = st.auras[3];
+			st.auras[3] = 0;
 			st.num++;
 			break;
 		}

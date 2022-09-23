@@ -59,7 +59,7 @@ bool inrect(int x, int y, rect a) {
 }
 
 enum domt {
-	nodomt, vnx, vx, vn, cn, c0, cx, go, ans, lk, lk1, lk2, exa, vx0
+	nodomt, vnx, vx, vn, cn, c0, cx, go, ans, lk, lk1, lk2, exa, vx0, gogo
 };
 struct domain {
 	rect r;
@@ -87,7 +87,7 @@ color_t txc = EGERGB(0, 0, 255);
 
 void init() {
 	initgraph(W, H);
-	setcaption(".20220921.001");
+	setcaption(".20220923.001");
 	setb(bgc);
 }
 
@@ -140,6 +140,7 @@ int exadomid;
 int chdomid[10];
 int fmhdomid[7];
 int fmchdomid[7];
+int deckmdomid[10];
 
 domain id2dom(int id) {
 	for (auto i : doms) {
@@ -160,15 +161,19 @@ void follow(domain a) {
 	}
 }
 
-string n1[18] = { "鱼灵","老千","箱舞","刀油","鬼灵","腾武","暗步","背刺","齿刺","假币","伺机","幻药","随从","法术","垃圾","武器","连法","清除" };
-int k1[18] = { 'Y','L','X','D','G','T','A','B','C','J','S','H',-1,-1,-1,-1,-1,46 };
-string a1[4] = { "伺机层数","老千层数","刀一层数","刀二层数" };
+const int countn = 20;
+string n1[countn] = { "鱼灵","老千","箱舞","刀油","鬼灵","咏唱","腾武","暗步","背刺","齿刺","假币","伺机","幻药","帷幕","随从","法术","垃圾","武器","连法","清除" };
+int k1[countn] = { 'Y','L','X','D','G','E','T','A','B','C','J','S','H','W',-1,-1,-1,-1,-1,46};
+string a1[4] = { "伺机层数","老千层数","下一减费","下二减费" };
 
 string getdftlk() {
+	cin.clear();
+	//重置输入流，防止无法读取 
+
 	FILE* f = freopen("dft.txt", "r", stdin);
 
-	char s[105];
-	scanf("%100s", s);
+	string s;
+	getline(cin, s);
 
 	fclose(stdin);
 
@@ -198,14 +203,18 @@ void getdoms() {
 	//301 ... 307
 	rep(i, 0, 6) adddd(200 + i * 60, 440, 260 + i * 60, 480, vx0, "", 0, fmchdomid[i] = 401 + i, 1500000, 5);
 	//401 ... 407
+	rep(i, 0, 9) adddd(200 + i * 60, 360, 260 + i * 60, 400, vn, "清除", 0, deckmdomid[i] = 1001 + i, 9300000 + 1000 * i, -1);
+	//1001 ... 1010
 	adddd(40, 400, 80, 440, c0, "", 0, 12, 8, -1);
 	//12
 	rep(i, 0, 9) adddd((i + 2) % 3 * 40, 400 + (i + 2) / 3 * 40, 40 + (i + 2) % 3 * 40, 440 + (i + 2) / 3 * 40, cx, "", i, 13 + i, 48 + i, -1);
 	//13 ... 22
-	rep(i, 0, 17) adddd(i % 4 * 40, 160 + i / 4 * 40, 40 + i % 4 * 40, 200 + i / 4 * 40, cn, n1[i], 0, 123 + i, k1[i], -1);
+	rep(i, 0, countn - 1) adddd(i % 4 * 40, 160 + i / 4 * 40, 40 + i % 4 * 40, 200 + i / 4 * 40, cn, n1[i], 0, 123 + i, k1[i], -1);
 	//123 ... 139
 	adddd(1220, 600, 1280, 640, go, "计算", 0, 37, 13, -1);
 	//37
+	adddd(1220, 560, 1280, 600, gogo, "读算", 0, 737, 187, -1);
+	//737
 	adddd(880, 0, 1280, 560, ans, "", 0, ansdomid = 38, -1, -1);
 	//38
 	adddd(980, 600, 1040, 640, vx, "时限", 15, tlimdomid = 39, -1, 999);
@@ -217,7 +226,7 @@ void getdoms() {
 	//41
 	adddd(100, 60, 160, 100, lk1, "修改", 0, 42, -1, -1);
 	//42
-	adddd(240, 60, 300, 100, lk2, "读取", 0, 43, 17, -1);
+	adddd(240, 60, 300, 100, lk2, "读取", 0, 43, 32, -1);
 	//43
 	adddd(320, 200, 440, 240, vx, "法术加费", 0, sdbdomid = 70, -1, 10);
 	//70
@@ -242,12 +251,14 @@ cardname str2cn(string s) {
 	if (s == "假币") return fakecoin;
 	if (s == "伺机") return preparation;
 	if (s == "幻药") return illusionpotion;
+	if (s == "帷幕") return shroud;
 	if (s == "鱼灵") return sharkspirit;
 	if (s == "老千") return foxyfraud;
 	if (s == "箱舞") return mailboxdancer;
 	if (s == "刀油") return cutterbutter;
 	if (s == "腾武") return redsmoke;
 	if (s == "鬼灵") return spectralpillager;
+	if (s == "咏唱") return elvensinger;
 	if (s == "法术") return anyspell;
 	if (s == "随从") return anyminion;
 	if (s == "武器") return anyweapon;
@@ -297,6 +308,7 @@ void drawdom(domain a, bool sl) {
 		}
 		case cn:
 		case go:
+		case gogo:
 		case lk1:
 		case lk2:
 		case exa: {
@@ -344,6 +356,20 @@ void st2doms(state st) {
 	tmp.x = openmode;
 	drawdom(tmp, 0);
 	follow(tmp);
+
+	rep(i, 0, deckmn - 1) {
+		tmp = id2dom(deckmdomid[i]);
+		tmp.name = mn2str(deckm[i]);
+		drawdom(tmp, 0);
+		follow(tmp);
+	}
+
+	rep(i, deckmn, 9) {
+		tmp = id2dom(deckmdomid[i]);
+		tmp.name = "清除";
+		drawdom(tmp, 0);
+		follow(tmp);
+	}
 
 	rep(i, 0, st.H - 1) {
 		tmp = id2dom(handsdomid[i]);
@@ -433,6 +459,12 @@ state doms2st(vector<domain> a) {
 	state st;
 	domain tmp, tmp2, tmp3;
 
+	deckmn = 0;
+	rep(i, 0, 9) {
+		tmp = id2dom(deckmdomid[i]);
+		if (tmp.name != "清除") deckm[deckmn++] = cn2mn(str2cn(tmp.name));
+	}
+
 	st.H = 0;
 	rep(i, 0, 9) {
 		tmp = id2dom(handsdomid[i]);
@@ -504,6 +536,7 @@ state initstcons() {
 	rep(i, 0, 3) a.auras[i] = 0;
 	a.mana = 10;
 	a.num = 0;
+	a.drawmn = 0;
 	return a;
 }
 
@@ -599,12 +632,12 @@ void touch(domain toselect) {
 					//then handsdomid[z] = selected.id
 
 					tmp = id2dom(fmhdomid[z]);
-					tmp.x = originalhealth(cn2mn(str2cn(selected.name)));
+					tmp.x = originalhealth_c(str2cn(selected.name));
 					drawdom(tmp, 0);
 					follow(tmp);
 
 					tmp = id2dom(fmchdomid[z]);
-					tmp.x = originalhealth(cn2mn(str2cn(selected.name)));
+					tmp.x = originalhealth_c(str2cn(selected.name));
 					drawdom(tmp, 0);
 					follow(tmp);
 				}
@@ -636,6 +669,24 @@ void touch(domain toselect) {
 		}
 		case go: {
 			inputing = false;
+
+			state st = doms2st(doms);
+			domain ans = id2dom(ansdomid);
+			ans.name = _solve(st, __tar, __tlim, 0, 0, 0, 1, 1, 0, 0);
+			drawdom(ans, 0);
+			follow(ans);
+			break;
+		}
+		case gogo: {
+			inputing = false;
+
+			loadauto();
+			selected = nodomain;
+
+			domain tmp = id2dom(ansdomid);
+			tmp.name = "";
+			drawdom(tmp, 0);
+			follow(tmp);
 
 			state st = doms2st(doms);
 			domain ans = id2dom(ansdomid);

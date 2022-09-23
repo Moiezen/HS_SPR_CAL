@@ -49,6 +49,7 @@ ull statehash(state a) {
 	rep(i, 0, 3) h = h * statehb + a.auras[i];
 	h = h * statehb + a.num;
 	h = h * statehb + a.mana;
+	h = h * statehb + a.drawmn;
 	return h;
 }
 

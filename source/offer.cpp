@@ -51,8 +51,8 @@ oxys offer(state a) {
 		if (na == spectralpillager) {
 			os.os.push_back(oxycons(i, -2));
 		}
-		if (na == backstab || na == fakecoin || na == preparation || na == illusionpotion
-		 || na == mailboxdancer || na == foxyfraud || na == cutterbutter || na == redsmoke
+		if (na == backstab || na == fakecoin || na == preparation || na == illusionpotion || na == shroud
+		 || na == mailboxdancer || na == foxyfraud || na == cutterbutter || na == elvensinger || na == redsmoke
 		 || na == sharkspirit || na == anyminion || na == anyspell || na == anyweapon || na == anycombospell || na == bonespike) {
 			os.os.push_back(oxycons(i, -1));
 		}

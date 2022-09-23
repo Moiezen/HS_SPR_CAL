@@ -26,8 +26,11 @@ string mn2str(minionname a) {
 			return "¹íÁé";
 			break;
 		}
+		case elvensinger_m: {
+			return "Ó½³ª";
+		}
 		case anyminion_m: {
-			return "À¬»ø";
+			return "Ëæ´Ó";
 			break;
 		}
 		case enemyhero: {
@@ -76,6 +79,10 @@ string cn2str(cardname a) {
 			return "¹íÁé";
 			break;
 		}
+		case elvensinger: {
+			return "Ó½³ª";
+			break;
+		}
 		case anyminion: {
 			return "Ëæ´Ó";
 			break;
@@ -116,6 +123,9 @@ string cn2str(cardname a) {
 			return "³İ´Ì";
 			break;
 		}
+		case shroud: {
+			return "á¡Ä»";
+		}
 		case invalid: {
 			return "À¬»ø";
 			break;
@@ -151,6 +161,10 @@ cardname mn2cn(minionname a) {
 		}
 		case spectralpillager_m: {
 			return spectralpillager;
+			break;
+		}
+		case elvensinger_m: {
+			return elvensinger;
 			break;
 		}
 		case anyminion_m: {
@@ -190,6 +204,10 @@ minionname cn2mn(cardname a) {
 			return spectralpillager_m;
 			break;
 		}
+		case elvensinger: {
+			return elvensinger_m;
+			break;
+		}
 		case anyminion: {
 			return anyminion_m;
 			break;
@@ -209,6 +227,7 @@ bool legalcn2mn(cardname a) {
 		case cutterbutter:
 		case redsmoke:
 		case spectralpillager:
+		case elvensinger:
 		case anyminion: {
 			return true;
 			break;
@@ -244,6 +263,9 @@ int originalcost(minionname a) {
 		case spectralpillager_m: {
 			return 6;
 			break;
+		}
+		case elvensinger_m: {
+			return 4;
 		}
 		case anyminion_m: {
 			return 99;
@@ -291,6 +313,9 @@ int originalhealth(minionname a) {
 		case spectralpillager_m: {
 			return 5;
 			break;
+		}
+		case elvensinger_m: {
+			return 2;
 		}
 		case anyminion_m: {
 			return 99;
@@ -359,6 +384,7 @@ state emptystcons() {
 	rep(i, 0, 3) a.auras[i] = 0;
 	a.mana = 0;
 	a.num = 0;
+	a.drawmn = 0;
 	return a;
 }
 state emptyst = emptystcons();
@@ -411,6 +437,9 @@ int openmode;
 int spelldebuff;
 int miniondebuff;
 int battlecrydebuff;
+
+int deckmn;
+minionname deckm[10];
 
 int iseq[999], isn;
 

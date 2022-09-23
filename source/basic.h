@@ -7,11 +7,11 @@ typedef unsigned long long ull;
 using namespace std;
 enum cardname {
 	shadowstep, backstab, fakecoin, preparation, illusionpotion, sharkspirit, foxyfraud, mailboxdancer, cutterbutter, redsmoke, spectralpillager,
-	anyminion, anyspell, invalid, anyweapon, anycombospell, bonespike
+	anyminion, anyspell, invalid, anyweapon, anycombospell, bonespike, elvensinger, shroud
 };
 enum minionname {
 	sharkspirit_m, foxyfraud_m, mailboxdancer_m, cutterbutter_m, redsmoke_m, spectralpillager_m,
-	anyminion_m, enemyhero, enemyminion, nul
+	anyminion_m, enemyhero, enemyminion, nul, elvensinger_m
 	//敌方英雄-可以是鬼灵匪贼的目标
 	//敌方随从-可以是背刺的目标
 	//空目标
@@ -48,6 +48,7 @@ struct state {
 	int auras[4];
 	int mana;
 	int num;
+	int drawmn;
 };
 state emptystcons();
 extern state emptyst;
@@ -97,6 +98,9 @@ extern int openmode;
 extern int spelldebuff;
 extern int miniondebuff;
 extern int battlecrydebuff;
+
+extern int deckmn;
+extern minionname deckm[10];
 
 extern int iseq[999], isn;
 

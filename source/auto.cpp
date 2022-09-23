@@ -1,3 +1,4 @@
+#include "deck.h"
 #include "auto.h"
 
 cardname cid2cn(string s) {
@@ -16,12 +17,13 @@ cardname cid2cn(string s) {
 	if (s == "BAR_552") return cutterbutter;
 	if (s == "DMF_071") return redsmoke;
 	if (s == "ICC_910") return spectralpillager;
-	if (s.find("REV_938") != -1) return anyspell;
+	if (s == "LOOT_211") return elvensinger;
+	if (s.find("REV_938") != -1) return anyspell;	
 	if (s == "TSC_916") return anycombospell;
 	if (s == "ULD_715") return anyspell;
 	if (s == "DED_004") return anyweapon;
 	if (s == "DMF_515") return anycombospell;
-	if (s == "WC_016") return anyspell;
+	if (s == "WC_016") return shroud;
 	if (s == "REV_825") return anyspell;
 	if (s == "LOOT_214")  return anyspell;
 	if (s == "DMF_512")  return anyspell;
@@ -45,6 +47,7 @@ int cid2oc(string s) {
 	if (s == "BAR_552") return 4;
 	if (s == "DMF_071") return 2;
 	if (s == "ICC_910") return 6;
+	if (s == "LOOT_211") return 4;
 	if (s.find("REV_938") != -1) return 1;
 	if (s == "TSC_916") return 1;
 	if (s == "ULD_715") return 1;
@@ -167,6 +170,9 @@ int updcurid(string s, int x) {
 	return x;
 }
 
+int nidn;
+minionname notindeck[99];
+
 vector<string> valids;
 
 state autoread(string _s, int& _tar) {
@@ -248,9 +254,17 @@ state autoread(string _s, int& _tar) {
 		}
 	}
 
+	valids.clear();
+
 	//读取完毕，开始转化
 
 	state autost = emptyst;
+
+	spelldebuff = 0;
+	miniondebuff = 0;
+	battlecrydebuff = 0;
+
+	nidn = 0;
 
 	map<int, int> id2pos;
 
@@ -267,10 +281,6 @@ state autoread(string _s, int& _tar) {
 			id2pos[i.first] = p;
 			autost.hands[p - 1] = cardcons(a, b, c);
 			autost.H++;
-
-			spelldebuff = 0;
-			miniondebuff = 0;
-			battlecrydebuff = 0;
 
 			if (a == backstab) {
 				if (j["error"].second == "NONE") {
@@ -362,6 +372,14 @@ state autoread(string _s, int& _tar) {
 				}
 			}
 		}
+
+		if (i.first <= myhid && j["player"].second == to_string(mypid) && j["ZONE"].second != "DECK") {
+			string cid = j["CardID"].second;
+			cardname c = cid2cn(cid);
+			if (legalcn2mn(c)) {
+				notindeck[nidn++] = cn2mn(c);
+			}
+		}
 	}
 
 	autost.mana = atoi(id2tag2stampandvalue[myid]["RESOURCES"].second.c_str())
@@ -370,9 +388,29 @@ state autoread(string _s, int& _tar) {
 
 	autost.num = atoi(id2tag2stampandvalue[myid]["NUM_CARDS_PLAYED_THIS_TURN"].second.c_str());
 
+	autost.drawmn = 0;
+
 	_tar = atoi(id2tag2stampandvalue[yourhid]["HEALTH"].second.c_str())
 		- atoi(id2tag2stampandvalue[yourhid]["DAMAGE"].second.c_str())
 		+ atoi(id2tag2stampandvalue[yourhid]["ARMOR"].second.c_str());
+
+	parsedeck(_s);
+
+	int truemn = 0;
+	rep(i, 0, deckmn - 1) {
+		bool flag = 0;
+		rep(j, 0, nidn - 1) {
+			if (deckm[i] == notindeck[j]) {
+				flag = 1;
+				notindeck[j] = nul;
+				break;
+			}
+		}
+		if (!flag) {
+			deckm[truemn++] = deckm[i];
+		}
+	}
+	deckmn = truemn;
 
 	return autost;
 }

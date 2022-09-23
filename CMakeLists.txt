@@ -17,6 +17,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
 	"source/solve_refresh.cpp" "source/solve_refresh.h"
 	"source/gen.cpp" "source/gen.h"
 	"source/pre.cpp" "source/pre.h"
+	"source/deck.h" "source/deck.cpp"
 	"source/auto.h" "source/auto.cpp"
 	"source/ui.cpp" "source/ui.h"
 	"source/HSSPRCAL_W.cpp"
