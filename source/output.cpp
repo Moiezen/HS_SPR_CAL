@@ -20,8 +20,11 @@ string output(opes o, int d, int u, ll t) {
 	if (u == 1) s += "(达标掐断)\n";
 	if (u == 2) s += "(时限掐断)\n";
 	s = s + to_string(d) + "\n";
+	//int count = 0;
 	for (auto i : o.os) {
 		s = s + o2s(i);
+		//count++;
+		//if (count % 4 == 0) s = s + "\n";
 	}
 	s = s + "(" + to_string(t) + ")\n";
 	return s;

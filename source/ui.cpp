@@ -49,7 +49,7 @@ void textra(rect a, color_t b, string c) {
 		c = c.substr(p + 1, c.size());
 		yy += 20;
 		if (yy >= 560) {
-			yy = 0;
+			yy = 5;
 			xx += 200;
 		}
 	}
@@ -482,7 +482,6 @@ state doms2st(vector<domain> a) {
 
 	rep(i, 0, 3) {
 		st.auras[i] = min(id2dom(aurasdomid[i]).x, alim[i]);
-		//过大的光环数值允许临时放置在UI上，但是转化为状态时应正常
 	}
 
 	st.mana = id2dom(manadomid).x;
@@ -547,10 +546,10 @@ void loadauto() {
 
 	st2doms(st);
 
-	tmp = id2dom(tlimdomid);
-	tmp.x = 15;
-	drawdom(tmp, 0);
-	follow(tmp);
+	//tmp = id2dom(tlimdomid);
+	//tmp.x = 15;
+	//drawdom(tmp, 0);
+	//follow(tmp);
 
 	tmp = id2dom(tardomid);
 	if (tmp.x != 999) {

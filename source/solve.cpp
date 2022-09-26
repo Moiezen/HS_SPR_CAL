@@ -34,7 +34,52 @@ int testcnt;
 
 int tick;
 
+ull statehb = 77232917;
+ull p1 = 1000000123;
+ull p2 = 1000000181;
+ull statehash(state a) {
+	ull d1 = 1;
+	rep(i, 0, a.H - 1) d1 = d1 * (a.hands[i].name * 100 + a.hands[i].cost + p1);
+	ull d2 = 1;
+	rep(i, 0, a.F - 1) d2 = d2 * (a.fields[i].name + p2);
+	//暂时当作无序
+	//事实上在trans处理中已经当作无序
+
+	ull h = d1 * statehb + d2;
+	rep(i, 0, 3) h = h * statehb + a.auras[i];
+	h = h * statehb + a.num;
+	h = h * statehb + a.mana;
+	h = h * statehb + a.drawmn;
+	return h;
+}
+
+map<ull, int> st2hidmg;
+int st2hidmgcountlim = (1 << 21);
+int st2hidmgcount = 0;
+int allcount = 0;
+int hashon = 1;
+
 void solve(syn q) {
+	if (hashon) {
+		allcount++;
+
+		ull hq = statehash(q.pa.first);
+		if (q.pa.second <= st2hidmg[hq] - 1) {
+			return;
+		}
+		else {
+			if (st2hidmg[hq] == 0) {
+				if (st2hidmgcount < st2hidmgcountlim) {
+					st2hidmgcount++;
+					st2hidmg[hq] = q.pa.second + 1;
+				}
+			}
+			else {
+				st2hidmg[hq] = q.pa.second + 1;
+			}
+		}
+	}
+
 	if (q.pa.second >= curdmg) {
 		if (collect == 1 && q.pa.second >= dmgbd) {
 			if (q.pa.second > curdmg) cls.clear();
@@ -63,7 +108,7 @@ void solve(syn q) {
 		}
 	}
 
-	opes of = offer(q.pa.first);
+	oxys o0 = offer(q.pa.first);
 
 	vector<double> sums;
 	double sum, allsum, lost;
@@ -72,8 +117,8 @@ void solve(syn q) {
 		sums.clear();
 		allsum = 0;
 
-		for (auto i : of.os) {
-			iseq[isn++] = o2i(i);
+		for (auto i : o0.os) {
+			iseq[isn++] = o2i(exact(q.pa.first, i));
 
 			sum = sumbasic;
 			rep(i, (isn - 1) - flimr + 1, (isn - 1) - fliml + 1) {
@@ -86,9 +131,9 @@ void solve(syn q) {
 	}
 
 	int j = 0;
-	for (auto i : of.os) {
+	for (auto i : o0.os) {
 		opes os = q.os;
-		os.os.push_back(i);
+		os.os.push_back(exact(q.pa.first, i));
 
 		if (optimize == 1) {
 			sum = sums[j++];

@@ -321,6 +321,9 @@ state autoread(string _s, int& _tar) {
 				if (buff == "EX1_145o") {
 					autost.auras[0] += 1;
 				}
+				if (buff == "AV_259e") {
+					autost.auras[0] -= 1;
+				}
 				if (buff == "DMF_511e") {
 					autost.auras[1] += 1;
 				}
@@ -368,6 +371,24 @@ state autoread(string _s, int& _tar) {
 					}
 					if (buff == "BAR_074e") {
 						autost.hands[p].cost += 1;
+					}
+					if (buff == "TID_744e") {
+						autost.hands[p].name = invalid;
+						autost.hands[p].cost = 0;
+					}
+					if (buff == "DRG_084e") {
+						int a = atoi(j["TAG_SCRIPT_DATA_NUM_1"].second.c_str());
+						autost.hands[p].cost = a;
+					}
+					if (buff == "TSC_020e2") {
+						int a = atoi(j["TAG_SCRIPT_DATA_NUM_1"].second.c_str());
+						autost.hands[p].cost = a;
+					}
+					if (buff == "AV_226e") {
+						autost.hands[p].cost += 1;
+					}
+					if (buff == "AV_113t9e") {
+						autost.hands[p].cost += 2;
 					}
 				}
 			}
