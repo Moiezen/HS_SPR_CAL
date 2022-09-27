@@ -24,17 +24,9 @@ gen.h
 pre.h
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/pre.h
 
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/basic.cpp
-basic.h
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/basic.h
-
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/basic.h
 bits/stdc++.h
 -
-
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/formula.cpp
-formula.h
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/formula.h
 
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/formula.h
 basic.h
@@ -48,17 +40,9 @@ gen.h
 basic.h
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/basic.h
 
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/offer.cpp
-offer.h
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/offer.h
-
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/offer.h
 basic.h
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/basic.h
-
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/output.cpp
-output.h
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/output.h
 
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/output.h
 basic.h
@@ -76,33 +60,11 @@ gen.h
 basic.h
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/basic.h
 
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/solve.cpp
-offer.h
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/offer.h
-trans.h
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/trans.h
-output.h
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/output.h
-formula.h
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/formula.h
-solve.h
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/solve.h
-ui.h
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/ui.h
-
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/solve.h
 basic.h
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/basic.h
 
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/trans.cpp
-trans.h
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/trans.h
-
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/trans.h
-basic.h
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/basic.h
-
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/ui.h
 basic.h
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/basic.h
 

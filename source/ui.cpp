@@ -92,14 +92,19 @@ void init() {
 }
 
 rect _all = rectcons(0, 0, 1280, 640);
-rect _start = rectcons(1160, 560, 1280, 640);
+rect _start_cn = rectcons(1040, 560, 1160, 640);
+rect _start_en = rectcons(1160, 560, 1280, 640);
 
 void drawatt() {
-	textr(_all, txc, "点击开始，代表你已经阅读过https://github.com/Moiezen/HS_SPR_CAL的README.md，并且该HSSPRCAL.exe是直接获取的最新版本");
+	textr(_all, txc, "你已经阅读过https://github.com/Moiezen/HS_SPR_CAL/README.md，并且该HSSPRCAL.exe是直接获取的最新版本");
 
-	barr(_start, bdc);
-	barr(cutedge(_start, 1), bgc);
-	textr(_start, txc, "开始");
+	barr(_start_cn, bdc);
+	barr(cutedge(_start_cn, 1), bgc);
+	textr(_start_cn, txc, "中文");
+
+	barr(_start_en, bdc);
+	barr(cutedge(_start_en, 1), bgc);
+	textr(_start_en, txc, "EN");
 }
 
 void attention() {
@@ -112,7 +117,11 @@ void attention() {
 			e = getmouse();
 		}
 
-		if (e.is_down() && inrect(e.x, e.y, _start)) {
+		if (e.is_down() && inrect(e.x, e.y, _start_cn)) {
+			return;
+		}
+		if (e.is_down() && inrect(e.x, e.y, _start_en)) {
+			_lang = EN;
 			return;
 		}
 	}
@@ -162,9 +171,9 @@ void follow(domain a) {
 }
 
 const int countn = 20;
-string n1[countn] = { "鱼灵","老千","箱舞","刀油","鬼灵","咏唱","腾武","暗步","背刺","齿刺","假币","伺机","幻药","帷幕","随从","法术","垃圾","武器","连法","清除" };
+string n1[countn] = {};
 int k1[countn] = { 'Y','L','X','D','G','E','T','A','B','C','J','S','H','W',-1,-1,-1,-1,-1,46};
-string a1[4] = { "伺机层数","老千层数","下一减费","下二减费" };
+string a1[4] = {};
 
 string getdftlk() {
 	cin.clear();
@@ -191,19 +200,25 @@ void savedftlk(string s) {
 void getdoms() {
 	doms.clear();
 
-	adddd(860, 600, 920, 640, vx, "水晶", 0, manadomid = 1, -1, 10);
+	n1[0] = shak_s(); n1[1] = foxy_s(); n1[2] = mail_s(); n1[3] = scab_s(); n1[4] = pill_s(); n1[5] = elvn_s(); n1[6] = tenw_s();
+	n1[7] = step_s(); n1[8] = stab_s(); n1[9] = bone_s(); n1[10] = coin_s(); n1[11] = prep_s(); n1[12] = pshn_s(); n1[13] = shrd_s();
+	n1[14] = anym_s(); n1[15] = anys_s(); n1[16] = trsh_s(); n1[17] = anyw_s(); n1[18] = cmbs_s(); n1[19] = clr_s();
+
+	a1[0] = a0_s(); a1[1] = a1_s(); a1[2] = a2_s(); a1[3] = a3_s();
+
+	adddd(860, 600, 920, 640, vx, mana_s(), 0, manadomid = 1, -1, 10);
 	//1
-	rep(i, 0, 9) adddd(200 + i * 60, 560, 260 + i * 60, 600, vnx, "清除", 0, handsdomid[i] = 2 + i, 1200000 + 1000 * i, 10);
+	rep(i, 0, 9) adddd(200 + i * 60, 560, 260 + i * 60, 600, vnx, clr_s(), 0, handsdomid[i] = 2 + i, 1200000 + 1000 * i, 10);
 	//2 ... 11
 	rep(i, 0, 9) adddd(200 + i * 60, 600, 260 + i * 60, 640, vx0, "", 0, chdomid[i] = 201 + i, 1100000, 5);
 	//201 ... 210
-	rep(i, 0, 6) adddd(200 + i * 60, 520, 260 + i * 60, 560, vn, "清除", 0, fieldsdomid[i] = 101 + i, 1300000 + 1000 * i, -1);
+	rep(i, 0, 6) adddd(200 + i * 60, 520, 260 + i * 60, 560, vn, clr_s(), 0, fieldsdomid[i] = 101 + i, 1300000 + 1000 * i, -1);
 	//101 ... 107
 	rep(i, 0, 6) adddd(200 + i * 60, 480, 260 + i * 60, 520, vx0, "", 0, fmhdomid[i] = 301 + i, 1400000, 5);
 	//301 ... 307
 	rep(i, 0, 6) adddd(200 + i * 60, 440, 260 + i * 60, 480, vx0, "", 0, fmchdomid[i] = 401 + i, 1500000, 5);
 	//401 ... 407
-	rep(i, 0, 9) adddd(200 + i * 60, 360, 260 + i * 60, 400, vn, "清除", 0, deckmdomid[i] = 1001 + i, 9300000 + 1000 * i, -1);
+	rep(i, 0, 9) adddd(200 + i * 60, 360, 260 + i * 60, 400, vn, clr_s(), 0, deckmdomid[i] = 1001 + i, 9300000 + 1000 * i, -1);
 	//1001 ... 1010
 	adddd(40, 400, 80, 440, c0, "", 0, 12, 8, -1);
 	//12
@@ -211,59 +226,59 @@ void getdoms() {
 	//13 ... 22
 	rep(i, 0, countn - 1) adddd(i % 4 * 40, 160 + i / 4 * 40, 40 + i % 4 * 40, 200 + i / 4 * 40, cn, n1[i], 0, 123 + i, k1[i], -1);
 	//123 ... 139
-	adddd(1220, 600, 1280, 640, go, "计算", 0, 37, 13, -1);
+	adddd(1220, 600, 1280, 640, go, calc_s(), 0, 37, 13, -1);
 	//37
-	adddd(1220, 560, 1280, 600, gogo, "读算", 0, 737, 187, -1);
+	adddd(1220, 560, 1280, 600, gogo, randc_s(), 0, 737, 187, -1);
 	//737
 	adddd(880, 0, 1280, 560, ans, "", 0, ansdomid = 38, -1, -1);
 	//38
-	adddd(980, 600, 1040, 640, vx, "时限", 15, tlimdomid = 39, -1, 999);
+	adddd(980, 600, 1040, 640, vx, time_s(), 15, tlimdomid = 39, -1, 999);
 	//39
-	adddd(1100, 600, 1160, 640, vx, "目标", 30, tardomid = 40, -1, 999);
+	adddd(1100, 600, 1160, 640, vx, targ_s(), 30, tardomid = 40, -1, 999);
 	//40
 	string dftlk = getdftlk();
 	adddd(0, 0, 400, 40, lk, dftlk, 0, lkdomid = 41, -1, -1);
 	//41
-	adddd(100, 60, 160, 100, lk1, "修改", 0, 42, -1, -1);
+	adddd(100, 60, 160, 100, lk1, chng_s(), 0, 42, -1, -1);
 	//42
-	adddd(240, 60, 300, 100, lk2, "读取", 0, 43, 32, -1);
+	adddd(240, 60, 300, 100, lk2, read_s(), 0, 43, 32, -1);
 	//43
-	adddd(320, 200, 440, 240, vx, "法术加费", 0, sdbdomid = 70, -1, 10);
+	adddd(320, 200, 440, 240, vx, stax_s(), 0, sdbdomid = 70, -1, 10);
 	//70
-	adddd(440, 200, 560, 240, vx, "随从加费", 0, mdbdomid = 71, -1, 10);
+	adddd(440, 200, 560, 240, vx, mtax_s(), 0, mdbdomid = 71, -1, 10);
 	//71
-	adddd(560, 200, 680, 240, vx, "战吼加费", 0, bdbdomid = 72, -1, 10);
+	adddd(560, 200, 680, 240, vx, btax_s(), 0, bdbdomid = 72, -1, 10);
 	//72
-	adddd(200, 200, 320, 240, vx, "背刺可用", 1, modedomid = 44, -1, 1);
+	adddd(200, 200, 320, 240, vx, able_s(), 1, modedomid = 44, -1, 1);
 	//44
-	adddd(200, 280, 320, 320, vx, "已用牌数", 0, numdomid = 45, -1, 10);
+	adddd(200, 280, 320, 320, vx, plyd_s(), 0, numdomid = 45, -1, 10);
 	//45
 	rep(i, 0, 3) adddd(320 + 120 * i, 280, 440 + 120 * i, 320, vx, a1[i], 0, aurasdomid[i] = 46 + i, -1, alim[i]);
 	//46 ... 49
-	adddd(0, 600, 120, 640, exa, "查看样例", 0, exadomid = 50, -1, -1);
+	adddd(0, 600, 120, 640, exa, samp_s(), 0, exadomid = 50, -1, -1);
 	//50
 }
 
 cardname str2cn(string s) {
-	if (s == "暗步") return shadowstep;
-	if (s == "背刺") return backstab;
-	if (s == "齿刺") return bonespike;
-	if (s == "假币") return fakecoin;
-	if (s == "伺机") return preparation;
-	if (s == "幻药") return illusionpotion;
-	if (s == "帷幕") return shroud;
-	if (s == "鱼灵") return sharkspirit;
-	if (s == "老千") return foxyfraud;
-	if (s == "箱舞") return mailboxdancer;
-	if (s == "刀油") return cutterbutter;
-	if (s == "腾武") return redsmoke;
-	if (s == "鬼灵") return spectralpillager;
-	if (s == "咏唱") return elvensinger;
-	if (s == "法术") return anyspell;
-	if (s == "随从") return anyminion;
-	if (s == "武器") return anyweapon;
-	if (s == "连法") return anycombospell;
-	if (s == "垃圾") return invalid;
+	if (s == step_s()) return shadowstep;
+	if (s == stab_s()) return backstab;
+	if (s == bone_s()) return bonespike;
+	if (s == coin_s()) return fakecoin;
+	if (s == prep_s()) return preparation;
+	if (s == pshn_s()) return illusionpotion;
+	if (s == shrd_s()) return shroud;
+	if (s == shak_s()) return sharkspirit;
+	if (s == foxy_s()) return foxyfraud;
+	if (s == mail_s()) return mailboxdancer;
+	if (s == scab_s()) return cutterbutter;
+	if (s == tenw_s()) return redsmoke;
+	if (s == pill_s()) return spectralpillager;
+	if (s == elvn_s()) return elvensinger;
+	if (s == anys_s()) return anyspell;
+	if (s == anym_s()) return anyminion;
+	if (s == anyw_s()) return anyweapon;
+	if (s == cmbs_s()) return anycombospell;
+	if (s == trsh_s()) return invalid;
 	return invalid;
 }
 
@@ -288,7 +303,7 @@ void drawdom(domain a, bool sl) {
 			break;
 		}
 		case vnx: {
-			if (a.name == "清除") textr(r, txc, "");
+			if (a.name == clr_s()) textr(r, txc, "");
 			else textr(r, txc, a.name + to_string(a.x));
 			break;
 		}
@@ -302,7 +317,7 @@ void drawdom(domain a, bool sl) {
 			break;
 		}
 		case vn: {
-			if (a.name == "清除") textr(r, txc, "");
+			if (a.name == clr_s()) textr(r, txc, "");
 			else textr(r, txc, a.name);
 			break;
 		}
@@ -316,7 +331,7 @@ void drawdom(domain a, bool sl) {
 			break;
 		}
 		case c0: {
-			textr(r, txc, "清");
+			textr(r, txc, cl_s());
 			break;
 		}
 		case cx: {
@@ -366,7 +381,7 @@ void st2doms(state st) {
 
 	rep(i, deckmn, 9) {
 		tmp = id2dom(deckmdomid[i]);
-		tmp.name = "清除";
+		tmp.name = clr_s();
 		drawdom(tmp, 0);
 		follow(tmp);
 	}
@@ -385,7 +400,7 @@ void st2doms(state st) {
 	}
 	rep(i, st.H, 9) {
 		tmp = id2dom(handsdomid[i]);
-		tmp.name = "清除";
+		tmp.name = clr_s();
 		tmp.x = 0;
 		drawdom(tmp, 0);
 		follow(tmp);
@@ -414,7 +429,7 @@ void st2doms(state st) {
 	}
 	rep(i, st.F, 6) {
 		tmp = id2dom(fieldsdomid[i]);
-		tmp.name = "清除";
+		tmp.name = clr_s();
 		drawdom(tmp, 0);
 		follow(tmp);
 
@@ -462,14 +477,14 @@ state doms2st(vector<domain> a) {
 	deckmn = 0;
 	rep(i, 0, 9) {
 		tmp = id2dom(deckmdomid[i]);
-		if (tmp.name != "清除") deckm[deckmn++] = cn2mn(str2cn(tmp.name));
+		if (tmp.name != clr_s()) deckm[deckmn++] = cn2mn(str2cn(tmp.name));
 	}
 
 	st.H = 0;
 	rep(i, 0, 9) {
 		tmp = id2dom(handsdomid[i]);
 		tmp2 = id2dom(chdomid[i]);
-		if (tmp.name != "清除") st.hands[st.H++] = cardcons(str2cn(tmp.name), tmp.x, tmp2.x);
+		if (tmp.name != clr_s()) st.hands[st.H++] = cardcons(str2cn(tmp.name), tmp.x, tmp2.x);
 	}
 
 	st.F = 0;
@@ -477,7 +492,7 @@ state doms2st(vector<domain> a) {
 		tmp = id2dom(fieldsdomid[i]);
 		tmp2 = id2dom(fmhdomid[i]);
 		tmp3 = id2dom(fmchdomid[i]);
-		if (tmp.name != "清除") st.fields[st.F++] = minioncons(cn2mn(str2cn(tmp.name)), tmp2.x, tmp3.x);
+		if (tmp.name != clr_s()) st.fields[st.F++] = minioncons(cn2mn(str2cn(tmp.name)), tmp2.x, tmp3.x);
 	}
 
 	rep(i, 0, 3) {
@@ -498,7 +513,7 @@ void loaddoms() {
 }
 
 bool legalcn4vn(string s) {
-	if (s == "清除") return true;
+	if (s == clr_s()) return true;
 	if (legalcn2mn(str2cn(s))) return true;
 	return false;
 }
@@ -703,7 +718,7 @@ void touch(domain toselect) {
 			inputing = false;
 
 			char _lk[105];
-			inputbox_getline("请输入炉石传说本地路径（回车确认）", "宇宙甜心", _lk, 100);
+			inputbox_getline(hint_s().c_str(), "宇宙甜心", _lk, 100);
 			domain lk = id2dom(lkdomid);
 			lk.name = (string)_lk;
 			savedftlk(lk.name);

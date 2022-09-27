@@ -33,12 +33,12 @@ void madd(int n, card c) {
 	while (n--) ctmp[cT++] = c;
 }
 
-state gen() {
+state gen(int m) {
 	state st;
 
 	cardname borc = backstab;
 	int _c = 0;
-	if (getrand(2, 1, 1)) {
+	if (m % 4 == 0) {
 		borc = bonespike;
 		_c = 2;
 	}

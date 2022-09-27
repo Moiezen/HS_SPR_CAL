@@ -1,40 +1,175 @@
 #include "basic.h"
 
+lang _lang = CN;
+
+string shak_s() {
+	return _lang == CN ? "鱼灵" : "Shak";
+}
+string foxy_s() {
+	return _lang == CN ? "老千" : "Foxy";
+}
+string mail_s() {
+	return _lang == CN ? "箱舞" : "Mail";
+}
+string scab_s() {
+	return _lang == CN ? "刀油" : "Scab";
+}
+string tenw_s() {
+	return _lang == CN ? "腾武" : "Tenw";
+}
+string pill_s() {
+	return _lang == CN ? "鬼灵" : "Pill";
+}
+string elvn_s() {
+	return _lang == CN ? "咏唱" : "Elvn";
+}
+string anym_s() {
+	return _lang == CN ? "随从" : "AnyM";
+}
+string face_s() {
+	return _lang == CN ? "对面" : "Face";
+}
+string step_s() {
+	return _lang == CN ? "暗步" : "Step";
+}
+string stab_s() {
+	return _lang == CN ? "背刺" : "Stab";
+}
+string coin_s() {
+	return _lang == CN ? "假币" : "Coin";
+}
+string prep_s() {
+	return _lang == CN ? "伺机" : "Prep";
+}
+string pshn_s() {
+	return _lang == CN ? "幻药" : "Pshn";
+}
+string anys_s() {
+	return _lang == CN ? "法术" : "Anys";
+}
+string trsh_s() {
+	return _lang == CN ? "垃圾" : "Trsh";
+}
+string anyw_s() {
+	return _lang == CN ? "武器" : "AnyW";
+}
+string cmbs_s() {
+	return _lang == CN ? "连法" : "CmbS";
+}
+string bone_s() {
+	return _lang == CN ? "齿刺" : "Bone";
+}
+string shrd_s() {
+	return _lang == CN ? "帷幕" : "Shrd";
+}
+string clr_s() {
+	return _lang == CN ? "清除" : "Clr.";
+}
+string mana_s() {
+	return _lang == CN ? "水晶" : "Mana";
+}
+string calc_s() {
+	return _lang == CN ? "计算" : "Calc";
+}
+string randc_s() {
+	return _lang == CN ? "读算" : "R&C.";
+}
+string time_s() {
+	return _lang == CN ? "时限" : "Time";
+}
+string targ_s() {
+	return _lang == CN ? "目标" : "Targ";
+}
+string chng_s() {
+	return _lang == CN ? "修改" : "Chng";
+}
+string read_s() {
+	return _lang == CN ? "读取" : "Read";
+}
+string stax_s() {
+	return _lang == CN ? "法术加费" : "AnySTax.";
+}
+string mtax_s() {
+	return _lang == CN ? "随从加费" : "AnyMTax,";
+}
+string btax_s() {
+	return _lang == CN ? "战吼加费" : "BcryTax.";
+}
+string able_s() {
+	return _lang == CN ? "战吼加费" : "StabAble";
+}
+string plyd_s() {
+	return _lang == CN ? "已用牌数" : "CrdsPlyd";
+}
+string samp_s() {
+	return _lang == CN ? "查看样例" : "ViewSamp";
+}
+string cl_s() {
+	return _lang == CN ? "清" : "Cl";
+}
+string a0_s() {
+	return _lang == CN ? "伺机层数" : "PrepDisc";
+}
+string a1_s() {
+	return _lang == CN ? "老千层数" : "FoxyDisc";
+}
+string a2_s() {
+	return _lang == CN ? "下一减费" : "Nxt1Disc";
+}
+string a3_s() {
+	return _lang == CN ? "下二减费" : "Nxt2Disc";
+}
+string hint_s() {
+	return _lang == CN ? "请输入炉石传说本地路径（回车确认）" : "Please enter the local path of HS:";
+}
+string calcing_s() {
+	return _lang == CN ? "(正在计算)" : "(Calcing.)";
+}
+string exhaust_s() {
+	return _lang == CN ? "(穷尽掐断)" : "(Exhaust.)";
+}
+string targrch_s() {
+	return _lang == CN ? "(达标掐断)" : "(TargRch.)";
+}
+string timerch_s() {
+	return _lang == CN ? "(时限掐断)" : "(TimeRch.)";
+}
+
 string mn2str(minionname a) {
 	switch (a) {
 		case sharkspirit_m: {
-			return "鱼灵";
+			return shak_s();
 			break;
 		}
 		case foxyfraud_m: {
-			return "老千";
+			return foxy_s();
 			break;
 		}
 		case mailboxdancer_m: {
-			return "箱舞";
+			return mail_s();
 			break;
 		}
 		case cutterbutter_m: {
-			return "刀油";
+			return scab_s();
 			break;
 		}
 		case redsmoke_m: {
-			return "腾武";
+			return tenw_s();
 			break;
 		}
 		case spectralpillager_m: {
-			return "鬼灵";
+			return pill_s();
 			break;
 		}
 		case elvensinger_m: {
-			return "咏唱";
+			return elvn_s();
 		}
 		case anyminion_m: {
-			return "随从";
+			return anym_s();
 			break;
 		}
 		case enemyhero: {
-			return "对手";
+			return face_s();
 			break;
 		}
 		case enemyminion: {
@@ -56,78 +191,78 @@ string mn2str(minionname a) {
 string cn2str(cardname a) {
 	switch (a) {
 		case sharkspirit: {
-			return "鱼灵";
+			return shak_s();
 			break;
 		}
 		case foxyfraud: {
-			return "老千";
+			return foxy_s();
 			break;
 		}
 		case mailboxdancer: {
-			return "箱舞";
+			return mail_s();
 			break;
 		}
 		case cutterbutter: {
-			return "刀油";
+			return scab_s();
 			break;
 		}
 		case redsmoke: {
-			return "腾武";
+			return tenw_s();
 			break;
 		}
 		case spectralpillager: {
-			return "鬼灵";
+			return pill_s();
 			break;
 		}
 		case elvensinger: {
-			return "咏唱";
+			return elvn_s();
 			break;
 		}
 		case anyminion: {
-			return "随从";
+			return anym_s();
 			break;
 		}
 		case shadowstep: {
-			return "暗步";
+			return step_s();
 			break;
 		}
 		case backstab: {
-			return "背刺";
+			return stab_s();
 			break;
 		}
 		case fakecoin: {
-			return "假币";
+			return coin_s();
 			break;
 		}
 		case preparation: {
-			return "伺机";
+			return prep_s();
 			break;
 		}
 		case illusionpotion: {
-			return "幻药";
+			return pshn_s();
 			break;
 		}
 		case anyspell: {
-			return "法术";
+			return anys_s();
 			break;
 		}
 		case anyweapon: {
-			return "武器";
+			return anyw_s();
 			break;
 		}
 		case anycombospell: {
-			return "连法";
+			return cmbs_s();
 			break;
 		}
 		case bonespike: {
-			return "齿刺";
+			return bone_s();
 			break;
 		}
 		case shroud: {
-			return "帷幕";
+			return shrd_s();
 		}
 		case invalid: {
-			return "垃圾";
+			return trsh_s();
 			break;
 		}
 		default: {

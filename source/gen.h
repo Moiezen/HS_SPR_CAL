@@ -2,4 +2,4 @@
 
 #include "basic.h"
 
-state gen();
+state gen(int m);
