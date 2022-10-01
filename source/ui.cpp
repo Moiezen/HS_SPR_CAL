@@ -142,6 +142,7 @@ int sdbdomid;
 int mdbdomid;
 int bdbdomid;
 int modedomid;
+int mode2domid;
 int numdomid;
 int aurasdomid[4];
 int exadomid;
@@ -170,10 +171,9 @@ void follow(domain a) {
 	}
 }
 
-const int countn = 20;
-string n1[countn] = {};
-int k1[countn] = { 'Y','L','X','D','G','E','T','A','B','C','J','S','H','W',-1,-1,-1,-1,-1,46};
-string a1[4] = {};
+const int countn = 25;
+const int splitn = 14;
+int k1[countn] = { 'Y','L','X','D','G','E','T','A','B','C','J','S','H','W',-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,46};
 
 string getdftlk() {
 	cin.clear();
@@ -200,11 +200,13 @@ void savedftlk(string s) {
 void getdoms() {
 	doms.clear();
 
-	n1[0] = shak_s(); n1[1] = foxy_s(); n1[2] = mail_s(); n1[3] = scab_s(); n1[4] = pill_s(); n1[5] = elvn_s(); n1[6] = tenw_s();
-	n1[7] = step_s(); n1[8] = stab_s(); n1[9] = bone_s(); n1[10] = coin_s(); n1[11] = prep_s(); n1[12] = pshn_s(); n1[13] = shrd_s();
-	n1[14] = anym_s(); n1[15] = anys_s(); n1[16] = trsh_s(); n1[17] = anyw_s(); n1[18] = cmbs_s(); n1[19] = clr_s();
+	string n1[countn] = {
+		shak_s(), foxy_s(), mail_s(), scab_s(), pill_s(), elvn_s(), tenw_s(),
+		step_s(), stab_s(), bone_s(), coin_s(), prep_s(), pshn_s(), shrd_s(),
+		anym_s(), anys_s(), trsh_s(), anyw_s(), cmbs_s(), si7_s(), swin_s(), cast_s(), iuca_s(), bran_s(), clr_s()
+	};
 
-	a1[0] = a0_s(); a1[1] = a1_s(); a1[2] = a2_s(); a1[3] = a3_s();
+	string a1[4] = { a0_s(), a1_s(), a2_s(), a3_s() };
 
 	adddd(860, 600, 920, 640, vx, mana_s(), 0, manadomid = 1, -1, 10);
 	//1
@@ -224,7 +226,8 @@ void getdoms() {
 	//12
 	rep(i, 0, 9) adddd((i + 2) % 3 * 40, 400 + (i + 2) / 3 * 40, 40 + (i + 2) % 3 * 40, 440 + (i + 2) / 3 * 40, cx, "", i, 13 + i, 48 + i, -1);
 	//13 ... 22
-	rep(i, 0, countn - 1) adddd(i % 4 * 40, 160 + i / 4 * 40, 40 + i % 4 * 40, 200 + i / 4 * 40, cn, n1[i], 0, 123 + i, k1[i], -1);
+	rep(i, 0, countn - 1) adddd(i % 4 * 40, 60 + i / 4 * 40 + (i >= splitn) * 40, 40 + i % 4 * 40, 100 + i / 4 * 40 + (i >= splitn) * 40, 
+								cn, n1[i], 0, 123 + i, k1[i], -1);
 	//123 ... 139
 	adddd(1220, 600, 1280, 640, go, calc_s(), 0, 37, 13, -1);
 	//37
@@ -239,18 +242,20 @@ void getdoms() {
 	string dftlk = getdftlk();
 	adddd(0, 0, 400, 40, lk, dftlk, 0, lkdomid = 41, -1, -1);
 	//41
-	adddd(100, 60, 160, 100, lk1, chng_s(), 0, 42, -1, -1);
+	adddd(400, 0, 440, 40, lk1, chng_s(), 0, 42, -1, -1);
 	//42
-	adddd(240, 60, 300, 100, lk2, read_s(), 0, 43, 32, -1);
+	adddd(440, 0, 480, 40, lk2, read_s(), 0, 43, 32, -1);
 	//43
-	adddd(320, 200, 440, 240, vx, stax_s(), 0, sdbdomid = 70, -1, 10);
+	adddd(440, 200, 560, 240, vx, stax_s(), 0, sdbdomid = 70, -1, 10);
 	//70
-	adddd(440, 200, 560, 240, vx, mtax_s(), 0, mdbdomid = 71, -1, 10);
+	adddd(560, 200, 680, 240, vx, mtax_s(), 0, mdbdomid = 71, -1, 10);
 	//71
-	adddd(560, 200, 680, 240, vx, btax_s(), 0, bdbdomid = 72, -1, 10);
+	adddd(680, 200, 800, 240, vx, btax_s(), 0, bdbdomid = 72, -1, 10);
 	//72
 	adddd(200, 200, 320, 240, vx, able_s(), 1, modedomid = 44, -1, 1);
 	//44
+	adddd(320, 200, 440, 240, vx, able2_s(), 1, mode2domid = 73, -1, 1);
+	//73
 	adddd(200, 280, 320, 320, vx, plyd_s(), 0, numdomid = 45, -1, 10);
 	//45
 	rep(i, 0, 3) adddd(320 + 120 * i, 280, 440 + 120 * i, 320, vx, a1[i], 0, aurasdomid[i] = 46 + i, -1, alim[i]);
@@ -262,18 +267,23 @@ void getdoms() {
 cardname str2cn(string s) {
 	if (s == step_s()) return shadowstep;
 	if (s == stab_s()) return backstab;
+	if (s == si7_s()) return extortion;
 	if (s == bone_s()) return bonespike;
 	if (s == coin_s()) return fakecoin;
 	if (s == prep_s()) return preparation;
 	if (s == pshn_s()) return illusionpotion;
 	if (s == shrd_s()) return shroud;
+	if (s == swin_s()) return swindle;
 	if (s == shak_s()) return sharkspirit;
 	if (s == foxy_s()) return foxyfraud;
 	if (s == mail_s()) return mailboxdancer;
 	if (s == scab_s()) return cutterbutter;
 	if (s == tenw_s()) return redsmoke;
 	if (s == pill_s()) return spectralpillager;
+	if (s == cast_s()) return shadowcaster;
 	if (s == elvn_s()) return elvensinger;
+	if (s == iuca_s()) return illucia;
+	if (s == bran_s()) return bronze;
 	if (s == anys_s()) return anyspell;
 	if (s == anym_s()) return anyminion;
 	if (s == anyw_s()) return anyweapon;
@@ -368,7 +378,12 @@ void st2doms(state st) {
 	follow(tmp);
 
 	tmp = id2dom(modedomid);
-	tmp.x = openmode;
+	tmp.x = stabable;
+	drawdom(tmp, 0);
+	follow(tmp);
+
+	tmp = id2dom(mode2domid);
+	tmp.x = boneable;
 	drawdom(tmp, 0);
 	follow(tmp);
 
@@ -466,7 +481,8 @@ state doms2st(vector<domain> a) {
 	spelldebuff = id2dom(sdbdomid).x;
 	miniondebuff = id2dom(mdbdomid).x;
 	battlecrydebuff = id2dom(bdbdomid).x;
-	openmode = id2dom(modedomid).x;
+	stabable = id2dom(modedomid).x;
+	boneable = id2dom(mode2domid).x;
 
 	__tar = id2dom(tardomid).x;
 	__tlim = id2dom(tlimdomid).x;
@@ -485,6 +501,11 @@ state doms2st(vector<domain> a) {
 		tmp = id2dom(handsdomid[i]);
 		tmp2 = id2dom(chdomid[i]);
 		if (tmp.name != clr_s()) st.hands[st.H++] = cardcons(str2cn(tmp.name), tmp.x, tmp2.x);
+	}
+
+	oppoH = st.H;
+	rep(i, 0, st.H - 1) {
+		oppohands[i] = st.hands[i];
 	}
 
 	st.F = 0;
@@ -530,7 +551,8 @@ state initstcons() {
 	spelldebuff = 0;
 	miniondebuff = 0;
 	battlecrydebuff = 0;
-	openmode = 1;
+	stabable = 1;
+	boneable = 1;
 
 	state a;
 	a.H = 10;
@@ -634,6 +656,10 @@ void touch(domain toselect) {
 					domain tmp;
 					int z = selected.id - handsdomid[0];
 					//then handsdomid[z] = selected.id
+
+					selected.x = originalcost_c(str2cn(selected.name));
+					drawdom(selected, 1);
+					follow(selected);
 
 					tmp = id2dom(chdomid[z]);
 					tmp.x = originalhealth_c(str2cn(selected.name));

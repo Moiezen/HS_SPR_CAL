@@ -17,6 +17,9 @@ string scab_s() {
 string tenw_s() {
 	return _lang == CN ? "腾武" : "Tenw";
 }
+string cast_s() {
+	return _lang == CN ? "暗施" : "Cast";
+}
 string pill_s() {
 	return _lang == CN ? "鬼灵" : "Pill";
 }
@@ -34,6 +37,9 @@ string step_s() {
 }
 string stab_s() {
 	return _lang == CN ? "背刺" : "Stab";
+}
+string si7_s() {
+	return _lang == CN ? "要挟" : "SI7.";
 }
 string coin_s() {
 	return _lang == CN ? "假币" : "Coin";
@@ -61,6 +67,15 @@ string bone_s() {
 }
 string shrd_s() {
 	return _lang == CN ? "帷幕" : "Shrd";
+}
+string swin_s() {
+	return _lang == CN ? "行骗" : "Swin";
+}
+string iuca_s() {
+	return _lang == CN ? "裂心" : "Iuca";
+}
+string bran_s() {
+	return _lang == CN ? "铜须" : "Bran";
 }
 string clr_s() {
 	return _lang == CN ? "清除" : "Clr.";
@@ -96,7 +111,10 @@ string btax_s() {
 	return _lang == CN ? "战吼加费" : "BcryTax.";
 }
 string able_s() {
-	return _lang == CN ? "战吼加费" : "StabAble";
+	return _lang == CN ? "背刺可用" : "StabAble";
+}
+string able2_s() {
+	return _lang == CN ? "齿刺可用" : "BoneAble";
 }
 string plyd_s() {
 	return _lang == CN ? "已用牌数" : "CrdsPlyd";
@@ -157,12 +175,23 @@ string mn2str(minionname a) {
 			return tenw_s();
 			break;
 		}
+		case shadowcaster_m: {
+			return cast_s();
+		}
 		case spectralpillager_m: {
 			return pill_s();
 			break;
 		}
 		case elvensinger_m: {
 			return elvn_s();
+		}
+		case illucia_m: {
+			return iuca_s();
+			break;
+		}
+		case bronze_m: {
+			return bran_s();
+			break;
 		}
 		case anyminion_m: {
 			return anym_s();
@@ -210,12 +239,23 @@ string cn2str(cardname a) {
 			return tenw_s();
 			break;
 		}
+		case shadowcaster: {
+			return cast_s();
+		}
 		case spectralpillager: {
 			return pill_s();
 			break;
 		}
 		case elvensinger: {
 			return elvn_s();
+			break;
+		}
+		case illucia: {
+			return iuca_s();
+			break;
+		}
+		case bronze: {
+			return bran_s();
 			break;
 		}
 		case anyminion: {
@@ -228,6 +268,10 @@ string cn2str(cardname a) {
 		}
 		case backstab: {
 			return stab_s();
+			break;
+		}
+		case extortion: {
+			return si7_s();
 			break;
 		}
 		case fakecoin: {
@@ -260,6 +304,9 @@ string cn2str(cardname a) {
 		}
 		case shroud: {
 			return shrd_s();
+		}
+		case swindle: {
+			return swin_s();
 		}
 		case invalid: {
 			return trsh_s();
@@ -294,12 +341,24 @@ cardname mn2cn(minionname a) {
 			return redsmoke;
 			break;
 		}
+		case shadowcaster_m: {
+			return shadowcaster;
+			break;
+		}
 		case spectralpillager_m: {
 			return spectralpillager;
 			break;
 		}
 		case elvensinger_m: {
 			return elvensinger;
+			break;
+		}
+		case illucia_m: {
+			return illucia;
+			break;
+		}
+		case bronze_m: {
+			return bronze;
 			break;
 		}
 		case anyminion_m: {
@@ -335,12 +394,24 @@ minionname cn2mn(cardname a) {
 			return redsmoke_m;
 			break;
 		}
+		case shadowcaster: {
+			return shadowcaster_m;
+			break;
+		}
 		case spectralpillager: {
 			return spectralpillager_m;
 			break;
 		}
 		case elvensinger: {
 			return elvensinger_m;
+			break;
+		}
+		case illucia: {
+			return illucia_m;
+			break;
+		}
+		case bronze: {
+			return bronze_m;
 			break;
 		}
 		case anyminion: {
@@ -361,8 +432,11 @@ bool legalcn2mn(cardname a) {
 		case mailboxdancer:
 		case cutterbutter:
 		case redsmoke:
+		case shadowcaster:
 		case spectralpillager:
 		case elvensinger:
+		case illucia:
+		case bronze:
 		case anyminion: {
 			return true;
 			break;
@@ -395,12 +469,22 @@ int originalcost(minionname a) {
 			return 2;
 			break;
 		}
+		case shadowcaster_m: {
+			return 5;
+			break;
+		}
 		case spectralpillager_m: {
 			return 6;
 			break;
 		}
 		case elvensinger_m: {
 			return 4;
+		}
+		case illucia_m: {
+			return 3;
+		}
+		case bronze_m: {
+			return 3;
 		}
 		case anyminion_m: {
 			return 99;
@@ -418,6 +502,55 @@ int originalcost(minionname a) {
 		}
 		default: {
 			assert(0);
+			return 0;
+			break;
+		}
+	}
+}
+int originalcost_c(cardname a) {
+	if (legalcn2mn(a)) {
+		return originalcost(cn2mn(a));
+	}
+	else switch(a) {
+		case shadowstep: {
+			return 0;
+			break;
+		}
+		case backstab: {
+			return 0;
+			break;
+		}
+		case extortion: {
+			return 1;
+		}
+		case fakecoin: {
+			return 0;
+			break;
+		}
+		case preparation: {
+			return 0;
+			break;
+		}
+		case illusionpotion: {
+			return 4;
+			break;
+		}
+		case bonespike: {
+			return 2;
+			break;
+		}
+		case shroud: {
+			return 3;
+			break;
+		}
+		case swindle: {
+			return 2;
+		}
+		case anyweapon: {
+			return 1;
+			break;
+		}
+		default: {
 			return 0;
 			break;
 		}
@@ -445,12 +578,22 @@ int originalhealth(minionname a) {
 			return 2;
 			break;
 		}
+		case shadowcaster_m: {
+			return 4;
+			break;
+		}
 		case spectralpillager_m: {
 			return 5;
 			break;
 		}
 		case elvensinger_m: {
 			return 2;
+		}
+		case illucia_m: {
+			return 3;
+		}
+		case bronze_m: {
+			return 4;
 		}
 		case anyminion_m: {
 			return 99;
@@ -544,6 +687,9 @@ ope exact(state a, oxy b) {
 		if (a.hands[b.x].name == backstab && a.fields[b.y].curhealth > 2) {
 			z = nul;
 		}
+		if (a.hands[b.x].name == extortion && a.fields[b.y].curhealth > 3) {
+			z = nul;
+		}
 	}
 	else if (b.y == -1) {
 		z = nul;
@@ -568,13 +714,17 @@ opes emptyopescons() {
 }
 opes emptyopes = emptyopescons();
 
-int openmode;
+int stabable;
+int boneable;
 int spelldebuff;
 int miniondebuff;
 int battlecrydebuff;
 
 int deckmn;
 minionname deckm[10];
+
+int oppoH;
+card oppohands[10];
 
 int iseq[999], isn;
 

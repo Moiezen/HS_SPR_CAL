@@ -7,11 +7,11 @@ typedef unsigned long long ull;
 using namespace std;
 enum cardname {
 	shadowstep, backstab, fakecoin, preparation, illusionpotion, sharkspirit, foxyfraud, mailboxdancer, cutterbutter, redsmoke, spectralpillager,
-	anyminion, anyspell, invalid, anyweapon, anycombospell, bonespike, elvensinger, shroud
+	anyminion, anyspell, invalid, anyweapon, anycombospell, bonespike, elvensinger, shroud, extortion, swindle, shadowcaster, illucia, bronze
 };
 enum minionname {
 	sharkspirit_m, foxyfraud_m, mailboxdancer_m, cutterbutter_m, redsmoke_m, spectralpillager_m,
-	anyminion_m, enemyhero, enemyminion, nul, elvensinger_m
+	anyminion_m, enemyhero, enemyminion, nul, elvensinger_m, shadowcaster_m, illucia_m, bronze_m
 	//敌方英雄-可以是鬼灵匪贼的目标
 	//敌方随从-可以是背刺的目标
 	//空目标
@@ -26,12 +26,14 @@ string foxy_s();
 string mail_s();
 string scab_s();
 string tenw_s();
+string cast_s();
 string pill_s();
 string elvn_s();
 string anym_s();
 string face_s();
 string step_s();
 string stab_s();
+string si7_s();
 string coin_s();
 string prep_s();
 string pshn_s();
@@ -41,6 +43,9 @@ string anyw_s();
 string cmbs_s();
 string bone_s();
 string shrd_s();
+string swin_s();
+string iuca_s();
+string bran_s();
 string clr_s();
 string mana_s();
 string calc_s();
@@ -53,6 +58,7 @@ string stax_s();
 string mtax_s();
 string btax_s();
 string able_s();
+string able2_s();
 string plyd_s();
 string samp_s();
 string cl_s();
@@ -72,6 +78,7 @@ cardname mn2cn(minionname a);
 minionname cn2mn(cardname a);
 bool legalcn2mn(cardname a);
 int originalcost(minionname a);
+int originalcost_c(cardname a);
 int originalhealth(minionname a);
 int originalhealth_c(cardname a);
 
@@ -143,13 +150,17 @@ struct opes {
 opes emptyopescons();
 extern opes emptyopes;
 
-extern int openmode;
+extern int stabable;
+extern int boneable;
 extern int spelldebuff;
 extern int miniondebuff;
 extern int battlecrydebuff;
 
 extern int deckmn;
 extern minionname deckm[10];
+
+extern int oppoH;
+extern card oppohands[10];
 
 extern int iseq[999], isn;
 

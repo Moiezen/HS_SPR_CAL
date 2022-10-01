@@ -187,18 +187,17 @@ string _solve(state st, int _need, int _tlim, int _collect, int _addquiz, int _p
 
 	tick = 0;
 
+	st2hidmg.clear();
+	st2hidmgcount = 0;
+	allcount = 0;
+
 	if (exbound == 0) {
 		bound = 1e9;
 		solve(syncons(make_pair(st, 0), 0, emptyopes));
 	}
 	if (exbound == 1) {
-		st2hidmg.clear();
-		st2hidmgcount = 0;
-		allcount = 0;
-
 		bound = -boundbasic;
 		bounded = 0;
-
 		solve(syncons(make_pair(st, 0), 0, emptyopes));
 
 		while (done == 0 && bounded == 1) {
@@ -212,6 +211,8 @@ string _solve(state st, int _need, int _tlim, int _collect, int _addquiz, int _p
 			solve(syncons(make_pair(st, 0), 0, emptyopes));
 		}
 	}
+
+	st2hidmg.clear();
 
 	if (collect == 1 && done == 0) {
 		if (curdmg >= dmgbd) {

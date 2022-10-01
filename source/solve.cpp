@@ -57,7 +57,7 @@ map<ull, int> st2hidmg;
 int st2hidmgcountlim = (1 << 21);
 int st2hidmgcount = 0;
 int allcount = 0;
-int hashon = 1;
+int hashon = 0;
 
 void solve(syn q) {
 	if (hashon) {
@@ -182,6 +182,10 @@ string _solve(state st, int _need, int _tlim, int _collect, int _addquiz, int _p
 
 	tick = 0;
 
+	st2hidmg.clear();
+	st2hidmgcount = 0;
+	allcount = 0;
+
 	if (exbound == 0) {
 		bound = 1e9;
 		solve(syncons(make_pair(st, 0), 0, emptyopes));
@@ -190,12 +194,19 @@ string _solve(state st, int _need, int _tlim, int _collect, int _addquiz, int _p
 		bound = -boundbasic;
 		bounded = 0;
 		solve(syncons(make_pair(st, 0), 0, emptyopes));
+
 		while (done == 0 && bounded == 1) {
+			st2hidmg.clear();
+			st2hidmgcount = 0;
+			allcount = 0;
+
 			bound -= boundbasic;
 			bounded = 0;
 			solve(syncons(make_pair(st, 0), 0, emptyopes));
 		}
 	}
+
+	st2hidmg.clear();
 
 	if (collect == 1 && done == 0) {
 		if (curdmg >= dmgbd) {

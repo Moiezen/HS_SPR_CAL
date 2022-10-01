@@ -35,7 +35,7 @@ oxys offer(state a) {
 		}
 		if (dup) continue;
 
-		if (na == shadowstep || na == backstab || na == redsmoke || na == spectralpillager || na == bonespike) {
+		if (na == shadowstep || na == backstab || na == extortion || na == redsmoke || na == shadowcaster || na == spectralpillager || na == bonespike) {
 			rep(j, 0, a.F - 1) {
 				bool dup2 = false;
 				rep(k, 0, j - 1) {
@@ -51,9 +51,11 @@ oxys offer(state a) {
 		if (na == spectralpillager) {
 			os.os.push_back(oxycons(i, -2));
 		}
-		if (na == backstab || na == fakecoin || na == preparation || na == illusionpotion || na == shroud
-		 || na == mailboxdancer || na == foxyfraud || na == cutterbutter || na == elvensinger || na == redsmoke
-		 || na == sharkspirit || na == anyminion || na == anyspell || na == anyweapon || na == anycombospell || na == bonespike) {
+		if (na == backstab || na == extortion || na == bonespike
+			|| na == fakecoin || na == preparation || na == illusionpotion || na == shroud || na == swindle
+			|| na == redsmoke || na == shadowcaster
+			|| na == mailboxdancer || na == foxyfraud || na == cutterbutter || na == elvensinger || na == sharkspirit || na == illucia || na == bronze
+			|| na == anyminion || na == anyspell || na == anyweapon || na == anycombospell) {
 			os.os.push_back(oxycons(i, -1));
 		}
 		//not include enemyminion yet

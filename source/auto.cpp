@@ -4,7 +4,7 @@
 cardname cid2cn(string s) {
 	if (s.find("EX1_144") != -1) return shadowstep;
 	if (s.find("CS2_072") != -1) return backstab;
-	if (s == "SW_412") return backstab;
+	if (s == "SW_412") return extortion;
 	if (s == "REV_939") return bonespike;
 	if (s.find("COIN") != -1) return fakecoin;
 	if (s == "GAME_005") return fakecoin;
@@ -16,13 +16,14 @@ cardname cid2cn(string s) {
 	if (s == "SW_070") return mailboxdancer;
 	if (s == "BAR_552") return cutterbutter;
 	if (s == "DMF_071") return redsmoke;
+	if (s == "OG_291") return shadowcaster;
 	if (s == "ICC_910") return spectralpillager;
 	if (s == "LOOT_211") return elvensinger;
 	if (s.find("REV_938") != -1) return anyspell;	
 	if (s == "TSC_916") return anycombospell;
 	if (s == "ULD_715") return anyspell;
 	if (s == "DED_004") return anyweapon;
-	if (s == "DMF_515") return anycombospell;
+	if (s == "DMF_515") return swindle;
 	if (s == "WC_016") return shroud;
 	if (s == "REV_825") return anyspell;
 	if (s == "LOOT_214")  return anyspell;
@@ -46,6 +47,7 @@ int cid2oc(string s) {
 	if (s == "SW_070") return 2;
 	if (s == "BAR_552") return 4;
 	if (s == "DMF_071") return 2;
+	if (s == "OG_291") return 5;
 	if (s == "ICC_910") return 6;
 	if (s == "LOOT_211") return 4;
 	if (s.find("REV_938") != -1) return 1;
@@ -170,6 +172,8 @@ int updcurid(string s, int x) {
 	return x;
 }
 
+map<int, int> id2initialcontroller;
+
 int nidn;
 minionname notindeck[99];
 
@@ -248,6 +252,10 @@ state autoread(string _s, int& _tar) {
 
 				id2tag2stampandvalue[curid][u] = make_pair(stampcnt++, v);
 
+				if (u == "CONTROLLER" && id2initialcontroller[curid] == 0) {
+					id2initialcontroller[curid] = atoi(v.c_str());
+				}
+
 				lu = u;
 				lv = v;
 			}
@@ -259,14 +267,16 @@ state autoread(string _s, int& _tar) {
 	//读取完毕，开始转化
 
 	state autost = emptyst;
-
+	
+	stabable = 0;
+	boneable = 0;
 	spelldebuff = 0;
 	miniondebuff = 0;
 	battlecrydebuff = 0;
 
 	nidn = 0;
 
-	map<int, int> id2pos;
+	map<int, int> id2handpos;
 
 	for (auto i : id2tag2stampandvalue) {
 		auto j = i.second;
@@ -278,18 +288,9 @@ state autoread(string _s, int& _tar) {
 			int c = atoi(j["HEALTH"].second.c_str());
 			int p = atoi(j["ZONE_POSITION"].second.c_str());
 
-			id2pos[i.first] = p;
+			id2handpos[i.first] = p;
 			autost.hands[p - 1] = cardcons(a, b, c);
 			autost.H++;
-
-			if (a == backstab) {
-				if (j["error"].second == "NONE") {
-					openmode = 1;
-				}
-				else {
-					openmode = 0;
-				}
-			}
 		}
 
 		if (j["ZONE"].second == "PLAY" && j["CARDTYPE"].second == "MINION" && j["CONTROLLER"].second == to_string(mycid)) {
@@ -313,6 +314,21 @@ state autoread(string _s, int& _tar) {
 			if (cid == "REV_837") {
 				miniondebuff += 2;
 			}
+			if (atoi(j["DAMAGE"].second.c_str()) == 0
+				&& atoi(j["IMMUNE"].second.c_str()) == 0
+				&& atoi(j["STEALTH"].second.c_str()) == 0
+				&& atoi(j["CANT_BE_TARGETED_BY_SPELLS"].second.c_str()) == 0
+				) {
+				stabable = 1;
+			}
+			if (atoi(j["HEALTH"].second.c_str()) - atoi(j["DAMAGE"].second.c_str()) <= 3
+				&& atoi(j["DIVINE_SHIELD"].second.c_str()) == 0
+				&& atoi(j["IMMUNE"].second.c_str()) == 0
+				&& atoi(j["STEALTH"].second.c_str()) == 0
+				&& atoi(j["CANT_BE_TARGETED_BY_SPELLS"].second.c_str()) == 0
+			) {
+				boneable = 1;
+			}
 		}
 
 		if (j["ZONE"].second == "PLAY" && j["CARDTYPE"].second == "ENCHANTMENT") {
@@ -326,6 +342,9 @@ state autoread(string _s, int& _tar) {
 				}
 				if (buff == "DMF_511e") {
 					autost.auras[1] += 1;
+				}
+				if (buff == "REV_939e") {
+					autost.auras[2] += 2;
 				}
 				if (buff == "BAR_552o") {
 					int a = atoi(j["TAG_SCRIPT_DATA_NUM_1"].second.c_str());
@@ -352,7 +371,7 @@ state autoread(string _s, int& _tar) {
 			}
 			else {
 				int a = atoi(j["ATTACHED"].second.c_str());
-				int p = id2pos[a] - 1;
+				int p = id2handpos[a] - 1;
 				if (p >= 0 && p <= 9) {
 					if (buff == "GBL_002e") {
 						autost.hands[p].cost -= 2;
@@ -361,6 +380,9 @@ state autoread(string _s, int& _tar) {
 						autost.hands[p].cost -= 2;
 					}
 					if (buff == "SCH_352e2") {
+						autost.hands[p].cost = 1;
+					}
+					if (buff == "OG_291e") {
 						autost.hands[p].cost = 1;
 					}
 					if (buff == "DMF_071e") {
@@ -394,7 +416,7 @@ state autoread(string _s, int& _tar) {
 			}
 		}
 
-		if (i.first <= myhid && j["player"].second == to_string(mypid) && j["ZONE"].second != "DECK") {
+		if (i.first <= myhid && id2initialcontroller[i.first] == mycid && (j["ZONE"].second != "DECK" || j["CONTROLLER"].second != to_string(mycid))) {
 			string cid = j["CardID"].second;
 			cardname c = cid2cn(cid);
 			if (legalcn2mn(c)) {
