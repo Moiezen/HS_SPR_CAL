@@ -174,12 +174,11 @@ int updcurid(string s, int x) {
 
 map<int, int> id2initialcontroller;
 
-int nidn;
-minionname notindeck[99];
+map<int, int> id2handpos;
 
 vector<string> valids;
 
-state autoread(string _s, int& _tar) {
+state autoread(string _s, int& _tar, int countslimit) {
 	cin.clear();
 	//重置输入流，防止无法读取 
 
@@ -189,7 +188,12 @@ state autoread(string _s, int& _tar) {
 
 	valids.clear();
 
+	int counts = 0;
+
 	while (getline(cin, __s)) {
+		if (__s.find("GameState.DebugPrintOptions() - id") != -1) counts++;
+		if (counts >= countslimit) break;
+
 		if (__s.find("- CREATE_GAME") != -1) {
 			valids.clear();
 		}
@@ -221,6 +225,10 @@ state autoread(string _s, int& _tar) {
 			stampcnt = 0;
 
 			curid = 0;
+
+			id2initialcontroller.clear();
+
+			id2handpos.clear();
 		}
 
 		updid(curid);
@@ -274,9 +282,8 @@ state autoread(string _s, int& _tar) {
 	miniondebuff = 0;
 	battlecrydebuff = 0;
 
-	nidn = 0;
-
-	map<int, int> id2handpos;
+	int nidn = 0;
+	minionname notindeck[99];
 
 	for (auto i : id2tag2stampandvalue) {
 		auto j = i.second;

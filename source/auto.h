@@ -4,4 +4,4 @@
 
 cardname cid2cn(string s);
 
-state autoread(string _s, int& _eh);
+state autoread(string _s, int& _tar, int countslimit);

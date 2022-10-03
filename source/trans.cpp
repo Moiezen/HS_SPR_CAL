@@ -111,7 +111,10 @@ pair<state, int> trans(state st, oxy ox) {
 			rmvh(st.hands, st.H, ox.x);
 			int kill = 0;
 			if (ox.y == -1) {
-				return badpair;
+				if (boneable == 0) {
+					return badpair;
+				}
+				kill = 1;
 			}
 			else if (ox.y >= 0) {
 				st.fields[ox.y].curhealth -= 3;

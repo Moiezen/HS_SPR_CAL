@@ -578,7 +578,7 @@ state initstcons() {
 
 void loadauto() {
 	int _tar = 999;
-	state st = autoread(id2dom(lkdomid).name, _tar);
+	state st = autoread(id2dom(lkdomid).name, _tar, 1 << 30);
 	domain tmp;
 
 	st2doms(st);
