@@ -267,7 +267,7 @@ state autoread(string _s, int& _tar, int& countslimit) {
 				if (u == "CONTROLLER" && id2initialcontroller[curid] == 0) {
 					id2initialcontroller[curid] = atoi(v.c_str());
 				}
-				if (u == "CARDID" && id2initialcardid[curid] == "") {
+				if (u == "CardID" && id2initialcardid[curid] == "") {
 					id2initialcardid[curid] = v;
 				}
 
@@ -347,8 +347,8 @@ state autoread(string _s, int& _tar, int& countslimit) {
 				boneable = 1;
 			}
 			if (atoi(j["TAUNT"].second.c_str()) ==1
-				&& atoi(j["DIVINE_SHIELD"].second.c_str()) == 0
 				&& atoi(j["IMMUNE"].second.c_str()) == 0
+				&& atoi(j["STEALTH"].second.c_str()) == 0
 			) {
 				oppotaunt = 1;
 			}
