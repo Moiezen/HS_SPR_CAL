@@ -1,6 +1,7 @@
 #include "offer.h"
 
 bool coinopt(state a, oxy& b) {
+	if (iceblockif == 1) return false;
 	if (a.mana < manalim && a.auras[2] == 0 && a.auras[3] == 0 && a.auras[0] == 0 && spelldebuff == 0) {
 		rep(i, 0, a.H - 1) {
 			if (a.hands[i].name == fakecoin && a.hands[i].cost == 0) {
@@ -21,6 +22,10 @@ oxys offer(state a) {
 	if (coinopt(a, o)) {
 		os.os.push_back(o);
 		return os;
+	}
+
+	if (a.hatk > 0) {
+		os.os.push_back(oxycons(-1, -2));
 	}
 
 	rep(i, 0, a.H - 1) {
@@ -52,13 +57,13 @@ oxys offer(state a) {
 			os.os.push_back(oxycons(i, -2));
 		}
 		if (na == backstab || na == extortion || na == bonespike
-			|| na == fakecoin || na == preparation || na == illusionpotion || na == shroud || na == swindle
+			|| na == fakecoin || na == preparation || na == illusionpotion || na == shroud || na == swindle || na == madnessplague
 			|| na == redsmoke || na == shadowcaster
 			|| na == mailboxdancer || na == foxyfraud || na == cutterbutter || na == elvensinger || na == sharkspirit || na == illucia || na == bronze
 			|| na == anyminion || na == anyspell || na == anyweapon || na == anycombospell) {
 			os.os.push_back(oxycons(i, -1));
 		}
-		//not include enemyminion yet
 	}
+
 	return os;
 }

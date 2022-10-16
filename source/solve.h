@@ -15,7 +15,6 @@ bool operator<(syn a, syn b);
 
 const double sumbasic = 1.;
 const double boundbasic = 10.0;
-const int _need_max = 999;
 
 extern int done, curdmg;
 extern opes curos;

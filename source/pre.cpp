@@ -10,7 +10,7 @@ void Coll() {
 	int N = 5000, T = 0, S = 0;
 	rep(i, 1, N) {
 		state st = gen(i);
-		_solve(st, _need_max, 15, 1, 0, 0, 0, 0, 0, 1);
+		_solve(st, _tar_max, 15, 1, 0, 0, 0, 0, 0, 1);
 		if (done == 0) S++; T++;
 		cerr << "now " << S << " of " << T << endl;
 	}
@@ -68,7 +68,7 @@ void Genq() {
 	int N = 1000, T = 0, S = 0;
 	rep(i, 1, N) {
 		state st = gen(i);
-		_solve(st, _need_max, 15, 0, 1, 0, 0, 0, 0, 1);
+		_solve(st, _tar_max, 15, 0, 1, 0, 0, 0, 0, 1);
 		if (done == 0) S++; T++;
 		cerr << "now " << S << " of " << T << endl;
 	}

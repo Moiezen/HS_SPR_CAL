@@ -77,6 +77,9 @@ string iuca_s() {
 string bran_s() {
 	return _lang == CN ? "铜须" : "Bran";
 }
+string plag_s() {
+	return _lang == CN ? "毒刀" : "Plag";
+}
 string clr_s() {
 	return _lang == CN ? "清除" : "Clr.";
 }
@@ -95,11 +98,17 @@ string time_s() {
 string targ_s() {
 	return _lang == CN ? "目标" : "Targ";
 }
+string adpt_s() {
+	return _lang == CN ? "适应" : "Adpt";
+}
 string chng_s() {
 	return _lang == CN ? "修改" : "Chng";
 }
 string read_s() {
 	return _lang == CN ? "读取" : "Read";
+}
+string back_s() {
+	return _lang == CN ? "回退" : "Back";
 }
 string stax_s() {
 	return _lang == CN ? "法术加费" : "AnySTax.";
@@ -151,6 +160,12 @@ string targrch_s() {
 }
 string timerch_s() {
 	return _lang == CN ? "(时限掐断)" : "(TimeRch.)";
+}
+string iceblock_s() {
+	return _lang == CN ? "破冰需要" : "IceBlock";
+}
+string heroattk_s() {
+	return _lang == CN ? "英雄攻击" : "HeroAttk";
 }
 
 string mn2str(minionname a) {
@@ -307,6 +322,9 @@ string cn2str(cardname a) {
 		}
 		case swindle: {
 			return swin_s();
+		}
+		case madnessplague: {
+			return plag_s();
 		}
 		case invalid: {
 			return trsh_s();
@@ -546,6 +564,9 @@ int originalcost_c(cardname a) {
 		case swindle: {
 			return 2;
 		}
+		case madnessplague: {
+			return 1;
+		}
 		case anyweapon: {
 			return 1;
 			break;
@@ -663,6 +684,7 @@ state emptystcons() {
 	a.mana = 0;
 	a.num = 0;
 	a.drawmn = 0;
+	a.hatk = 0;
 	return a;
 }
 state emptyst = emptystcons();
@@ -694,10 +716,23 @@ ope exact(state a, oxy b) {
 	else if (b.y == -1) {
 		z = nul;
 	}
-	else {
+	else if (b.y == -2) {
 		z = enemyhero;
 	}
-	return opecons(a.hands[b.x].cost, a.hands[b.x].name, z);
+	else {
+		assert(0);
+	}
+
+	if (b.x >= 0) {
+		return opecons(a.hands[b.x].cost, a.hands[b.x].name, z);
+	}
+	else if (b.x == -1) {
+		return opecons(0, heroattack, z);
+	}
+	else {
+		assert(0);
+		return opecons(0, invalid, nul);
+	}
 }
 
 oxys emptyoxyscons() {
@@ -721,10 +756,12 @@ int miniondebuff;
 int battlecrydebuff;
 
 int deckmn;
-minionname deckm[10];
+minionname deckm[99];
 
 int oppoH;
 card oppohands[10];
+
+int iceblockif;
 
 int iseq[999], isn;
 

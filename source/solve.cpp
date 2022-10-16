@@ -21,7 +21,7 @@ double optf(double x, double y) {
 }
 
 ll tlim, tbegin;
-int need;
+int tar;
 int collect, addquiz, print;
 int exbound, optimize, pureformula;
 double bound;
@@ -88,7 +88,7 @@ void solve(syn q) {
 		curos = q.os;
 		curdmg = q.pa.second;
 	}
-	if (q.pa.second >= need) {
+	if (q.pa.second >= tar) {
 		done = 1;
 		return;
 	}
@@ -157,10 +157,10 @@ void solve(syn q) {
 }
 
 string _solve(state st, int _need, int _tlim, int _collect, int _addquiz, int _print, int _exbound, int _optimize, int _pureformula, int _test) {
-	if (_need < _need_max && _collect == 1) assert(0);
+	if (_need < _tar_max && _collect == 1) assert(0);
 	//同时开启需求截断和收集会污染数据 
 
-	need = _need;
+	tar = _need;
 	done = curdmg = 0;
 	curos = emptyopes;
 

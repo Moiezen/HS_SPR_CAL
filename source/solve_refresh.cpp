@@ -21,7 +21,7 @@ double optf(double x, double y) {
 }
 
 ll tlim, tbegin;
-int need;
+int tar;
 int collect, addquiz, print;
 int exbound, optimize, pureformula;
 double bound;
@@ -37,19 +37,21 @@ int tick;
 ull statehb = 77232917;
 ull p1 = 1000000123;
 ull p2 = 1000000181;
-ull statehash(state a) {
+ull statehash(state a, int b) {
 	ull d1 = 1;
 	rep(i, 0, a.H - 1) d1 = d1 * (a.hands[i].name * 100 + a.hands[i].cost + p1);
 	ull d2 = 1;
 	rep(i, 0, a.F - 1) d2 = d2 * (a.fields[i].name + p2);
 	//暂时当作无序
-	//事实上在trans处理中已经当作无序
+	//事实上在offer.cpp中已经一定程度上当作无序处理
 
 	ull h = d1 * statehb + d2;
 	rep(i, 0, 3) h = h * statehb + a.auras[i];
 	h = h * statehb + a.num;
 	h = h * statehb + a.mana;
 	h = h * statehb + a.drawmn;
+	h = h * statehb + a.hatk;
+	if (iceblockif == 1) h = h * statehb + b;
 	return h;
 }
 
@@ -59,11 +61,39 @@ int st2hidmgcount = 0;
 int allcount = 0;
 int hashon = 1;
 
+int accum(int x, int y) {
+	int t = 1;
+	if (y < 0) {
+		y = -y;
+		t = 2;
+	}
+
+	if (iceblockif == 0) {
+		return x + t * y;
+	}
+
+	while (t--) {
+		if (x >= _tar_ice2) {
+			x = x;
+		}
+		else if (x + y < tar) {
+			x = x + y;
+		}
+		else if (x + y >= tar) {
+			x = _tar_ice1 - (tar - x);
+		}
+		else {
+			assert(0);
+		}
+	}
+	return x;
+}
+
 void solve(syn q) {
 	if (hashon) {
 		allcount++;
 
-		ull hq = statehash(q.pa.first);
+		ull hq = statehash(q.pa.first, q.pa.second);
 		if (q.pa.second <= st2hidmg[hq] - 1) {
 			return;
 		}
@@ -93,9 +123,14 @@ void solve(syn q) {
 			}
 		}
 	}
-	if (q.pa.second >= need) {
+	if (iceblockif == 0 && q.pa.second >= tar) {
 		done = 1;
 		return;
+	}
+	if (iceblockif == 1 && q.pa.second == _tar_ice1 - 1) {
+		done = 1;
+		return;
+		//1血破冰已是最优，相当于达标
 	}
 	if ((tick++ & 8) == 0 && time(0) >= tbegin + tlim) {
 		done = 2;
@@ -104,6 +139,10 @@ void solve(syn q) {
 	if (exbound == 1 && q.pri < bound) {
 		bounded = 1;
 		return;
+	}
+	if (q.pa.second >= _tar_ice2) {
+		return;
+		//已经打出破冰则也已不必继续操作
 	}
 
 	if (optimize == 1) {
@@ -136,6 +175,7 @@ void solve(syn q) {
 	}
 
 	int j = 0;
+	int alreadyvalids = 0;
 	for (auto i : o0.os) {
 		opes os = q.os;
 		os.os.push_back(exact(q.pa.first, i));
@@ -153,19 +193,33 @@ void solve(syn q) {
 			//cerr<<lost<<endl;
 		}
 		else {
-			pair<state, int> p = trans(q.pa.first, i); if (test == 1) testcnt++;
-			solve(syncons(make_pair(p.first, q.pa.second + p.second), q.pri + lost, os));
+			pair<state, int> p = trans(q.pa.first, i);
+			if (test == 1) {
+				testcnt++;
+			}
+			if (p.second == badpair_min) {
+				continue;
+			}
+			//if (iceblockif == 0 && i.x == -1 && alreadyvalids > 0) {
+				//continue;
+				//如果不需要破冰，那么英雄攻击一定可以留到最后进行
+				//因此，只要可以进行任何其他选择(alreadyvalids > 0)，就可以暂时忽视英雄攻击这一选择（i.x == -1）
+				//这一优化应当归为offer，但在offer中不容易实现，因此在此处实现
+			//}
+
+			alreadyvalids++;
+			solve(syncons(make_pair(p.first, accum(q.pa.second, p.second)), q.pri + lost, os));
 			if (done > 0) return;
 		}
 
 	}
 }
 
-string _solve(state st, int _need, int _tlim, int _collect, int _addquiz, int _print, int _exbound, int _optimize, int _pureformula, int _test) {
-	if (_need < _need_max && _collect == 1) assert(0);
+string _solve(state st, int _tar, int _tlim, int _collect, int _addquiz, int _print, int _exbound, int _optimize, int _pureformula, int _test) {
+	if (_tar < _tar_max && _collect == 1) assert(0);
 	//同时开启需求截断和收集会污染数据 
 
-	need = _need;
+	tar = _tar;
 	done = curdmg = 0;
 	curos = emptyopes;
 

@@ -20,8 +20,8 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
 	"source/deck.h" "source/deck.cpp"
 	"source/auto.h" "source/auto.cpp"
 	"source/ui.cpp" "source/ui.h"
-	"source/HSSPRCAL_W.cpp"
-  )
+    "source/adapt.cpp" "source/adapt.h"
+	"source/HSSPRCAL_W.cpp")
 endif()
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")

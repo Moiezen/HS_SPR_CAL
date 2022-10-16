@@ -13,7 +13,7 @@ void rmvf(minion* a, int& n, int x) {
 	n--;
 }
 
-pair<state, int> badpair = make_pair(emptyst, -999999);
+pair<state, int> badpair = make_pair(emptyst, badpair_min);
 
 int twice(state st) {
 	rep(i, 0, st.F - 1)
@@ -31,13 +31,12 @@ int twice2(state st) {
 }
 
 pair<state, int> trans(state st, oxy ox) {
-	if (ox.x >= st.H || ox.x < 0 || ox.y >= st.F || ox.y < -2) {
+	if (ox.x >= st.H || ox.x < -1 || ox.y >= st.F || ox.y < -2) {
 		return badpair;
 	}
 	ope op = exact(st, ox);
 
 	int dmg = 0;
-	bool flag = true;
 	switch (op.name) {
 		case shadowstep: {
 			rmvh(st.hands, st.H, ox.x);
@@ -448,11 +447,15 @@ pair<state, int> trans(state st, oxy ox) {
 			st.fields[st.F++] = minioncons(cn2mn(op.name), h, h);
 
 			if (ox.y == -2) {
-				dmg = st.num * twi;
+				dmg = st.num;
+				if (twi == 2) dmg = -dmg;
+				//以此标记双倍
 			}
 			else if (ox.y >= 0) {
-				//应用总能去除的假定 
-				rmvf(st.fields, st.F, ox.y);
+				st.fields[ox.y].curhealth -= st.num * twi;
+				if (st.fields[ox.y].curhealth <= 0) {
+					rmvf(st.fields, st.F, ox.y);
+				}
 			}
 			else {
 				return badpair;
@@ -501,6 +504,8 @@ pair<state, int> trans(state st, oxy ox) {
 			rmvh(st.hands, st.H, ox.x);
 			if (ox.y != -1) return badpair;
 
+			if (st.hatk >= 0) st.hatk = 2;
+
 			st.mana -= max(op.cost - st.auras[2], 0);
 			if (st.mana < 0) return badpair;
 
@@ -521,6 +526,36 @@ pair<state, int> trans(state st, oxy ox) {
 			st.auras[2] = st.auras[3];
 			st.auras[3] = 0;
 			st.num++;
+			break;
+		}
+		case madnessplague: {
+			rmvh(st.hands, st.H, ox.x);
+			if (ox.y != -1) return badpair;
+
+			if (st.hatk >= 0) st.hatk = 2;
+
+			st.mana -= max(op.cost - st.auras[0] * 2 - st.auras[2] + spelldebuff, 0);
+			if (st.mana < 0) return badpair;
+			
+			st.auras[0] = 0;
+			st.auras[2] = st.auras[3];
+			st.auras[3] = 0;
+			st.num++;
+			break;
+		}
+		case heroattack: {
+			if (ox.y != -2) return badpair;
+			if (st.hatk <= 0) return badpair;
+
+			dmg = st.hatk;
+			st.hatk = -1;
+
+			if (iceblockif == 0) {
+				st.mana = -999;
+				//如果不需要破冰，那么英雄攻击一定可以留到最后进行
+				//因此，可以认为在英雄攻击后不会再进行任何操作，即直接将mana设置为-999
+				//这一优化在solve中曾有另一种不完全相同但实际效果相同的解决方式
+			}
 			break;
 		}
 		case invalid: {

@@ -1,6 +1,7 @@
 #include "solve.h"
 #include "pre.h"
 #include "auto.h"
+#include "adapt.h"
 #include "ui.h"
 
 #include <graphics.h>
@@ -51,7 +52,7 @@ void textra(rect a, color_t b, string c) {
 		if (yy >= 560) {
 			yy = 5;
 			xx += 200;
-		}
+		}	
 	}
 }
 bool inrect(int x, int y, rect a) {
@@ -59,7 +60,7 @@ bool inrect(int x, int y, rect a) {
 }
 
 enum domt {
-	nodomt, vnx, vx, vn, cn, c0, cx, go, ans, lk, lk1, lk2, exa, vx0, gogo
+	nodomt, vnx, vx, vn, cn, c0, cx, go, ans, lk, lk1, lk2, exa, vx0, gogo, lk2_1, lk0
 };
 struct domain {
 	rect r;
@@ -87,7 +88,7 @@ color_t txc = EGERGB(0, 0, 255);
 
 void init() {
 	initgraph(W, H);
-	setcaption(".20221002.001");
+	setcaption(".20221017.001");
 	setb(bgc);
 }
 
@@ -146,6 +147,8 @@ int mode2domid;
 int numdomid;
 int aurasdomid[4];
 int exadomid;
+int icebdomid;
+int hatkdomid;
 
 int chdomid[10];
 int fmhdomid[7];
@@ -171,9 +174,7 @@ void follow(domain a) {
 	}
 }
 
-const int countn = 25;
-const int splitn = 14;
-int k1[countn] = { 'Y','L','X','D','G','E','T','A','B','C','J','S','H','W',-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,46};
+int k1[countn] = { 'Y','L','X','D','G','E','T','A','B','C','J','S','H','W',-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,46 };
 
 string getdftlk() {
 	cin.clear();
@@ -203,7 +204,7 @@ void getdoms() {
 	string n1[countn] = {
 		shak_s(), foxy_s(), mail_s(), scab_s(), pill_s(), elvn_s(), tenw_s(),
 		step_s(), stab_s(), bone_s(), coin_s(), prep_s(), pshn_s(), shrd_s(),
-		anym_s(), anys_s(), trsh_s(), anyw_s(), cmbs_s(), si7_s(), swin_s(), cast_s(), iuca_s(), bran_s(), clr_s()
+		anym_s(), anys_s(), trsh_s(), anyw_s(), cmbs_s(), si7_s(), swin_s(), cast_s(), iuca_s(), bran_s(), plag_s(), clr_s()
 	};
 
 	string a1[4] = { a0_s(), a1_s(), a2_s(), a3_s() };
@@ -242,10 +243,14 @@ void getdoms() {
 	string dftlk = getdftlk();
 	adddd(0, 0, 400, 40, lk, dftlk, 0, lkdomid = 41, -1, -1);
 	//41
-	adddd(400, 0, 440, 40, lk1, chng_s(), 0, 42, -1, -1);
+	adddd(400, 0, 440, 40, lk0, adpt_s(), 0, 42, -1, -1);
+	//51
+	adddd(440, 0, 480, 40, lk1, chng_s(), 0, 42, -1, -1);
 	//42
-	adddd(440, 0, 480, 40, lk2, read_s(), 0, 43, 32, -1);
+	adddd(480, 0, 520, 40, lk2, read_s(), 0, 43, 32, -1);
 	//43
+	adddd(520, 0, 560, 40, lk2_1, back_s(), 0, 91, 'Z', -1);
+	//91
 	adddd(440, 200, 560, 240, vx, stax_s(), 0, sdbdomid = 70, -1, 10);
 	//70
 	adddd(560, 200, 680, 240, vx, mtax_s(), 0, mdbdomid = 71, -1, 10);
@@ -262,6 +267,10 @@ void getdoms() {
 	//46 ... 49
 	adddd(0, 600, 120, 640, exa, samp_s(), 0, exadomid = 50, -1, -1);
 	//50
+	adddd(200, 120, 320, 160, vx, iceblock_s(), 0, icebdomid = 80, -1, 1);
+	//80
+	adddd(320, 120, 440, 160, vx, heroattk_s(), 0, hatkdomid = 81, -1, 10);
+	//81
 }
 
 cardname str2cn(string s) {
@@ -284,6 +293,7 @@ cardname str2cn(string s) {
 	if (s == elvn_s()) return elvensinger;
 	if (s == iuca_s()) return illucia;
 	if (s == bran_s()) return bronze;
+	if (s == plag_s()) return madnessplague;
 	if (s == anys_s()) return anyspell;
 	if (s == anym_s()) return anyminion;
 	if (s == anyw_s()) return anyweapon;
@@ -292,8 +302,8 @@ cardname str2cn(string s) {
 	return invalid;
 }
 
-int __tar = 999;
-int __tlim = 999999;
+int __tar;
+int __tlim;
 
 void drawdom(domain a, bool sl) {
 	rect r = a.r;
@@ -334,8 +344,10 @@ void drawdom(domain a, bool sl) {
 		case cn:
 		case go:
 		case gogo:
+		case lk0:
 		case lk1:
 		case lk2:
+		case lk2_1:
 		case exa: {
 			textr(r, txc, a.name);
 			break;
@@ -386,6 +398,17 @@ void st2doms(state st) {
 	tmp.x = boneable;
 	drawdom(tmp, 0);
 	follow(tmp);
+
+	tmp = id2dom(icebdomid);
+	tmp.x = iceblockif;
+	drawdom(tmp, 0);
+	follow(tmp);
+
+	if (deckmn >= 10) {
+		deckmn = 10;
+	}
+	//autoread得到的牌库随从实际上可能超过10
+	//在UI部分以及之后的计算部分，暂仅考虑不超过10个牌库随从
 
 	rep(i, 0, deckmn - 1) {
 		tmp = id2dom(deckmdomid[i]);
@@ -475,6 +498,11 @@ void st2doms(state st) {
 	tmp.x = st.num;
 	drawdom(tmp, 0);
 	follow(tmp);
+
+	tmp = id2dom(hatkdomid);
+	tmp.x = st.hatk;
+	drawdom(tmp, 0);
+	follow(tmp);
 }
 
 state doms2st(vector<domain> a) {
@@ -483,11 +511,12 @@ state doms2st(vector<domain> a) {
 	battlecrydebuff = id2dom(bdbdomid).x;
 	stabable = id2dom(modedomid).x;
 	boneable = id2dom(mode2domid).x;
+	iceblockif = id2dom(icebdomid).x;
 
 	__tar = id2dom(tardomid).x;
 	__tlim = id2dom(tlimdomid).x;
 
-	state st;
+	state st = emptyst;
 	domain tmp, tmp2, tmp3;
 
 	deckmn = 0;
@@ -522,6 +551,8 @@ state doms2st(vector<domain> a) {
 
 	st.mana = id2dom(manadomid).x;
 	st.num = id2dom(numdomid).x;
+	st.drawmn = 0;
+	st.hatk = id2dom(hatkdomid).x;
 	return st;
 }
 
@@ -573,13 +604,19 @@ state initstcons() {
 	a.mana = 10;
 	a.num = 0;
 	a.drawmn = 0;
+	a.hatk = 0;
 	return a;
 }
 
-void loadauto() {
+int countslimitsaved = 0;
+
+void loadauto(int normalwhen0 = 0) {
 	int _tar = 999;
-	state st = autoread(id2dom(lkdomid).name, _tar, 1 << 30);
+	int _countslimit = normalwhen0 == 0 ? 1 << 30 : countslimitsaved - 1;
+	state st = autoread(id2dom(lkdomid).name, _tar, _countslimit);
 	domain tmp;
+
+	countslimitsaved = _countslimit;
 
 	st2doms(st);
 
@@ -740,13 +777,25 @@ void touch(domain toselect) {
 
 			break;
 		}
+		case lk0: {
+			inputing = false;
+
+			string _lk = adaptlk();
+			domain lk = id2dom(lkdomid);
+			if (_lk.length() == 0) break;
+			lk.name = _lk;
+			savedftlk(lk.name);
+			drawdom(lk, 0);
+			follow(lk);
+			break;
+		}
 		case lk1: {
 			inputing = false;
 
-			char _lk[105];
+			char _lk[105] = {};
 			inputbox_getline(hint_s().c_str(), "宇宙甜心", _lk, 100);
 			domain lk = id2dom(lkdomid);
-			lk.name = (string)_lk;
+			lk.name = _lk;
 			savedftlk(lk.name);
 			drawdom(lk, 0);
 			follow(lk);
@@ -756,6 +805,18 @@ void touch(domain toselect) {
 			inputing = false;
 
 			loadauto();
+			selected = nodomain;
+
+			domain tmp = id2dom(ansdomid);
+			tmp.name = "";
+			drawdom(tmp, 0);
+			follow(tmp);
+			break;
+		}
+		case lk2_1: {
+			inputing = false;
+
+			loadauto(1);
 			selected = nodomain;
 
 			domain tmp = id2dom(ansdomid);

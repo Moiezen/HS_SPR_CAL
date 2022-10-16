@@ -21,7 +21,7 @@ cardname cid2cn(string s) {
 	if (s == "LOOT_211") return elvensinger;
 	if (s.find("REV_938") != -1) return anyspell;	
 	if (s == "TSC_916") return anycombospell;
-	if (s == "ULD_715") return anyspell;
+	if (s == "ULD_715") return madnessplague;
 	if (s == "DED_004") return anyweapon;
 	if (s == "DMF_515") return swindle;
 	if (s == "WC_016") return shroud;
@@ -173,12 +173,13 @@ int updcurid(string s, int x) {
 }
 
 map<int, int> id2initialcontroller;
+map<int, string> id2initialcardid;
 
 map<int, int> id2handpos;
 
 vector<string> valids;
 
-state autoread(string _s, int& _tar, int countslimit) {
+state autoread(string _s, int& _tar, int& countslimit) {
 	cin.clear();
 	//重置输入流，防止无法读取 
 
@@ -199,6 +200,8 @@ state autoread(string _s, int& _tar, int countslimit) {
 		}
 		valids.push_back(__s);
 	}
+
+	countslimit = counts;
 
 	fclose(stdin);
 
@@ -227,6 +230,7 @@ state autoread(string _s, int& _tar, int countslimit) {
 			curid = 0;
 
 			id2initialcontroller.clear();
+			id2initialcardid.clear();
 
 			id2handpos.clear();
 		}
@@ -263,6 +267,9 @@ state autoread(string _s, int& _tar, int countslimit) {
 				if (u == "CONTROLLER" && id2initialcontroller[curid] == 0) {
 					id2initialcontroller[curid] = atoi(v.c_str());
 				}
+				if (u == "CARDID" && id2initialcardid[curid] == "") {
+					id2initialcardid[curid] = v;
+				}
 
 				lu = u;
 				lv = v;
@@ -281,9 +288,12 @@ state autoread(string _s, int& _tar, int countslimit) {
 	spelldebuff = 0;
 	miniondebuff = 0;
 	battlecrydebuff = 0;
+	iceblockif = 0;
 
 	int nidn = 0;
 	minionname notindeck[99];
+
+	int oppotaunt = 0;
 
 	for (auto i : id2tag2stampandvalue) {
 		auto j = i.second;
@@ -335,6 +345,12 @@ state autoread(string _s, int& _tar, int countslimit) {
 				&& atoi(j["CANT_BE_TARGETED_BY_SPELLS"].second.c_str()) == 0
 			) {
 				boneable = 1;
+			}
+			if (atoi(j["TAUNT"].second.c_str()) ==1
+				&& atoi(j["DIVINE_SHIELD"].second.c_str()) == 0
+				&& atoi(j["IMMUNE"].second.c_str()) == 0
+			) {
+				oppotaunt = 1;
 			}
 		}
 
@@ -424,7 +440,7 @@ state autoread(string _s, int& _tar, int countslimit) {
 		}
 
 		if (i.first <= myhid && id2initialcontroller[i.first] == mycid && (j["ZONE"].second != "DECK" || j["CONTROLLER"].second != to_string(mycid))) {
-			string cid = j["CardID"].second;
+			string cid = id2initialcardid[i.first];
 			cardname c = cid2cn(cid);
 			if (legalcn2mn(c)) {
 				notindeck[nidn++] = cn2mn(c);
@@ -439,6 +455,15 @@ state autoread(string _s, int& _tar, int countslimit) {
 	autost.num = atoi(id2tag2stampandvalue[myid]["NUM_CARDS_PLAYED_THIS_TURN"].second.c_str());
 
 	autost.drawmn = 0;
+
+	autost.hatk = atoi(id2tag2stampandvalue[myhid]["ATK"].second.c_str());
+		
+	if (oppotaunt == 1
+		|| atoi(id2tag2stampandvalue[myhid]["NUM_ATTACKS_THIS_TURN"].second.c_str()) > 0
+		|| atoi(id2tag2stampandvalue[myhid]["FROZEN"].second.c_str()) > 0
+	) {
+		autost.hatk = -1;
+	}
 
 	_tar = atoi(id2tag2stampandvalue[yourhid]["HEALTH"].second.c_str())
 		- atoi(id2tag2stampandvalue[yourhid]["DAMAGE"].second.c_str())

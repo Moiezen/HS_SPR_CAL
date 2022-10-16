@@ -7,13 +7,15 @@ typedef unsigned long long ull;
 using namespace std;
 enum cardname {
 	shadowstep, backstab, fakecoin, preparation, illusionpotion, sharkspirit, foxyfraud, mailboxdancer, cutterbutter, redsmoke, spectralpillager,
-	anyminion, anyspell, invalid, anyweapon, anycombospell, bonespike, elvensinger, shroud, extortion, swindle, shadowcaster, illucia, bronze
+	anyminion, anyspell, invalid, anyweapon, anycombospell, bonespike, elvensinger, shroud, extortion, swindle, shadowcaster, illucia, bronze,
+	madnessplague, heroattack
+	//heroattack归入牌名
 };
 enum minionname {
 	sharkspirit_m, foxyfraud_m, mailboxdancer_m, cutterbutter_m, redsmoke_m, spectralpillager_m,
 	anyminion_m, enemyhero, enemyminion, nul, elvensinger_m, shadowcaster_m, illucia_m, bronze_m
 	//敌方英雄-可以是鬼灵匪贼的目标
-	//敌方随从-可以是背刺的目标
+	//敌方随从-可以是背刺的目标（尽管目前背刺/骨刺敌方随从会归为空目标）
 	//空目标
 	//以上虚目标均归入随从名以简化操作目标
 };
@@ -46,14 +48,17 @@ string shrd_s();
 string swin_s();
 string iuca_s();
 string bran_s();
+string plag_s();
 string clr_s();
 string mana_s();
 string calc_s();
 string randc_s();
 string time_s();
 string targ_s();
+string adpt_s();
 string chng_s();
 string read_s();
+string back_s();
 string stax_s();
 string mtax_s();
 string btax_s();
@@ -71,6 +76,8 @@ string calcing_s();
 string exhaust_s();
 string targrch_s();
 string timerch_s();
+string iceblock_s();
+string heroattk_s();
 
 string mn2str(minionname a);
 string cn2str(cardname a);
@@ -105,6 +112,7 @@ struct state {
 	int mana;
 	int num;
 	int drawmn;
+	int hatk;
 };
 state emptystcons();
 extern state emptyst;
@@ -114,12 +122,18 @@ const int mlim = 7;
 const int manalim = 10;
 const int alim[4] = { 1,6,12,6 };
 
+const int _tar_max = 999;
+const int _tar_ice1 = 990;
+const int _tar_ice2 = 900;
+//将破x血冰记作_tar_ice1-x，且该值不低于_tar_ice2
+
 struct oxy {
 	int x, y;
 	//x 手牌序号
 	//y 目标序号
 	//y=-1 nul
 	//y=-2 enemyhero
+	//y=-3 heroattack to enemyhero
 };
 oxy oxycons(int x, int y);
 
@@ -157,10 +171,12 @@ extern int miniondebuff;
 extern int battlecrydebuff;
 
 extern int deckmn;
-extern minionname deckm[10];
+extern minionname deckm[99];
 
 extern int oppoH;
 extern card oppohands[10];
+
+extern int iceblockif;
 
 extern int iseq[999], isn;
 

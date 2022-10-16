@@ -2,10 +2,15 @@
 
 string o2s(ope o) {
 	string s = "";
-	s = s + cn2str(o.name);
-	s = s + "(";
-	s = s + to_string(o.cost);
-	s = s + ")";
+	if (o.name == heroattack) {
+		s = s + heroattk_s();
+	}
+	else {
+		s = s + cn2str(o.name);
+		s = s + "(";
+		s = s + to_string(o.cost);
+		s = s + ")";
+	}
 	if (o.target != nul) {
 		s = s + "->" + mn2str(o.target);
 	}
@@ -19,6 +24,7 @@ string output(opes o, int d, int u, ll t) {
 	if (u == 0) s += exhaust_s();
 	if (u == 1) s += targrch_s();
 	if (u == 2) s += timerch_s();
+	if (d >= _tar_ice2) d = d - _tar_ice1;
 	s = s + "\n";
 	s = s + to_string(d) + "\n";
 	//int count = 0;
