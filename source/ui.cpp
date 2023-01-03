@@ -12,9 +12,6 @@
 #define refresh delay_ms(0)
 #define adddd(a,b,c,d,e,f,g,h,i,j) doms.push_back(domaincons(rectcons(a,b,c,d),e,f,g,h,i,j));
 
-int H = 640;
-int W = 1280;
-
 struct rect {
 	int x1, y1, x2, y2;
 };
@@ -26,6 +23,9 @@ rect rectcons(int a, int b, int c, int d) {
 rect norect = rectcons(-1, -1, -1, -1);
 rect cutedge(rect a, int b) {
 	return rectcons(a.x1 + b, a.y1 + b, a.x2 - b, a.y2 - b);
+}
+rect movedxdy(rect a, int dx, int dy) {
+	return rectcons(a.x1 + dx, a.y1 + dy, a.x2 +dx, a.y2 - dy);
 }
 void barr(rect a, color_t b) {
 	setf(b);
@@ -60,7 +60,7 @@ bool inrect(int x, int y, rect a) {
 }
 
 enum domt {
-	nodomt, vnx, vx, vn, cn, c0, cx, go, ans, lk, lk1, lk2, exa, vx0, gogo, lk2_1, lk0
+	nodomt, vnx, vx, vn, cn, c0, cx, go, ans, lk, lk1, lk2, exa, vx0, gogo, lk2_1, lk0, adj
 };
 struct domain {
 	rect r;
@@ -86,9 +86,14 @@ color_t bdc = EGERGB(0, 0, 0);
 color_t slc = EGERGB(0, 255, 0);
 color_t txc = EGERGB(0, 0, 255);
 
+int H = 640;
+int W = 1280;
+
+string caption_s = "帆帆小甜心.20230104";
+
 void init() {
 	initgraph(W, H);
-	setcaption(".20221017.001");
+	setcaption(caption_s.c_str());
 	setb(bgc);
 }
 
@@ -149,6 +154,8 @@ int aurasdomid[4];
 int exadomid;
 int icebdomid;
 int hatkdomid;
+int todemisedomid;
+int adjustdomid;
 
 int chdomid[10];
 int fmhdomid[7];
@@ -164,17 +171,6 @@ domain id2dom(int id) {
 	}
 	return nodomain;
 }
-
-void follow(domain a) {
-	for (auto& i : doms) {
-		if (a.id == i.id) {
-			i = a;
-			break;
-		}
-	}
-}
-
-int k1[countn] = { 'Y','L','X','D','G','E','T','A','B','C','J','S','H','W',-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,46 };
 
 string getdftlk() {
 	cin.clear();
@@ -198,18 +194,21 @@ void savedftlk(string s) {
 	fclose(stdout);
 }
 
+int k1[countn] = { 'Y','L','X','D','G','E','T','A','B','C','J','S','H','W',-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,46 };
+
 void getdoms() {
 	doms.clear();
 
 	string n1[countn] = {
 		shak_s(), foxy_s(), mail_s(), scab_s(), pill_s(), elvn_s(), tenw_s(),
 		step_s(), stab_s(), bone_s(), coin_s(), prep_s(), pshn_s(), shrd_s(),
-		anym_s(), anys_s(), trsh_s(), anyw_s(), cmbs_s(), si7_s(), swin_s(), cast_s(), iuca_s(), bran_s(), plag_s(), clr_s()
+		anym_s(), anys_s(), trsh_s(), anyw_s(), cmbs_s(), si7_s(), swin_s(),
+		shxk_s(), cast_s(), iuca_s(), bran_s(), zola_s(), plag_s(), demi_s(), clr_s()
 	};
 
 	string a1[4] = { a0_s(), a1_s(), a2_s(), a3_s() };
 
-	adddd(860, 600, 920, 640, vx, mana_s(), 0, manadomid = 1, -1, 10);
+	adddd(920, 600, 980, 640, vx, mana_s(), 0, manadomid = 1, -1, 10);
 	//1
 	rep(i, 0, 9) adddd(200 + i * 60, 560, 260 + i * 60, 600, vnx, clr_s(), 0, handsdomid[i] = 2 + i, 1200000 + 1000 * i, 10);
 	//2 ... 11
@@ -223,9 +222,9 @@ void getdoms() {
 	//401 ... 407
 	rep(i, 0, 9) adddd(200 + i * 60, 360, 260 + i * 60, 400, vn, clr_s(), 0, deckmdomid[i] = 1001 + i, 9300000 + 1000 * i, -1);
 	//1001 ... 1010
-	adddd(40, 400, 80, 440, c0, "", 0, 12, 8, -1);
+	adddd(40, 420, 80, 460, c0, "", 0, 12, 8, -1);
 	//12
-	rep(i, 0, 9) adddd((i + 2) % 3 * 40, 400 + (i + 2) / 3 * 40, 40 + (i + 2) % 3 * 40, 440 + (i + 2) / 3 * 40, cx, "", i, 13 + i, 48 + i, -1);
+	rep(i, 0, 9) adddd((i + 2) % 3 * 40, 420 + (i + 2) / 3 * 40, 40 + (i + 2) % 3 * 40, 460 + (i + 2) / 3 * 40, cx, "", i, 13 + i, 48 + i, -1);
 	//13 ... 22
 	rep(i, 0, countn - 1) adddd(i % 4 * 40, 60 + i / 4 * 40 + (i >= splitn) * 40, 40 + i % 4 * 40, 100 + i / 4 * 40 + (i >= splitn) * 40, 
 								cn, n1[i], 0, 123 + i, k1[i], -1);
@@ -236,9 +235,9 @@ void getdoms() {
 	//737
 	adddd(880, 0, 1280, 560, ans, "", 0, ansdomid = 38, -1, -1);
 	//38
-	adddd(980, 600, 1040, 640, vx, time_s(), 15, tlimdomid = 39, -1, 999);
+	adddd(1020, 600, 1080, 640, vx, time_s(), 15, tlimdomid = 39, -1, 999);
 	//39
-	adddd(1100, 600, 1160, 640, vx, targ_s(), 30, tardomid = 40, -1, 999);
+	adddd(1120, 600, 1180, 640, vx, targ_s(), 30, tardomid = 40, -1, 999);
 	//40
 	string dftlk = getdftlk();
 	adddd(0, 0, 400, 40, lk, dftlk, 0, lkdomid = 41, -1, -1);
@@ -271,6 +270,10 @@ void getdoms() {
 	//80
 	adddd(320, 120, 440, 160, vx, heroattk_s(), 0, hatkdomid = 81, -1, 10);
 	//81
+	adddd(820, 560, 860, 600, vn, clr_s(), 0, todemisedomid = 82, -1, -1);
+	//82
+	adddd(880, 600, 900, 640, adj, smal_s(), 0, adjustdomid = 83, 189, -1);
+	//83
 }
 
 cardname str2cn(string s) {
@@ -292,21 +295,37 @@ cardname str2cn(string s) {
 	if (s == cast_s()) return shadowcaster;
 	if (s == elvn_s()) return elvensinger;
 	if (s == iuca_s()) return illucia;
-	if (s == bran_s()) return bronze;
+	if (s == bran_s()) return brann;
+	if (s == zola_s()) return zolag;
 	if (s == plag_s()) return madnessplague;
 	if (s == anys_s()) return anyspell;
 	if (s == anym_s()) return anyminion;
 	if (s == anyw_s()) return anyweapon;
 	if (s == cmbs_s()) return anycombospell;
 	if (s == trsh_s()) return invalid;
-	return invalid;
+	if (s == demi_s()) return demise;
+ 	return invalid;
 }
 
-int __tar;
-int __tlim;
+minionname str2mn(string s) {
+	if (s == shxk_s()) {
+		return sharkspirit_mx;
+	}
+	else {
+		return cn2mn(str2cn(s));
+	}
+}
+
+int W_small = 400;
+int if_small = 0;
+//=0 when large
+//=1 when small
 
 void drawdom(domain a, bool sl) {
 	rect r = a.r;
+	if (if_small == 1) {
+		r = movedxdy(r, -(W - W_small), 0);
+	}
 
 	barr(r, bdc);
 	if (sl) {
@@ -348,6 +367,7 @@ void drawdom(domain a, bool sl) {
 		case lk1:
 		case lk2:
 		case lk2_1:
+		case adj:
 		case exa: {
 			textr(r, txc, a.name);
 			break;
@@ -371,141 +391,63 @@ void drawdom(domain a, bool sl) {
 	}
 }
 
-void st2doms(state st) {
-	domain tmp;
-
-	tmp = id2dom(sdbdomid);
-	tmp.x = spelldebuff;
-	drawdom(tmp, 0);
-	follow(tmp);
-
-	tmp = id2dom(mdbdomid);
-	tmp.x = miniondebuff;
-	drawdom(tmp, 0);
-	follow(tmp);
-
-	tmp = id2dom(bdbdomid);
-	tmp.x = battlecrydebuff;
-	drawdom(tmp, 0);
-	follow(tmp);
-
-	tmp = id2dom(modedomid);
-	tmp.x = stabable;
-	drawdom(tmp, 0);
-	follow(tmp);
-
-	tmp = id2dom(mode2domid);
-	tmp.x = boneable;
-	drawdom(tmp, 0);
-	follow(tmp);
-
-	tmp = id2dom(icebdomid);
-	tmp.x = iceblockif;
-	drawdom(tmp, 0);
-	follow(tmp);
-
-	if (deckmn >= 10) {
-		deckmn = 10;
+void drawfixdom(domain a, int x = 0) {
+	drawdom(a, x);
+	for (auto& i : doms) {
+		if (a.id == i.id) {
+			i = a;
+			break;
+		}
 	}
-	//autoread得到的牌库随从实际上可能超过10
-	//在UI部分以及之后的计算部分，暂仅考虑不超过10个牌库随从
-
-	rep(i, 0, deckmn - 1) {
-		tmp = id2dom(deckmdomid[i]);
-		tmp.name = mn2str(deckm[i]);
-		drawdom(tmp, 0);
-		follow(tmp);
-	}
-
-	rep(i, deckmn, 9) {
-		tmp = id2dom(deckmdomid[i]);
-		tmp.name = clr_s();
-		drawdom(tmp, 0);
-		follow(tmp);
-	}
-
-	rep(i, 0, st.H - 1) {
-		tmp = id2dom(handsdomid[i]);
-		tmp.name = cn2str(st.hands[i].name);
-		tmp.x = st.hands[i].cost;
-		drawdom(tmp, 0);
-		follow(tmp);
-
-		tmp = id2dom(chdomid[i]);
-		tmp.x = st.hands[i].health;
-		drawdom(tmp, 0);
-		follow(tmp);
-	}
-	rep(i, st.H, 9) {
-		tmp = id2dom(handsdomid[i]);
-		tmp.name = clr_s();
-		tmp.x = 0;
-		drawdom(tmp, 0);
-		follow(tmp);
-
-		tmp = id2dom(chdomid[i]);
-		tmp.x = 0;
-		drawdom(tmp, 0);
-		follow(tmp);
-	}
-
-	rep(i, 0, st.F - 1) {
-		tmp = id2dom(fieldsdomid[i]);
-		tmp.name = mn2str(st.fields[i].name);
-		drawdom(tmp, 0);
-		follow(tmp);
-
-		tmp = id2dom(fmhdomid[i]);
-		tmp.x = st.fields[i].health;
-		drawdom(tmp, 0);
-		follow(tmp);
-
-		tmp = id2dom(fmchdomid[i]);
-		tmp.x = st.fields[i].curhealth;
-		drawdom(tmp, 0);
-		follow(tmp);
-	}
-	rep(i, st.F, 6) {
-		tmp = id2dom(fieldsdomid[i]);
-		tmp.name = clr_s();
-		drawdom(tmp, 0);
-		follow(tmp);
-
-		tmp = id2dom(fmhdomid[i]);
-		tmp.x = 0;
-		drawdom(tmp, 0);
-		follow(tmp);
-
-		tmp = id2dom(fmchdomid[i]);
-		tmp.x = 0;
-		drawdom(tmp, 0);
-		follow(tmp);
-	}
-
-	rep(i, 0, 3) {
-		tmp = id2dom(aurasdomid[i]);
-		tmp.x = st.auras[i];
-		drawdom(tmp, 0);
-		follow(tmp);
-	}
-
-	tmp = id2dom(manadomid);
-	tmp.x = st.mana;
-	drawdom(tmp, 0);
-	follow(tmp);
-
-	tmp = id2dom(numdomid);
-	tmp.x = st.num;
-	drawdom(tmp, 0);
-	follow(tmp);
-
-	tmp = id2dom(hatkdomid);
-	tmp.x = st.hatk;
-	drawdom(tmp, 0);
-	follow(tmp);
 }
 
-state doms2st(vector<domain> a) {
+void loaddoms() {
+	for (auto i : doms) {
+		drawdom(i, 0);
+	}
+	selected = nodomain;
+	inputing = false;
+}
+
+void adjust_size_small() {
+	initgraph(W_small, H);
+	setcaption(caption_s.c_str());
+	setb(bgc);
+	cleardevice();
+	loaddoms();
+
+	domain tmp = id2dom(adjustdomid);
+	tmp.name = larg_s();
+	drawfixdom(tmp);
+}
+
+void adjust_size_large() {
+	initgraph(W, H);
+	setcaption(caption_s.c_str());
+	setb(bgc);
+	cleardevice();
+	loaddoms();
+
+	domain tmp = id2dom(adjustdomid);
+	tmp.name = smal_s();
+	drawfixdom(tmp);
+}
+
+void adjust_size() {
+	if (if_small == 0) {
+		if_small = 1;
+		adjust_size_small();
+	}
+	else {
+		if_small = 0;
+		adjust_size_large();
+	}
+}
+
+int __tar;
+int __tlim;
+
+state doms2st() {
 	spelldebuff = id2dom(sdbdomid).x;
 	miniondebuff = id2dom(mdbdomid).x;
 	battlecrydebuff = id2dom(bdbdomid).x;
@@ -522,7 +464,7 @@ state doms2st(vector<domain> a) {
 	deckmn = 0;
 	rep(i, 0, 9) {
 		tmp = id2dom(deckmdomid[i]);
-		if (tmp.name != clr_s()) deckm[deckmn++] = cn2mn(str2cn(tmp.name));
+		if (tmp.name != clr_s()) deckm[deckmn++] = str2mn(tmp.name);
 	}
 
 	st.H = 0;
@@ -542,7 +484,7 @@ state doms2st(vector<domain> a) {
 		tmp = id2dom(fieldsdomid[i]);
 		tmp2 = id2dom(fmhdomid[i]);
 		tmp3 = id2dom(fmchdomid[i]);
-		if (tmp.name != clr_s()) st.fields[st.F++] = minioncons(cn2mn(str2cn(tmp.name)), tmp2.x, tmp3.x);
+		if (tmp.name != clr_s()) st.fields[st.F++] = minioncons(str2mn(tmp.name), tmp2.x, tmp3.x);
 	}
 
 	rep(i, 0, 3) {
@@ -553,39 +495,158 @@ state doms2st(vector<domain> a) {
 	st.num = id2dom(numdomid).x;
 	st.drawmn = 0;
 	st.hatk = id2dom(hatkdomid).x;
+	st.todemise = str2cn(id2dom(todemisedomid).name);
 	return st;
 }
 
-void loaddoms() {
-	for (auto i : doms) {
-		drawdom(i, 0);
+void st2doms(state st) {
+	domain tmp;
+
+	tmp = id2dom(sdbdomid);
+	tmp.x = spelldebuff;
+	drawfixdom(tmp);
+
+	tmp = id2dom(mdbdomid);
+	tmp.x = miniondebuff;
+	drawfixdom(tmp);
+
+	tmp = id2dom(bdbdomid);
+	tmp.x = battlecrydebuff;
+	drawfixdom(tmp);
+
+	tmp = id2dom(modedomid);
+	tmp.x = stabable;
+	drawfixdom(tmp);
+
+	tmp = id2dom(mode2domid);
+	tmp.x = boneable;
+	drawfixdom(tmp);
+
+	tmp = id2dom(icebdomid);
+	tmp.x = iceblockif;
+	drawfixdom(tmp);
+
+	if (deckmn >= 10) {
+		deckmn = 10;
 	}
-	selected = nodomain;
-	inputing = false;
+	//autoread得到的牌库随从实际上可能超过10
+	//在UI部分以及之后的计算部分，暂仅考虑不超过10个牌库随从
+
+	rep(i, 0, deckmn - 1) {
+		tmp = id2dom(deckmdomid[i]);
+		tmp.name = mn2str(deckm[i]);
+		drawfixdom(tmp);
+	}
+
+	rep(i, deckmn, 9) {
+		tmp = id2dom(deckmdomid[i]);
+		tmp.name = clr_s();
+		drawfixdom(tmp);
+	}
+
+	rep(i, 0, st.H - 1) {
+		tmp = id2dom(handsdomid[i]);
+		tmp.name = cn2str(st.hands[i].name);
+		tmp.x = st.hands[i].cost;
+		drawfixdom(tmp);
+
+		tmp = id2dom(chdomid[i]);
+		tmp.x = st.hands[i].health;
+		drawfixdom(tmp);
+	}
+	rep(i, st.H, 9) {
+		tmp = id2dom(handsdomid[i]);
+		tmp.name = clr_s();
+		tmp.x = 0;
+		drawfixdom(tmp);
+
+		tmp = id2dom(chdomid[i]);
+		tmp.x = 0;
+		drawfixdom(tmp);
+	}
+
+	rep(i, 0, st.F - 1) {
+		tmp = id2dom(fieldsdomid[i]);
+		tmp.name = mn2str(st.fields[i].name);
+		drawfixdom(tmp);
+
+		tmp = id2dom(fmhdomid[i]);
+		tmp.x = st.fields[i].health;
+		drawfixdom(tmp);
+
+		tmp = id2dom(fmchdomid[i]);
+		tmp.x = st.fields[i].curhealth;
+		drawfixdom(tmp);
+	}
+	rep(i, st.F, 6) {
+		tmp = id2dom(fieldsdomid[i]);
+		tmp.name = clr_s();
+		drawfixdom(tmp);
+
+		tmp = id2dom(fmhdomid[i]);
+		tmp.x = 0;
+		drawfixdom(tmp);
+
+		tmp = id2dom(fmchdomid[i]);
+		tmp.x = 0;
+		drawfixdom(tmp);
+	}
+
+	rep(i, 0, 3) {
+		tmp = id2dom(aurasdomid[i]);
+		tmp.x = st.auras[i];
+		drawfixdom(tmp);
+	}
+
+	tmp = id2dom(manadomid);
+	tmp.x = st.mana;
+	drawfixdom(tmp);
+
+	tmp = id2dom(numdomid);
+	tmp.x = st.num;
+	drawfixdom(tmp);
+
+	tmp = id2dom(hatkdomid);
+	tmp.x = st.hatk;
+	drawfixdom(tmp);
+
+	tmp = id2dom(todemisedomid);
+	tmp.name = cn2str(st.todemise);
+	drawfixdom(tmp);
 }
 
-bool legalcn4vn(string s) {
+bool legalstr2cn4vn(string s) {
 	if (s == clr_s()) return true;
-	if (legalcn2mn(str2cn(s))) return true;
+	if (s == shxk_s()) return true;
+	if (normalminion(str2cn(s))) return true;
+	return false;
+}
+
+bool legalstr2cn4vnx(string s) {
+	return not (s == shxk_s());
+}
+
+bool legalstr2cn4vn_demi(string s) {
+	if (s == clr_s()) return true;
+	if (normalspell(str2cn(s))) return true;
 	return false;
 }
 
 void refreshans(string _s) {
-	domain ans = id2dom(ansdomid);
-	ans.name = _s;
-	drawdom(ans, 0);
-	follow(ans);
+	domain tmp = id2dom(ansdomid);
+	tmp.name = _s;
+	drawfixdom(tmp);
 	refresh;
 }
 
-state initstcons() {
+state initst() {
 	spelldebuff = 0;
 	miniondebuff = 0;
 	battlecrydebuff = 0;
 	stabable = 1;
 	boneable = 1;
 
-	state a;
+	state a = emptyst;
 	a.H = 10;
 	a.hands[0] = cardcons(fakecoin, 0);
 	a.hands[1] = cardcons(fakecoin, 0);
@@ -605,6 +666,7 @@ state initstcons() {
 	a.num = 0;
 	a.drawmn = 0;
 	a.hatk = 0;
+	a.todemise = anyspell;
 	return a;
 }
 
@@ -620,34 +682,26 @@ void loadauto(int normalwhen0 = 0) {
 
 	st2doms(st);
 
-	//tmp = id2dom(tlimdomid);
-	//tmp.x = 15;
-	//drawdom(tmp, 0);
-	//follow(tmp);
-
 	tmp = id2dom(tardomid);
 	if (tmp.x != 999) {
 		tmp.x = _tar;
-		drawdom(tmp, 0);
-		follow(tmp);
+		drawfixdom(tmp);
 	}
 }
 
 void loadsample() {
-	state initst = initstcons();
+	state st = initst();
 	domain tmp;
 
-	st2doms(initst);
+	st2doms(st);
 	
 	tmp = id2dom(tlimdomid);
 	tmp.x = 999;
-	drawdom(tmp, 0);
-	follow(tmp);
+	drawfixdom(tmp);
 
 	tmp = id2dom(tardomid);
 	tmp.x = 60;
-	drawdom(tmp, 0);
-	follow(tmp);
+	drawfixdom(tmp);
 }
 
 void touch(domain toselect) {
@@ -681,13 +735,31 @@ void touch(domain toselect) {
 			break;
 		}
 		case cn: {
-			if (selected.type == vnx || (selected.type == vn && legalcn4vn(toselect.name))) {
-				//非随从在UI上就不允许被放置在随从位
+			if (
+				(
+					selected.type == vnx && legalstr2cn4vnx(toselect.name)
+				)
+				||
+				(
+					selected.type == vn &&
+					(
+						(
+							selected.id != todemisedomid && legalstr2cn4vn(toselect.name)
+						)
+						||
+						(
+							selected.id == todemisedomid && legalstr2cn4vn_demi(toselect.name)
+						)
+					)
+				)
+			   ) {
+				//在UI上已经：
+				//沉默的鲨鱼之灵不允许被放置在手牌位
+				//非随从不允许被放置在随从位
 				inputing = false;
-
+				
 				selected.name = toselect.name;
-				drawdom(selected, 1);
-				follow(selected);
+				drawfixdom(selected, 1);
 
 				if (selected.id >= handsdomid[0] && selected.id <= handsdomid[9]) {
 					domain tmp;
@@ -695,13 +767,11 @@ void touch(domain toselect) {
 					//then handsdomid[z] = selected.id
 
 					selected.x = originalcost_c(str2cn(selected.name));
-					drawdom(selected, 1);
-					follow(selected);
+					drawfixdom(selected, 1);
 
 					tmp = id2dom(chdomid[z]);
 					tmp.x = originalhealth_c(str2cn(selected.name));
-					drawdom(tmp, 0);
-					follow(tmp);
+					drawfixdom(tmp);
 				}
 				if (selected.id >= fieldsdomid[0] && selected.id <= fieldsdomid[6]) {
 					domain tmp;
@@ -710,13 +780,11 @@ void touch(domain toselect) {
 
 					tmp = id2dom(fmhdomid[z]);
 					tmp.x = originalhealth_c(str2cn(selected.name));
-					drawdom(tmp, 0);
-					follow(tmp);
+					drawfixdom(tmp);
 
 					tmp = id2dom(fmchdomid[z]);
 					tmp.x = originalhealth_c(str2cn(selected.name));
-					drawdom(tmp, 0);
-					follow(tmp);
+					drawfixdom(tmp);
 				}
 			}
 			break;
@@ -726,8 +794,7 @@ void touch(domain toselect) {
 				inputing = true;
 				
 				selected.x = 0;
-				drawdom(selected, 1);
-				follow(selected);
+				drawfixdom(selected, 1);
 			}
 			break;
 		}
@@ -739,19 +806,17 @@ void touch(domain toselect) {
 				inputing = true;
 
 				selected.x = min(selected.x * 10 + toselect.x, selected.lim);
-				drawdom(selected, 1);
-				follow(selected);
+				drawfixdom(selected, 1);
 			}
 			break;
 		}
 		case go: {
 			inputing = false;
 
-			state st = doms2st(doms);
-			domain ans = id2dom(ansdomid);
-			ans.name = _solve(st, __tar, __tlim, 0, 0, 0, 1, 1, 0, 0);
-			drawdom(ans, 0);
-			follow(ans);
+			state st = doms2st();
+			domain tmp = id2dom(ansdomid);
+			tmp.name = _solve(st, __tar, __tlim, 0, 0, 0, 1, 1, 0, 0);
+			drawfixdom(tmp);
 			break;
 		}
 		case gogo: {
@@ -762,14 +827,12 @@ void touch(domain toselect) {
 
 			domain tmp = id2dom(ansdomid);
 			tmp.name = "";
-			drawdom(tmp, 0);
-			follow(tmp);
+			drawfixdom(tmp);
 
-			state st = doms2st(doms);
-			domain ans = id2dom(ansdomid);
-			ans.name = _solve(st, __tar, __tlim, 0, 0, 0, 1, 1, 0, 0);
-			drawdom(ans, 0);
-			follow(ans);
+			state st = doms2st();
+			tmp = id2dom(ansdomid);
+			tmp.name = _solve(st, __tar, __tlim, 0, 0, 0, 1, 1, 0, 0);
+			drawfixdom(tmp);
 			break;
 		}
 		case ans:
@@ -781,24 +844,22 @@ void touch(domain toselect) {
 			inputing = false;
 
 			string _lk = adaptlk();
-			domain lk = id2dom(lkdomid);
+			domain tmp = id2dom(lkdomid);
 			if (_lk.length() == 0) break;
-			lk.name = _lk;
-			savedftlk(lk.name);
-			drawdom(lk, 0);
-			follow(lk);
+			tmp.name = _lk;
+			savedftlk(tmp.name);
+			drawfixdom(tmp);
 			break;
 		}
 		case lk1: {
 			inputing = false;
 
 			char _lk[105] = {};
-			inputbox_getline(hint_s().c_str(), "宇宙甜心", _lk, 100);
-			domain lk = id2dom(lkdomid);
-			lk.name = _lk;
-			savedftlk(lk.name);
-			drawdom(lk, 0);
-			follow(lk);
+			inputbox_getline(hint_s().c_str(), "帆帆甜甜", _lk, 100);
+			domain tmp = id2dom(lkdomid);
+			tmp.name = _lk;
+			savedftlk(tmp.name);
+			drawfixdom(tmp);
 			break;
 		}
 		case lk2: {
@@ -809,8 +870,7 @@ void touch(domain toselect) {
 
 			domain tmp = id2dom(ansdomid);
 			tmp.name = "";
-			drawdom(tmp, 0);
-			follow(tmp);
+			drawfixdom(tmp);
 			break;
 		}
 		case lk2_1: {
@@ -821,8 +881,14 @@ void touch(domain toselect) {
 
 			domain tmp = id2dom(ansdomid);
 			tmp.name = "";
-			drawdom(tmp, 0);
-			follow(tmp);
+			drawfixdom(tmp);
+			break;
+		}
+		case adj: {
+			inputing = false;
+
+			adjust_size();
+			selected = nodomain;
 			break;
 		}
 		case exa: {
@@ -836,6 +902,10 @@ void touch(domain toselect) {
 }
 
 void click(int x, int y) {
+	if (if_small == 1) {
+		x = x + (W - W_small);
+	}
+
 	domain t = nodomain;
 	for (auto i : doms) {
 		if (indom(x, y, i)) {

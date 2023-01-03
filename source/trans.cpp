@@ -24,7 +24,7 @@ int twice(state st) {
 }
 int twice2(state st) {
 	rep(i, 0, st.F - 1)
-		if (st.fields[i].name == sharkspirit_m || st.fields[i].name == bronze_m) {
+		if (st.fields[i].name == sharkspirit_m || st.fields[i].name == brann_m) {
 			return 2;
 		}
 	return 1;
@@ -35,6 +35,19 @@ pair<state, int> trans(state st, oxy ox) {
 		return badpair;
 	}
 	ope op = exact(st, ox);
+
+	//对于殒命暗影，检查原先.todemise，对op.name进行替换
+	if (op.name == demise) {
+		if (st.todemise == anyspell || st.todemise == anycombospell) {
+			return badpair;
+			//对于未知具体的一般法术，暂无法获得原费，且本有可能是奥秘等，暂不支持殒命暗影复制其而被使用
+		}
+		op.name = st.todemise;
+		op.cost = originalcost_c(op.name);
+	}
+
+	if (normalspell(op.name)) st.todemise = op.name;
+	//检查op.name，如果是常规法术，对.todemise进行替换
 
 	int dmg = 0;
 	switch (op.name) {
@@ -182,6 +195,8 @@ pair<state, int> trans(state st, oxy ox) {
 			if (ox.y != -1) return badpair;
 
 			if (st.drawmn < deckmn && st.drawmn + 2 >= deckmn) {
+				if (st.H + deckmn <= hlim)
+					//treat as never draw if mill some
 				rep(i, 0, deckmn - 1) {
 					if (st.H >= hlim) break;
 					st.hands[st.H++] = cardcons(mn2cn(deckm[i]), originalcost(deckm[i]));
@@ -202,8 +217,13 @@ pair<state, int> trans(state st, oxy ox) {
 			rmvh(st.hands, st.H, ox.x);
 			if (ox.y != -1) return badpair;
 
+			st.hands[st.H++] = cardcons(invalid, 0, 0);
+			//add an invalid when swindle
+
 			if (st.num) {
 				if (st.drawmn < deckmn && st.drawmn + 1 >= deckmn) {
+					if (st.H + deckmn <= hlim)
+						//treat as never draw if mill some
 					rep(i, 0, deckmn - 1) {
 						if (st.H >= hlim) break;
 						st.hands[st.H++] = cardcons(mn2cn(deckm[i]), originalcost(deckm[i]));
@@ -241,7 +261,7 @@ pair<state, int> trans(state st, oxy ox) {
 			st.num++;
 			break;
 		}
-		case bronze: {
+		case brann: {
 			int h = st.hands[ox.x].health;
 			rmvh(st.hands, st.H, ox.x);
 			if (ox.y != -1) return badpair;
@@ -362,6 +382,8 @@ pair<state, int> trans(state st, oxy ox) {
 
 			if (st.num) {
 				if (st.drawmn < deckmn && st.drawmn + twi * 2 >= deckmn) {
+					if (st.H + deckmn <= hlim)
+						//treat as never draw if mill some
 					rep(i, 0, deckmn - 1) {
 						if (st.H >= hlim) break;
 						st.hands[st.H++] = cardcons(mn2cn(deckm[i]), originalcost(deckm[i]));
@@ -423,6 +445,36 @@ pair<state, int> trans(state st, oxy ox) {
 				while (twi--) {
 					if (st.H >= hlim) break;
 					st.hands[st.H++] = cardcons(mn2cn(op.target), 1, 1);
+				}
+			}
+			else {
+				return badpair;
+			}
+
+			st.mana -= max(op.cost - st.auras[2] + miniondebuff + battlecrydebuff, 0);
+			if (st.mana < 0) return badpair;
+
+			st.auras[2] = st.auras[3];
+			st.auras[3] = 0;
+			st.num++;
+			break;
+		}
+		case zolag: {
+			int twi = twice2(st);
+			int h = st.hands[ox.x].health;
+			rmvh(st.hands, st.H, ox.x);
+			if (st.F >= mlim) {
+				return badpair;
+			}
+			st.fields[st.F++] = minioncons(cn2mn(op.name), h, h);
+
+			if (ox.y == -1 && st.F == 1) {
+				//暗施可空交（空场限定）
+			}
+			else if (ox.y >= 0) {
+				while (twi--) {
+					if (st.H >= hlim) break;
+					st.hands[st.H++] = cardcons(mn2cn(op.target), originalcost(op.target));
 				}
 			}
 			else {

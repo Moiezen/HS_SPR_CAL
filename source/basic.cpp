@@ -5,6 +5,9 @@ lang _lang = CN;
 string shak_s() {
 	return _lang == CN ? "鱼灵" : "Shak";
 }
+string shxk_s() {
+	return _lang == CN ? "沉鱼" : "Shxk";
+}
 string foxy_s() {
 	return _lang == CN ? "老千" : "Foxy";
 }
@@ -76,6 +79,9 @@ string iuca_s() {
 }
 string bran_s() {
 	return _lang == CN ? "铜须" : "Bran";
+}
+string zola_s() {
+	return _lang == CN ? "佐拉" : "Zola";
 }
 string plag_s() {
 	return _lang == CN ? "毒刀" : "Plag";
@@ -167,12 +173,24 @@ string iceblock_s() {
 string heroattk_s() {
 	return _lang == CN ? "英雄攻击" : "HeroAttk";
 }
+string demi_s() {
+	return _lang == CN ? "殒命" : "Demi";
+}
+string smal_s() {
+	return "><";
+}
+string larg_s() {
+	return "<>";
+}
 
 string mn2str(minionname a) {
 	switch (a) {
 		case sharkspirit_m: {
 			return shak_s();
 			break;
+		}
+		case sharkspirit_mx: {
+			return shxk_s();
 		}
 		case foxyfraud_m: {
 			return foxy_s();
@@ -204,8 +222,12 @@ string mn2str(minionname a) {
 			return iuca_s();
 			break;
 		}
-		case bronze_m: {
+		case brann_m: {
 			return bran_s();
+			break;
+		}
+		case zolag_m: {
+			return zola_s();
 			break;
 		}
 		case anyminion_m: {
@@ -269,8 +291,12 @@ string cn2str(cardname a) {
 			return iuca_s();
 			break;
 		}
-		case bronze: {
+		case brann: {
 			return bran_s();
+			break;
+		}
+		case zolag: {
+			return zola_s();
 			break;
 		}
 		case anyminion: {
@@ -326,6 +352,9 @@ string cn2str(cardname a) {
 		case madnessplague: {
 			return plag_s();
 		}
+		case demise: {
+			return demi_s();
+		}
 		case invalid: {
 			return trsh_s();
 			break;
@@ -340,6 +369,10 @@ string cn2str(cardname a) {
 cardname mn2cn(minionname a) {
 	switch (a) {
 		case sharkspirit_m: {
+			return sharkspirit;
+			break;
+		}
+		case sharkspirit_mx: {
 			return sharkspirit;
 			break;
 		}
@@ -375,8 +408,12 @@ cardname mn2cn(minionname a) {
 			return illucia;
 			break;
 		}
-		case bronze_m: {
-			return bronze;
+		case brann_m: {
+			return brann;
+			break;
+		}
+		case zolag_m: {
+			return zolag;
 			break;
 		}
 		case anyminion_m: {
@@ -428,8 +465,8 @@ minionname cn2mn(cardname a) {
 			return illucia_m;
 			break;
 		}
-		case bronze: {
-			return bronze_m;
+		case zolag: {
+			return zolag_m;
 			break;
 		}
 		case anyminion: {
@@ -443,7 +480,7 @@ minionname cn2mn(cardname a) {
 		}
 	}
 }
-bool legalcn2mn(cardname a) {
+bool normalminion(cardname a) {
 	switch (a) {
 		case sharkspirit:
 		case foxyfraud:
@@ -454,8 +491,32 @@ bool legalcn2mn(cardname a) {
 		case spectralpillager:
 		case elvensinger:
 		case illucia:
-		case bronze:
+		case brann:
+		case zolag:
 		case anyminion: {
+			return true;
+			break;
+		}
+		default: {
+			return false;
+			break;
+		}
+	}
+}
+bool normalspell(cardname a) {
+	switch (a) {
+		case shadowstep:
+		case backstab:
+		case fakecoin:
+		case preparation:
+		case illusionpotion:
+		case bonespike:
+		case shroud:
+		case extortion:
+		case swindle:
+		case madnessplague:
+		case anyspell:
+		case anycombospell: {
 			return true;
 			break;
 		}
@@ -468,6 +529,10 @@ bool legalcn2mn(cardname a) {
 int originalcost(minionname a) {
 	switch (a) {
 		case sharkspirit_m: {
+			return 4;
+			break;
+		}
+		case sharkspirit_mx: {
 			return 4;
 			break;
 		}
@@ -501,7 +566,10 @@ int originalcost(minionname a) {
 		case illucia_m: {
 			return 3;
 		}
-		case bronze_m: {
+		case brann_m: {
+			return 3;
+		}
+		case zolag_m: {
 			return 3;
 		}
 		case anyminion_m: {
@@ -526,7 +594,7 @@ int originalcost(minionname a) {
 	}
 }
 int originalcost_c(cardname a) {
-	if (legalcn2mn(a)) {
+	if (normalminion(a)) {
 		return originalcost(cn2mn(a));
 	}
 	else switch(a) {
@@ -583,6 +651,10 @@ int originalhealth(minionname a) {
 			return 3;
 			break;
 		}
+		case sharkspirit_mx: {
+			return 3;
+			break;
+		}
 		case foxyfraud_m: {
 			return 2;
 			break;
@@ -613,8 +685,11 @@ int originalhealth(minionname a) {
 		case illucia_m: {
 			return 3;
 		}
-		case bronze_m: {
+		case brann_m: {
 			return 4;
+		}
+		case zolag_m: {
+			return 2;
 		}
 		case anyminion_m: {
 			return 99;
@@ -638,7 +713,7 @@ int originalhealth(minionname a) {
 	}
 }
 int originalhealth_c(cardname a) {
-	if (legalcn2mn(a)) {
+	if (normalminion(a)) {
 		return originalhealth(cn2mn(a));
 	}
 	else {
@@ -685,24 +760,25 @@ state emptystcons() {
 	a.num = 0;
 	a.drawmn = 0;
 	a.hatk = 0;
+	a.todemise = anyspell;
 	return a;
 }
 state emptyst = emptystcons();
 
-oxy oxycons(int a, int b){
+oxy oxycons(int a, int b){//oxy:x-y操作
 	oxy c;
 	c.x = a;
 	c.y = b;
 	return c;
 }
-ope opecons(int a, cardname b, minionname c) {
+ope opecons(int a, cardname b, minionname c) {//
 	ope d;
 	d.cost = a;
 	d.name = b;
 	d.target = c;
 	return d;
 }
-ope exact(state a, oxy b) {
+ope exact(state a, oxy b) {//将x-y操作具体为用于输出的具体操作
 	minionname z = nul;
 	if (b.y >= 0) {
 		z = a.fields[b.y].name;
@@ -733,6 +809,14 @@ ope exact(state a, oxy b) {
 		assert(0);
 		return opecons(0, invalid, nul);
 	}
+}
+
+ope exact4f(state a, oxy b) {//与具体操作类似，且融入公式
+	ope o = exact(a, b);
+	if (o.name == extortion) o.name = backstab;//要挟按照背刺融入公式
+	//某些不常见（随从）牌也可以按照另一张融入公式，暂不考虑
+	if (o.name == demise) o.name = a.todemise;//殒命暗影按照实际复制的法术融入公式
+	return o;
 }
 
 oxys emptyoxyscons() {

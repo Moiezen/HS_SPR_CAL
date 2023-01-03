@@ -6,15 +6,41 @@
 
 #IncludeRegexTransform: 
 
-/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/basic.cpp
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/HSSPRCAL_L.cpp
 basic.h
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/basic.h
+offer.h
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/offer.h
+trans.h
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/trans.h
+output.h
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/output.h
+formula.h
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/formula.h
+solve.h
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/solve.h
+gen.h
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/gen.h
+pre.h
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/pre.h
 
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/basic.h
 bits/stdc++.h
 -
 
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/formula.cpp
+formula.h
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/formula.h
+
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/formula.h
+basic.h
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/basic.h
+
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/gen.cpp
+gen.h
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/gen.h
+
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/gen.h
 basic.h
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/basic.h
 
@@ -23,6 +49,18 @@ basic.h
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/basic.h
 
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/output.h
+basic.h
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/basic.h
+
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/pre.cpp
+formula.h
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/formula.h
+solve.h
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/solve.h
+gen.h
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/gen.h
+
+/mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/pre.h
 basic.h
 /mnt/c/Users/Moiez/Desktop/HS_SPR_CAL/source/basic.h
 

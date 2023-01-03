@@ -1,6 +1,13 @@
 #include "deck.h"
 #include "auto.h"
 
+int cid2secret(string s) {
+	if (s == "REV_825") return 0;
+	if (s == "LOOT_214") return 1;
+	if (s == "LOOT_204") return 2;
+	return -1;
+}
+
 cardname cid2cn(string s) {
 	if (s.find("EX1_144") != -1) return shadowstep;
 	if (s.find("CS2_072") != -1) return backstab;
@@ -12,23 +19,27 @@ cardname cid2cn(string s) {
 	if (s.find("EX1_145") != -1) return preparation;
 	if (s == "SCH_352") return illusionpotion;
 	if (s == "TRL_092") return sharkspirit;
+	if (s.find("LOE_077") != -1) return brann;
 	if (s == "DMF_511") return foxyfraud;
 	if (s == "SW_070") return mailboxdancer;
+	if (s == "SCH_159") return invalid;//special: illucia must be set manually
 	if (s == "BAR_552") return cutterbutter;
 	if (s == "DMF_071") return redsmoke;
 	if (s == "OG_291") return shadowcaster;
-	if (s == "ICC_910") return spectralpillager;
+	if (s.find("LOOT_516") != -1) return zolag;
+	if (s.find("ICC_910") != -1) return spectralpillager;//new fix: core version
 	if (s == "LOOT_211") return elvensinger;
-	if (s.find("REV_938") != -1) return anyspell;	
+	if (s.find("REV_938") != -1) return anyspell;
 	if (s == "TSC_916") return anycombospell;
 	if (s == "ULD_715") return madnessplague;
 	if (s == "DED_004") return anyweapon;
 	if (s == "DMF_515") return swindle;
 	if (s == "WC_016") return shroud;
 	if (s == "REV_825") return anyspell;
-	if (s == "LOOT_214")  return anyspell;
-	if (s == "DMF_512")  return anyspell;
+	if (s == "LOOT_214") return anyspell;
+	if (s == "DMF_512") return anyspell;
 	if (s == "LOOT_204") return anyspell;
+	if (s == "RLK_567") return demise;
 	return invalid;
 }
 
@@ -48,7 +59,7 @@ int cid2oc(string s) {
 	if (s == "BAR_552") return 4;
 	if (s == "DMF_071") return 2;
 	if (s == "OG_291") return 5;
-	if (s == "ICC_910") return 6;
+	if (s.find("ICC_910") != -1) return 6;
 	if (s == "LOOT_211") return 4;
 	if (s.find("REV_938") != -1) return 1;
 	if (s == "TSC_916") return 1;
@@ -60,6 +71,7 @@ int cid2oc(string s) {
 	if (s == "LOOT_214") return 2;
 	if (s == "DMF_512") return 4;
 	if (s == "LOOT_204") return 2;
+	if (s == "RLK_567") return 0;
 	return 0;
 }
 
@@ -291,12 +303,29 @@ state autoread(string _s, int& _tar, int& countslimit) {
 	iceblockif = 0;
 
 	int nidn = 0;
-	minionname notindeck[99];
+	minionname notindeck[99] = {};
 
 	int oppotaunt = 0;
 
+	int handsecret[10] = {};
+
+	const int secretmax = 4;
+	int secretcheapest[secretmax] = { 999,999,999,999 };
+
+	int _demiseif = 0;
+	int _demisepos = -1;
+	int _demisepos2 = -1;
+
 	for (auto i : id2tag2stampandvalue) {
 		auto j = i.second;
+
+		if (j["ZONE"].second == "SECRET" && j["CONTROLLER"].second == to_string(mycid)) {
+			string cid = j["CardID"].second;
+			int d = cid2secret(cid);
+			if (d >= 0) {
+				secretcheapest[d] = -999;
+			}
+		}
 
 		if (j["ZONE"].second == "HAND" && j["CONTROLLER"].second == to_string(mycid)) {
 			string cid = j["CardID"].second;
@@ -308,6 +337,9 @@ state autoread(string _s, int& _tar, int& countslimit) {
 			id2handpos[i.first] = p;
 			autost.hands[p - 1] = cardcons(a, b, c);
 			autost.H++;
+
+			int d = cid2secret(cid);
+			handsecret[p - 1] = d;
 		}
 
 		if (j["ZONE"].second == "PLAY" && j["CARDTYPE"].second == "MINION" && j["CONTROLLER"].second == to_string(mycid)) {
@@ -315,6 +347,12 @@ state autoread(string _s, int& _tar, int& countslimit) {
 			int b = atoi(j["HEALTH"].second.c_str());
 			int c = atoi(j["DAMAGE"].second.c_str());
 			int p = atoi(j["ZONE_POSITION"].second.c_str());
+
+			if (a == sharkspirit_m) {
+				if (atoi(j["SILENCED"].second.c_str()) == 1) {
+					a = sharkspirit_mx;
+				}
+			}
 
 			autost.fields[p - 1] = minioncons(a, b, b - c);
 			autost.F++;
@@ -395,7 +433,7 @@ state autoread(string _s, int& _tar, int& countslimit) {
 			else {
 				int a = atoi(j["ATTACHED"].second.c_str());
 				int p = id2handpos[a] - 1;
-				if (p >= 0 && p <= 9) {
+				if (p >= 0 && p < hlim) {
 					if (buff == "GBL_002e") {
 						autost.hands[p].cost -= 2;
 					}
@@ -435,6 +473,15 @@ state autoread(string _s, int& _tar, int& countslimit) {
 					if (buff == "AV_113t9e") {
 						autost.hands[p].cost += 2;
 					}
+					if (buff == "RLK_567e2") {
+						_demiseif = 1;
+						if (_demisepos == -1) {
+							_demisepos = id2handpos[a] - 1;
+						}
+						else if (_demisepos != id2handpos[a] - 1) {
+							_demisepos2 = id2handpos[a] - 1;
+						}
+					}
 				}
 			}
 		}
@@ -442,11 +489,34 @@ state autoread(string _s, int& _tar, int& countslimit) {
 		if (i.first <= myhid && id2initialcontroller[i.first] == mycid && (j["ZONE"].second != "DECK" || j["CONTROLLER"].second != to_string(mycid))) {
 			string cid = id2initialcardid[i.first];
 			cardname c = cid2cn(cid);
-			if (legalcn2mn(c)) {
+			if (normalminion(c)) {
 				notindeck[nidn++] = cn2mn(c);
 			}
 		}
 	}
+
+	rep(i, 0, autost.H - 1) {
+		int c = autost.hands[i].cost;
+		int d = handsecret[i];
+		if (d >= 0) {
+			secretcheapest[d] = min(secretcheapest[d], c);
+		}
+	}
+
+	rep(i, 0, autost.H - 1) {
+		int c = autost.hands[i].cost;
+		int d = handsecret[i];
+		if (d >= 0) {
+			if (c > secretcheapest[d]) {
+				autost.hands[i].name = invalid;
+				autost.hands[i].cost = 0;
+			}
+			else if (c == secretcheapest[d]) {
+				secretcheapest[d] = -999;
+			}
+		}
+	}
+	//对于每个手牌中的同类奥秘，费用最低的一张以外视为垃圾，已经在奥秘区则均视为垃圾（提前标记-999）
 
 	autost.mana = atoi(id2tag2stampandvalue[myid]["RESOURCES"].second.c_str())
 		- atoi(id2tag2stampandvalue[myid]["RESOURCES_USED"].second.c_str())
@@ -468,6 +538,20 @@ state autoread(string _s, int& _tar, int& countslimit) {
 	_tar = atoi(id2tag2stampandvalue[yourhid]["HEALTH"].second.c_str())
 		- atoi(id2tag2stampandvalue[yourhid]["DAMAGE"].second.c_str())
 		+ atoi(id2tag2stampandvalue[yourhid]["ARMOR"].second.c_str());
+
+	if (_demiseif == 1) {
+		autost.todemise = autost.hands[_demisepos].name;
+		autost.hands[_demisepos].name = demise;
+		autost.hands[_demisepos].cost = 0;
+		if (_demisepos2 != -1) {
+			assert(autost.todemise == autost.hands[_demisepos2].name);
+			autost.hands[_demisepos2].name = demise;
+			autost.hands[_demisepos2].cost = 0;
+		}
+	}
+	else {
+		autost.todemise = anyspell;
+	}
 
 	parsedeck(_s);
 

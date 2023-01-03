@@ -7,23 +7,33 @@ typedef unsigned long long ull;
 using namespace std;
 enum cardname {
 	shadowstep, backstab, fakecoin, preparation, illusionpotion, sharkspirit, foxyfraud, mailboxdancer, cutterbutter, redsmoke, spectralpillager,
-	anyminion, anyspell, invalid, anyweapon, anycombospell, bonespike, elvensinger, shroud, extortion, swindle, shadowcaster, illucia, bronze,
-	madnessplague, heroattack
+	anyminion, anyspell, invalid, anyweapon, anycombospell, bonespike, elvensinger, shroud, extortion, swindle, shadowcaster, illucia, brann, zolag,
+	madnessplague, heroattack, demise
 	//heroattack归入牌名
 };
 enum minionname {
 	sharkspirit_m, foxyfraud_m, mailboxdancer_m, cutterbutter_m, redsmoke_m, spectralpillager_m,
-	anyminion_m, enemyhero, enemyminion, nul, elvensinger_m, shadowcaster_m, illucia_m, bronze_m
+	anyminion_m, enemyhero, enemyminion, nul, elvensinger_m, shadowcaster_m, illucia_m, brann_m, zolag_m, sharkspirit_mx
 	//敌方英雄-可以是鬼灵匪贼的目标
 	//敌方随从-可以是背刺的目标（尽管目前背刺/骨刺敌方随从会归为空目标）
 	//空目标
 	//以上虚目标均归入随从名以简化操作目标
 };
+
+//每当新加一种牌名
+//1. 修改basic.h和basic.cpp中的定义信息，基础费用信息，中英文牌名信息
+//	如果是随从还需要修改随从-牌名转换信息(cn2mn,normalminion)，基础血量信息
+//  如果是法术也需要指出是一张常规法术(normalspell)
+//2. 修改offer.cpp和trans.cpp中的操作可行判定以及操作造成的状态变化
+//3. 修改ui.cpp中的UI入口和auto.cpp中的自动入口
+//（4. 对于具有自动入口，且需要从初始套牌中识别的，修改deck.cpp中的识别）
+
 enum lang {
 	CN, EN
 };
 extern lang _lang;
 string shak_s();
+string shxk_s();
 string foxy_s();
 string mail_s();
 string scab_s();
@@ -48,6 +58,7 @@ string shrd_s();
 string swin_s();
 string iuca_s();
 string bran_s();
+string zola_s();
 string plag_s();
 string clr_s();
 string mana_s();
@@ -78,12 +89,16 @@ string targrch_s();
 string timerch_s();
 string iceblock_s();
 string heroattk_s();
+string demi_s();
+string smal_s();
+string larg_s();
 
 string mn2str(minionname a);
 string cn2str(cardname a);
 cardname mn2cn(minionname a);
 minionname cn2mn(cardname a);
-bool legalcn2mn(cardname a);
+bool normalminion(cardname a);
+bool normalspell(cardname a);
 int originalcost(minionname a);
 int originalcost_c(cardname a);
 int originalhealth(minionname a);
@@ -113,6 +128,7 @@ struct state {
 	int num;
 	int drawmn;
 	int hatk;
+	cardname todemise;
 };
 state emptystcons();
 extern state emptyst;
@@ -145,6 +161,8 @@ struct ope {
 ope opecons(int a, cardname b, minionname c);
 
 ope exact(state a, oxy b);
+
+ope exact4f(state a, oxy b);
 
 struct oxys {
 	vector<oxy> os;

@@ -5,6 +5,9 @@ string o2s(ope o) {
 	if (o.name == heroattack) {
 		s = s + heroattk_s();
 	}
+	else if (o.name == demise) {
+		s = s + demi_s();
+	}
 	else {
 		s = s + cn2str(o.name);
 		s = s + "(";

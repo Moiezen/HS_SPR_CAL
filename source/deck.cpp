@@ -126,7 +126,7 @@ void parsedeck(string _s) {
     deckmn = 0;
     for (auto cid : cids) {
         cardname c = cid2cn(cid);
-        if (legalcn2mn(c)) {
+        if (normalminion(c)) {
             deckm[deckmn++] = cn2mn(c);
         }
     }

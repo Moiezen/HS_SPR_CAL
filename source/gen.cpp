@@ -45,8 +45,8 @@ state gen(int m) {
 
 	cT = 0;
 	madd(getrand(2, 1, 5), cardcons(sharkspirit, 4));
-	madd(getrand(3, 7, 2, 1), cardcons(foxyfraud, 2));
-	madd(getrand(3, 3, 1, 0), cardcons(mailboxdancer, 2));
+	//madd(getrand(3, 7, 2, 1), cardcons(foxyfraud, 2));
+	madd(getrand(3, 0, 1, 0), cardcons(mailboxdancer, 2));
 	madd(getrand(2, 1, 5), cardcons(cutterbutter, 4));
 	madd(getrand(3, 0, 1, 1), cardcons(spectralpillager, 6));
 	madd(getrand(2, 1, 3), cardcons(redsmoke, 2));

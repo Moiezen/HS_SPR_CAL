@@ -39,7 +39,11 @@ ull p1 = 1000000123;
 ull p2 = 1000000181;
 ull statehash(state a, int b) {
 	ull d1 = 1;
-	rep(i, 0, a.H - 1) d1 = d1 * (a.hands[i].name * 100 + a.hands[i].cost + p1);
+	bool ifdemise = false;
+	rep(i, 0, a.H - 1) {
+		d1 = d1 * (a.hands[i].name * 100 + a.hands[i].cost + p1);
+		ifdemise = ifdemise || (a.hands[i].name == demise);
+	}
 	ull d2 = 1;
 	rep(i, 0, a.F - 1) d2 = d2 * (a.fields[i].name + p2);
 	//暂时当作无序
@@ -51,15 +55,34 @@ ull statehash(state a, int b) {
 	h = h * statehb + a.mana;
 	h = h * statehb + a.drawmn;
 	h = h * statehb + a.hatk;
-	if (iceblockif == 1) h = h * statehb + b;
+
+	if (ifdemise) {
+		h = h * statehb + a.todemise;
+	}
+	else {
+		h = h * statehb;
+	}
+	//手牌中还有殒命暗影存在时，要将.todemise加入哈希，否则补位
+
+	if (iceblockif == 1) {
+		h = h * statehb + b;
+	}
+	else {
+		h = h * statehb;
+	}
+	//破冰需求下，因为不对当前伤害做偏序优化，所以要当前伤害也加入哈希，否则补位
+
 	return h;
 }
+int hashon = 1;
 
 map<ull, int> st2hidmg;
 int st2hidmgcountlim = (1 << 21);
 int st2hidmgcount = 0;
+
+map<ull, int> st2hinum;
+
 int allcount = 0;
-int hashon = 1;
 
 int accum(int x, int y) {
 	int t = 1;
@@ -162,7 +185,7 @@ void solve(syn q) {
 		allsum = 0;
 
 		for (auto i : o0.os) {
-			iseq[isn++] = o2i(exact(q.pa.first, i));
+			iseq[isn++] = o2i(exact4f(q.pa.first, i));
 
 			sum = sumbasic;
 			rep(i, (isn - 1) - flimr + 1, (isn - 1) - fliml + 1) {
