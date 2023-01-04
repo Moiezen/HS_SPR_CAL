@@ -8,11 +8,21 @@ Hearthstone Spectral Pillager Rogue Calculator
 </br>
 </br>
 
-**How to use:**
+**如何使用**
 
-Use 'cmake' in Windows to get 'HSSPRCAL.exe'.
+在Windows下使用cmake生成HSSPRCAL.exe。
+
+已生成的HSSPRCAL.exe以及fml.txt在文件夹buildw/下，放在一起使用。
+
+不对该HSSPRCAL.exe负责，如不信任请自行生成。
+
+**How to use**
+
+Use 'cmake' in Windows to generate 'HSSPRCAL.exe'.
 
 A ready 'HSSPRCAL.exe' with 'fml.txt' is in folder 'buildw/'. Put them together to use.
+
+No duty for this 'HSSPRCAL.exe', generate by self if not trust.
 
 </br>
 </br>
@@ -228,8 +238,6 @@ A ready 'HSSPRCAL.exe' with 'fml.txt' is in folder 'buildw/'. Put them together 
 
 小提示3：如果读取失败，可能是因为路径设置错误，或者路径下并不存在power.log，后者可能可以通过使用一次官方记牌器解决。
 
-**已经整合成了多文件版本，请在Windows环境下使用cmake以得到可执行文件HSSPRCAL.exe**
-
-buildw/有现成的HSSPRCAL.exe，结合fml.txt使用。不对该exe运行产生的任何后果负责，如不信任请自行cmake。
+**基础使用方法被我放到开头了。**
 
 （虽然看上去有Linux环境下的版本，但实际上不太有）
