@@ -4,6 +4,10 @@ Hearthstone Spectral Pillager Rogue Calculator
 
 **写在最前面**：官方插件可以记牌，可以计算场攻，可以算酒馆战棋对战胜率。HDT插件还可以在酒馆战棋决赛时计算不同站位的胜率（假设对手阵容不变）。这个计算器可以计算鬼灵贼的斩杀方式。这些都是计算，没有区别。
 
+Use 'cmake' in Windows to get 'HSSPRCAL.exe'.
+
+A ready 'HSSPRCAL.exe' is in folder 'buildw/'.
+
 **update[20230104]**
 
 1. 现在可以支持殒命暗影（殒命/Demi）（并且已经修复了毒刀不触发殒命暗影的bug），界面中有一个小方框表示“殒命暗影当前复制的法术”，也可以手动调整。
