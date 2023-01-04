@@ -4,9 +4,19 @@ Hearthstone Spectral Pillager Rogue Calculator
 
 **写在最前面**：官方插件可以记牌，可以计算场攻，可以算酒馆战棋对战胜率。HDT插件还可以在酒馆战棋决赛时计算不同站位的胜率（假设对手阵容不变）。这个计算器可以计算鬼灵贼的斩杀方式。这些都是计算，没有区别。
 
+</br>
+</br>
+</br>
+
+**How to use:**
+
 Use 'cmake' in Windows to get 'HSSPRCAL.exe'.
 
-A ready 'HSSPRCAL.exe' is in folder 'buildw/'.
+A ready 'HSSPRCAL.exe' with 'fml.txt' is in folder 'buildw/'. Put them together to use.
+
+</br>
+</br>
+</br>
 
 **update[20230104]**
 
@@ -32,6 +42,10 @@ A ready 'HSSPRCAL.exe' is in folder 'buildw/'.
 
 7. 根据上次更新提到的：现在可以支持佐拉，且现在裂心者必须手动设置。
 
+</br>
+</br>
+</br>
+
 **update[20221017]**
 
 1. 现在可能可以支持有关低血破冰的计算，且**总是需要手动将破冰需求设置为1**。如果能破冰，则会给出一个尽可能的低血破冰，其中x血破冰显示为(-x)。目前这一支持的效率可能很低。
@@ -51,6 +65,10 @@ A ready 'HSSPRCAL.exe' is in folder 'buildw/'.
 有关中文编码的问题，包括无法正确根据路径读取，以及无法正确显示文字。
 
 算法优化，包括但不仅限于之前各项额外支持反而带来的计算负担。
+
+</br>
+</br>
+</br>
 
 **update[20221002]**
 
@@ -75,6 +93,10 @@ A ready 'HSSPRCAL.exe' is in folder 'buildw/'.
 10. 出于种种原因，现在能够支持暗影施法者(Cast)、铜须(Bran)、裂心者(Iuca)（其中裂心者会认为对手手牌与自己初始手牌相同，亦即往往只能用于那些刚打出裂心者的情形）。前一者用于某些非主流构筑，后二者用于宇宙牧，并且后二者不会被自动读取，需要手动修改。
 
 补充：宇宙牧可能还会用到佐拉，之后会支持。在更少见的情况下，鬼灵贼可能还会借助被公爵换来的铜须或佐拉完成斩杀，之后这二者会被自动读取。鬼灵贼不太可能借助被公爵换来的裂心者完成斩杀，或者至少逻辑与宇宙牧借助裂心者完成斩杀完全不同，为了防止误导，之后不会被自动读取。之后也有可能支持手动设置对手手牌。
+
+</br>
+</br>
+</br>
 
 **update[20220923]**
 
